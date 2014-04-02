@@ -4,10 +4,8 @@
             <a href="index.jsp" class="nav">Home</a>
         </li>
 
-        <% 
-        Boolean logado = (session.getAttribute("logado") != null) && (Boolean)session.getAttribute("logado");
-        Boolean administrador = (session.getAttribute("administrador") != null) &&  (Boolean)session.getAttribute("administrador");
-        if (logado) {
+        <%      
+        if (usuario.isAutenticado()) {
         	%>
         	
             <li class="divider"></li>
@@ -31,7 +29,7 @@
         </li>
 
         <% 
-        if (administrador) {
+        if (usuario.isAdministrador()) {
         	%>
             <li class="divider"></li>
             <li>
@@ -40,7 +38,7 @@
 
       <%    
       }
-        if (logado) {
+        if (usuario.isAutenticado()) {
         	%>
             <li class="divider"></li>
             <li>

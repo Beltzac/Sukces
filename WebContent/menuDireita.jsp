@@ -1,4 +1,4 @@
-<?php
+<!--<?php
 require_once 'funcoes.php';
 require_once 'DAO/ProdutoDAO.php';
 require_once 'DAO/MarcaDAO.php';
@@ -15,7 +15,7 @@ $preco = $p->get('preco');
 $codigo = $p->get('cod_prod');
 $imagem = imagem($p->get('cod_prod'));
 ?>
-
+-->
 <div class="right_content">
 
     <div class="title_box">
@@ -29,7 +29,8 @@ $imagem = imagem($p->get('cod_prod'));
     </div>
 
     <%
-     if (logado) {
+
+     if (usuario.isAutenticado()) {
 /*
         if (!isset($_SESSION['quantidadeProdutos']) || !isset($_SESSION['valorTotal'])) {
 

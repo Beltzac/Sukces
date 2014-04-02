@@ -1,14 +1,7 @@
-
-<?php
-include 'session_start.php';
-if (!$_SESSION['admin']) {
-    header('Location: index.php');
-}
-?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>AdministraÃ§Ã£o</title>
+<title>Administração</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript" src="js/boxOver.js"></script>
@@ -230,7 +223,7 @@ if (!$_SESSION['admin']) {
 		$("#proddimensao").mask("999x999x999");
 	});
 </script>
-
+<!-- 
 <?php
         require_once 'DAO/ProdutoDAO.php';
         require_once 'DAO/PessoaDAO.php';
@@ -330,7 +323,7 @@ if (!$_SESSION['admin']) {
             }
         }
         ?>
-
+ -->
 </head>
 <body>
 
@@ -338,6 +331,10 @@ if (!$_SESSION['admin']) {
 	<div id="main_container">
 
 		<%@ include file="header.jsp"%>
+		<%
+			if (!usuario.isAutenticado() || !usuario.isAdministrador())
+				response.sendRedirect("index.jsp");
+		%>
 
 		<div id="main_content">
 
@@ -564,7 +561,7 @@ if (!$_SESSION['admin']) {
 
 
 
-					<h3>RelatÃ³rios</h3>
+					<h3>Relatórios</h3>
 
 					<div>
 						<div>

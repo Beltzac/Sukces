@@ -1,9 +1,3 @@
-<?php
-include 'session_start.php';
-if (!$_SESSION['admin']) {
-    header('Location: index.php');
-}
-?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -15,6 +9,9 @@ if (!$_SESSION['admin']) {
 <div id="main_container">
 
              <%@ include file="header.jsp"%>       
+             <% 	
+				if(!usuario.isAutenticado() || !usuario.isAdministrador()) response.sendRedirect("index.jsp");
+			%>
 
             <div id="main_content">
                

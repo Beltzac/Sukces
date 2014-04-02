@@ -16,11 +16,24 @@ public class PessoaBean implements Serializable {
 	private String cnpj;
 	private String cep;
 	private String endereco;
+	private String numero;
 	private String telefone1;
 	private String telefone2;
 	private boolean administrador;
 	private String data_criacao;
 	
+	
+	private boolean autenticado;
+
+	public boolean autenticar() {
+		System.out.println("Email: " + email + " Senha: " + senha);
+		if (email != null && senha != null)
+			if (email.equals("lol@gmail.com") && senha.equals("123")){
+				setAutenticado(true);
+				return true;		
+			}
+		return false;
+	}
 
 
 	public String getNome() {
@@ -88,6 +101,22 @@ public class PessoaBean implements Serializable {
 	}
 	public void setData_criacao(String data_criacao) {
 		this.data_criacao = data_criacao;
+	}
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+
+	public boolean isAutenticado() {
+		return autenticado;
+	}
+
+
+	public void setAutenticado(boolean autenticado) {
+		this.autenticado = autenticado;
 	}
 	
 	

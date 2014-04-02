@@ -1,4 +1,4 @@
-<?php
+<!--  <?php
 session_start();
 require_once 'PessoaDAO.php';
 require_once 'enderecoDAO.php';
@@ -155,4 +155,21 @@ switch ($_POST['acao']) {
 }
 
 redirect();
-?>
+?> -->
+
+<%@page import="dao.PessoaDAO"%>
+
+<jsp:useBean id="cliente" scope="request" class="bean.PessoaBean" />
+<jsp:setProperty property="*" name="cliente" />
+
+<%
+	PessoaDAO dao = new PessoaDAO();
+
+	switch ((String) session.getAttribute("acao")) {
+
+	case "novo":
+		dao.gravar(cliente);
+		break;
+
+	}
+%>

@@ -1,4 +1,4 @@
-
+<!--
 <?php
 require_once 'funcoes.php';
 require_once 'DAO/ProdutoDAO.php';
@@ -21,13 +21,14 @@ $preco = $p->get('preco');
 $codigo = $p->get('cod_prod');
 $imagem = imagem($p->get('cod_prod'));
 ?>
-
+-->
 <div class="left_content">
     <div class="title_box">
         Categorias
     </div>
 
     <ul class="left_menu">
+    <!--
         <?php
         /*$categorias = phpFastCache::get("categorias");
 
@@ -50,10 +51,11 @@ $imagem = imagem($p->get('cod_prod'));
             $i++;
         }
         ?>
+        -->
     </ul>
 
     <div class="title_box">
-        PromoÃ§Ã£o!
+        Promoção!
     </div>
     <div class="border_box">
         <div class="product_title">

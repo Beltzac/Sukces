@@ -23,7 +23,7 @@ public class PessoaDAO implements IDAO<PessoaBean> {
 		con = ConnectionFactory.getConnection();
 
 		stmtGravar = con
-				.prepareStatement("INSERT INTO usuario (nome, email, senha, cpf, cnpj, cep, endereco, telefone1, telefone2, administrador, data_criacao) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+				.prepareStatement("INSERT INTO usuario (nome, email, senha, cpf, cnpj, cep, endereco, numero, telefone1, telefone2, administrador, data_criacao) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 		stmtCarregar = con
 				.prepareStatement("SELECT * FROM usuario WHERE id = ?");
 		stmtCarregarTodos = con.prepareStatement("SELECT * FROM usuario");

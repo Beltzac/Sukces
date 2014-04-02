@@ -1,3 +1,5 @@
+<jsp:useBean id="usuario" scope="session" class="bean.PessoaBean"/>
+
 <!--  <?php
 if (isset($_SESSION['logado']) && $_SESSION['logado']) {
     require_once 'DAO/PedidoDAO.php';

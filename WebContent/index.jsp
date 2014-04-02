@@ -1,9 +1,3 @@
-<!--<?php
-include 'session_start.php';
-?> -->
-
-
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,10 +27,10 @@ include 'session_start.php';
 
                         <div class="oferta_details">
                             <div class="oferta_title">
-                                Canecas TÃ©rmicas
+                                Canecas Térmicas
                             </div>
                             <div class="oferta_text">
-                                Ã‰ uma caneca preta que mostra a foto apos a insercao de algum liquido quente.
+                               É uma caneca preta que mostra a foto apos a insercao de algum liquido quente.
                             </div>
                             <a href="details.jsp" class="prod_buy">Detalhes</a>
                         </div>
@@ -45,7 +39,7 @@ include 'session_start.php';
                     <div class="center_title_bar">
                         Produtos em Destaque
                     </div>
-
+<!-- 
                     <?php
                     
                     //Procura produtos para preencher a pagina inicial, utiliza cache
@@ -66,13 +60,13 @@ include 'session_start.php';
         {               
            caixaProduto($value);
         }
-                       ?>
+                       ?> -->
 
                     <div class="center_title_bar">
                         Produtos Recomendados
                     </div>
 
-                    <?php
+<!--                     <?php 
                 
                     
 
@@ -81,7 +75,7 @@ include 'session_start.php';
                         caixaProduto($value);
                         
                     }
-                    ?>
+                    ?> -->
                 </div><!-- centro -->
 
                
