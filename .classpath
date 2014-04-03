@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="src/commons-dbutils-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/commons-dbutils-1.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/wildfly-8.0.0.Final Runtime">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>

@@ -2,7 +2,7 @@ package bean;
 
 import java.io.Serializable;
 
-public class PessoaBean implements Serializable {
+public class UsuarioBean implements Serializable {
 
 	/**
 	 * 
@@ -10,7 +10,7 @@ public class PessoaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id = -1;
-	private String nome = "Jão";
+	private String nome;
 	private String email;
 	private String senha;
 	private String cpf;
@@ -24,20 +24,6 @@ public class PessoaBean implements Serializable {
 	private String telefone2;
 	private boolean administrador = false;
 	private String data_criacao;
-	
-	
-	private boolean autenticado;
-
-	public boolean autenticar() {
-		System.out.println("Email: " + email + " Senha: " + senha);
-		if (email != null && senha != null)
-			if (email.equals("lol@gmail.com") && senha.equals("123")){
-				setAutenticado(true);
-				return true;		
-			}
-		return false;
-	}
-
 
 	public String getNome() {
 		return nome;
@@ -106,17 +92,6 @@ public class PessoaBean implements Serializable {
 		this.numero = numero;
 	}
 
-
-	public boolean isAutenticado() {
-		return autenticado;
-	}
-
-
-	public void setAutenticado(boolean autenticado) {
-		this.autenticado = autenticado;
-	}
-
-
 	public int getId() {
 		return id;
 	}
@@ -154,6 +129,15 @@ public class PessoaBean implements Serializable {
 
 	public void setRua(String rua) {
 		this.rua = rua;
+	}
+	@Override
+	public String toString() {
+		return "UsuarioBean [id=" + id + ", nome=" + nome + ", email=" + email
+				+ ", senha=" + senha + ", cpf=" + cpf + ", cnpj=" + cnpj
+				+ ", cep=" + cep + ", cidade=" + cidade + ", estado=" + estado
+				+ ", rua=" + rua + ", numero=" + numero + ", telefone1="
+				+ telefone1 + ", telefone2=" + telefone2 + ", administrador="
+				+ administrador + ", data_criacao=" + data_criacao + "]";
 	}
 	
 	

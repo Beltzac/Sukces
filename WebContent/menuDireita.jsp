@@ -30,7 +30,7 @@ $imagem = imagem($p->get('cod_prod'));
 
     <%
 
-     if (usuario.isAutenticado()) {
+     if (loginBean.isAutenticado()) {
 /*
         if (!isset($_SESSION['quantidadeProdutos']) || !isset($_SESSION['valorTotal'])) {
 
@@ -67,7 +67,7 @@ $imagem = imagem($p->get('cod_prod'));
                 Login
             </div>
 
-            <form id="login" method="post" action="login_manager.jsp">
+            <form id="login" method="post" action="action/login_manager.jsp">
                 E-mail:
                 <input type="text" name="email" class="login_input" value=""/>
                 Senha:

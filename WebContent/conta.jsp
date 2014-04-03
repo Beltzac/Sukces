@@ -125,7 +125,7 @@
 
              <%@ include file="header.jsp"%>
              <% 	
-				if(!usuario.isAutenticado()) response.sendRedirect("index.jsp");
+				if(!loginBean.isAutenticado()) response.sendRedirect("index.jsp");
 			%>       
 
             <div id="main_content">
@@ -174,36 +174,36 @@
                             <form action="action/atualizarUsuario.jsp" id="pessoa" method="post">
                                 <div class="contact_form">
                                    
-                                    <input type="hidden" name="id" value="${usuario.id}">                                   
+                                    <input type="hidden" name="id" value="${loginBean.usuario.id}">                                   
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Nome completo:</strong></label>
-                                        <input type="text" name="nome" class="contact_input" value="${usuario.nome}"/>
+                                        <input type="text" name="nome" class="contact_input" value="${loginBean.usuario.nome}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Email:</strong></label>
-                                        <input type="text" name="email" class="contact_input" value="${usuario.email}"/>
+                                        <input type="text" name="email" class="contact_input" value="${loginBean.usuario.email}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Telefone 1:</strong></label>
-                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${usuario.telefone1}"/>
+                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${loginBean.usuario.telefone1}"/>
                                     </div>
                                     
                                      <div class="form_row">
                                         <label class="contact"><strong>Telefone 2:</strong></label>
-                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${usuario.telefone2}"/>
+                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${loginBean.usuario.telefone2}"/>
                                     </div>  
 
                                     <div class="form_row">
                                         <label class="contact"><strong>CPF:</strong></label>
-                                        <input type="text" name="cpf" id="cpf" class="contact_input" value="${usuario.cpf}"/>
+                                        <input type="text" name="cpf" id="cpf" class="contact_input" value="${loginBean.usuario.cpf}"/>
                                     </div>
                                     
                                      <div class="form_row">
                                         <label class="contact"><strong>CNPJ:</strong></label>
-                                        <input type="text" name="cnpj" id="cnpj" class="contact_input" value="${usuario.cnpj}"/>
+                                        <input type="text" name="cnpj" id="cnpj" class="contact_input" value="${loginBean.usuario.cnpj}"/>
                                     </div>                                   
 
                                     <div class="form_row">
@@ -225,27 +225,27 @@
 
                                     <div class="form_row">
                                         <label class="contact"><strong>CEP:</strong></label>
-                                        <input type="text" name="cep" id="cep" class="contact_input" value="${usuario.cep}"/>
+                                        <input type="text" name="cep" id="cep" class="contact_input" value="${loginBean.usuario.cep}"/>
                                     </div>
                                     
                                      <div class="form_row">
                                         <label class="contact"><strong>Rua:</strong></label>
-                                        <input type="text" name="rua" class="contact_input" value="${usuario.endereco}"/>
+                                        <input type="text" name="rua" class="contact_input" value="${loginBean.usuario.rua}"/>
                                     </div>
                                     
                                    <div class="form_row">
                                         <label class="contact"><strong>Cidade:</strong></label>
-                                        <input type="text" name="cidade" class="contact_input" value="${usuario.cidade}"/>
+                                        <input type="text" name="cidade" class="contact_input" value="${loginBean.usuario.cidade}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Estado:</strong></label>
-                                        <input type="text" name="estado" id="endcep" class="contact_input" value="${usuario.estado}"/>
+                                        <input type="text" name="estado" id="endcep" class="contact_input" value="${loginBean.usuario.estado}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Número:</strong></label>
-                                        <input type="text" name="numero" class="contact_input" value="${usuario.numero}"/>
+                                        <input type="text" name="numero" class="contact_input" value="${loginBean.usuario.numero}"/>
                                     </div>
 
 

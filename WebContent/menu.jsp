@@ -5,7 +5,7 @@
         </li>
 
         <%      
-        if (usuario.isAutenticado()) {
+        if (loginBean.isAutenticado()) {
         	%>
         	
             <li class="divider"></li>
@@ -29,7 +29,7 @@
         </li>
 
         <% 
-        if (usuario.isAdministrador()) {
+        if (loginBean.isAutenticado() && loginBean.getUsuario().isAdministrador()) {
         	%>
             <li class="divider"></li>
             <li>
@@ -38,11 +38,11 @@
 
       <%    
       }
-        if (usuario.isAutenticado()) {
+        if (loginBean.isAutenticado()) {
         	%>
             <li class="divider"></li>
             <li>
-                <a href="login_manager.jsp?logout=true" class="nav" style = " font-size: 15 ; color: tomato; ">Logout (${usuario.nome})</a>
+                <a href="action/login_manager.jsp?logout=true" class="nav" style = " font-size: 15 ; color: tomato; ">Logout (${loginBean.usuario.nome})</a>
             </li>
 
             <%

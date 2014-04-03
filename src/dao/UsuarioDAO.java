@@ -7,56 +7,80 @@ import java.util.List;
 
 import org.apache.commons.dbutils.BeanProcessor;
 
-import bean.PessoaBean;
+import bean.UsuarioBean;
 
-public class PessoaDAO implements IDAO<PessoaBean> {
+public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	private Connection con;
 
 	private PreparedStatement stmtCarregar;
 	private PreparedStatement stmtCarregarTodos;
 	private PreparedStatement stmtPesquisar;
+	private PreparedStatement stmtLogin;
 	private PreparedStatement stmtGravar;
+	private PreparedStatement stmtAtualizar;
 	private PreparedStatement stmtDeletar;
 
-	public PessoaDAO() throws Exception {
+	public UsuarioDAO() throws Exception {
 		con = ConnectionFactory.getConnection();
 
 		stmtGravar = con
 				.prepareStatement("INSERT INTO usuario (nome, email, senha, cpf, cnpj, cep, rua,cidade,estado, numero, telefone1, telefone2, administrador, data_criacao) VALUES (?,?,MD5(?),?,?,?,?,?,?,?,?,?,?,CURRENT_DATE())");
-		stmtCarregar = con
-				.prepareStatement("SELECT * FROM usuario WHERE id = ?");
+		
+		stmtAtualizar = con
+				.prepareStatement("UPDATE usuario SET nome = ?, email = ?, cpf = ?, cnpj = ?, cep = ?, rua = ?,cidade = ?,estado = ?, numero = ?, telefone1 = ?, telefone2 = ?, administrador = ? WHERE id = ?");
+		
+		
+		
+		stmtCarregar = con.prepareStatement("SELECT * FROM usuario WHERE id = ?");
+		stmtLogin = con.prepareStatement("SELECT * FROM usuario WHERE email = ? AND senha = MD5(?)");
 		stmtCarregarTodos = con.prepareStatement("SELECT * FROM usuario");
 		stmtDeletar = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
 
 	}
 
 	@Override
-	public PessoaBean carregar(int id) throws Exception {
+	public UsuarioBean carregar(int id) throws Exception {
 		stmtCarregar.setInt(1, id);
 		ResultSet rs = stmtCarregar.executeQuery();
-		PessoaBean o = null;
+		UsuarioBean o = null;
 
 		if (rs.next()) {
 			BeanProcessor bp = new BeanProcessor();
-			o = bp.toBean(rs, PessoaBean.class);
+			o = bp.toBean(rs, UsuarioBean.class);
 		}
 
 		rs.close();
 		return o;
 	}
+	
+	public UsuarioBean carregar(String email, String senha) throws Exception{
+		stmtLogin.setString(1, email);
+		stmtLogin.setString(2, senha);
+		ResultSet rs = stmtLogin.executeQuery();
+		UsuarioBean o = null;
+
+		if (rs.next()) {
+			BeanProcessor bp = new BeanProcessor();
+			o = bp.toBean(rs, UsuarioBean.class);
+		}
+
+		rs.close();
+		return o;
+		
+	}
 
 	@Override
-	public List<PessoaBean> carregarTodos() throws Exception {
+	public List<UsuarioBean> carregarTodos() throws Exception {
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
-		List<PessoaBean> l = bp.toBeanList(rs, PessoaBean.class);
+		List<UsuarioBean> l = bp.toBeanList(rs, UsuarioBean.class);
 		rs.close();
 		return l;
 	}
 
 	@Override
-	public List<PessoaBean> pesquisar(String texto, String[] campos)
+	public List<UsuarioBean> pesquisar(String texto, String[] campos)
 			throws Exception {
 
 		String sql;
@@ -74,13 +98,13 @@ public class PessoaDAO implements IDAO<PessoaBean> {
 		ResultSet rs = stmtPesquisar.executeQuery();
 
 		BeanProcessor bp = new BeanProcessor();
-		List<PessoaBean> l = bp.toBeanList(rs, PessoaBean.class);
+		List<UsuarioBean> l = bp.toBeanList(rs, UsuarioBean.class);
 		rs.close();
 		return l;
 	}
 
 	@Override
-	public void gravar(PessoaBean obj) throws Exception {
+	public void gravar(UsuarioBean obj) throws Exception {
 		
 		if (obj.getId() == -1){
 			System.out.println("Criando conta: " + obj.getEmail());
@@ -97,13 +121,28 @@ public class PessoaDAO implements IDAO<PessoaBean> {
 			stmtGravar.setInt(10, obj.getNumero());
 			stmtGravar.setString(11, obj.getTelefone1());
 			stmtGravar.setString(12, obj.getTelefone2());
-			stmtGravar.setBoolean(13, obj.isAdministrador());					
+			stmtGravar.setBoolean(13, obj.isAdministrador());	
+			
 			stmtGravar.executeUpdate();
 			
 		} else {
 			System.out.println("Atualizando conta: " + obj.getEmail());
 			
+			stmtAtualizar.setString(1, obj.getNome());
+			stmtAtualizar.setString(2, obj.getEmail());			
+			stmtAtualizar.setString(3, obj.getCpf());
+			stmtAtualizar.setString(4, obj.getCnpj());
+			stmtAtualizar.setString(5, obj.getCep());
+			stmtAtualizar.setString(6, obj.getRua());
+			stmtAtualizar.setString(7, obj.getCidade());
+			stmtAtualizar.setString(8, obj.getEstado());
+			stmtAtualizar.setInt(9, obj.getNumero());
+			stmtAtualizar.setString(10, obj.getTelefone1());
+			stmtAtualizar.setString(11, obj.getTelefone2());
+			stmtAtualizar.setBoolean(12, obj.isAdministrador());
+			stmtAtualizar.setInt(13, obj.getId());
 			
+			stmtAtualizar.executeUpdate();					
 			
 		}
 

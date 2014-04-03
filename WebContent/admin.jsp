@@ -332,7 +332,7 @@
 
 		<%@ include file="header.jsp"%>
 		<%
-			if (!usuario.isAutenticado() || !usuario.isAdministrador())
+			if (!loginBean.isAutenticado() || !loginBean.getUsuario().isAdministrador())
 				response.sendRedirect("index.jsp");
 		%>
 
@@ -517,7 +517,7 @@
 								</div>
 
 								<div class="form_row">
-									<label class="contact"><strong>NÃºmero:</strong></label> <input
+									<label class="contact"><strong>Número:</strong></label> <input
 										type="text" name="num" class="contact_input"
 										value="<?php echo $endereco->get('num') ?>" />
 								</div>
