@@ -159,44 +159,51 @@
                             </table>
 
                         </div>
+                        
+                        <%
+                        
+                        
+                        
+                        
+                        %>
+                        
 
                         <h3>Detalhes da minha conta</h3>
 
                         <div>
-                            <form action="dao/pessoaAction.php" id="pessoa" method="post">
+                            <form action="action/atualizarUsuario.jsp" id="pessoa" method="post">
                                 <div class="contact_form">
-
-                                    <input type="hidden" name="acao" value="AtualizarPessoa">
-                                    <input type="hidden" name="id" value="<?php echo $_SESSION['id'] ?>">                                   
+                                   
+                                    <input type="hidden" name="id" value="${usuario.id}">                                   
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Nome completo:</strong></label>
-                                        <input type="text" name="nome" class="contact_input" value="<?php echo $pessoa->get('nome') ?>"/>
+                                        <input type="text" name="nome" class="contact_input" value="${usuario.nome}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Email:</strong></label>
-                                        <input type="text" name="email" class="contact_input" value="<?php echo $pessoa->get('email') ?>"/>
+                                        <input type="text" name="email" class="contact_input" value="${usuario.email}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Telefone 1:</strong></label>
-                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="<?php echo $pessoa->get('telefone') ?>"/>
+                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${usuario.telefone1}"/>
                                     </div>
                                     
                                      <div class="form_row">
                                         <label class="contact"><strong>Telefone 2:</strong></label>
-                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="<?php echo $pessoa->get('telefone') ?>"/>
+                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${usuario.telefone2}"/>
                                     </div>  
 
                                     <div class="form_row">
                                         <label class="contact"><strong>CPF:</strong></label>
-                                        <input type="text" name="cpf" id="cpf" class="contact_input" value="<?php echo $pessoa->get('cpf') ?>"/>
+                                        <input type="text" name="cpf" id="cpf" class="contact_input" value="${usuario.cpf}"/>
                                     </div>
                                     
                                      <div class="form_row">
                                         <label class="contact"><strong>CNPJ:</strong></label>
-                                        <input type="text" name="cnpj" id="cnpj" class="contact_input" value="<?php echo $pessoa->get('cpf') ?>"/>
+                                        <input type="text" name="cnpj" id="cnpj" class="contact_input" value="${usuario.cnpj}"/>
                                     </div>                                   
 
                                     <div class="form_row">
@@ -213,48 +220,44 @@
                                         <label class="contact"><strong>Confirme senha:</strong></label>
                                         <input type="password" class="contact_input" name="senha2" />
                                     </div>
-
-
-                                    <div class="form_row">
-                                        <input class="submit" type="submit" value="Atualizar" name=""/>
-
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <h3> Endereços</h3>
-
-                        <div>
-                            <form method="post" id="endereco" action="dao/pessoaAction.php" >
-                                <div class="contact_form">
-
-                                    <input type="hidden" name="acao" value="AtualizarEndereco">                                    
-
-                                    <div class="form_row">
-                                        <label class="contact"><strong>Endereço:</strong></label>
-                                        <input type="text" name="endereco" class="contact_input" value="<?php echo $endereco->get('rua') ?>"/>
-                                    </div>
+                                    
+                                   
 
                                     <div class="form_row">
                                         <label class="contact"><strong>CEP:</strong></label>
-                                        <input type="text" name="cep" id="endcep" class="contact_input" value="<?php echo $endereco->get('cep') ?>"/>
+                                        <input type="text" name="cep" id="cep" class="contact_input" value="${usuario.cep}"/>
+                                    </div>
+                                    
+                                     <div class="form_row">
+                                        <label class="contact"><strong>Rua:</strong></label>
+                                        <input type="text" name="rua" class="contact_input" value="${usuario.endereco}"/>
+                                    </div>
+                                    
+                                   <div class="form_row">
+                                        <label class="contact"><strong>Cidade:</strong></label>
+                                        <input type="text" name="cidade" class="contact_input" value="${usuario.cidade}"/>
+                                    </div>
+
+                                    <div class="form_row">
+                                        <label class="contact"><strong>Estado:</strong></label>
+                                        <input type="text" name="estado" id="endcep" class="contact_input" value="${usuario.estado}"/>
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Número:</strong></label>
-                                        <input type="text" name="numero" class="contact_input" value="<?php echo $endereco->get('num') ?>"/>
+                                        <input type="text" name="numero" class="contact_input" value="${usuario.numero}"/>
                                     </div>
-                                                                    
+
 
                                     <div class="form_row">
                                         <input class="submit" type="submit" value="Atualizar" name=""/>
 
                                     </div>
-
                                 </div>
                             </form>
                         </div>
+
+                        
 
                     </div>
 

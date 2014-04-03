@@ -33,7 +33,7 @@
         	%>
             <li class="divider"></li>
             <li>
-                <a href="admin.jsp" class="nav">AdministraÃ§Ã£o do site</a>
+                <a href="admin.jsp" class="nav">Administração do site</a>
             </li>
 
       <%    
@@ -42,7 +42,7 @@
         	%>
             <li class="divider"></li>
             <li>
-                <a href="login_manager.jsp?logout=true" class="nav" style = " font-size: 15 ; color: tomato; ">Logout ( <% System.out.print("Mudar nome"); %>)</a>
+                <a href="login_manager.jsp?logout=true" class="nav" style = " font-size: 15 ; color: tomato; ">Logout (${usuario.nome})</a>
             </li>
 
             <%

@@ -8,18 +8,21 @@ public class PessoaBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private String nome;
+	
+	private int id = -1;
+	private String nome = "Jão";
 	private String email;
 	private String senha;
 	private String cpf;
 	private String cnpj;
 	private String cep;
-	private String endereco;
-	private String numero;
+	private String cidade; 
+	private String estado;
+	private String rua;
+	private int numero;
 	private String telefone1;
 	private String telefone2;
-	private boolean administrador;
+	private boolean administrador = false;
 	private String data_criacao;
 	
 	
@@ -72,12 +75,6 @@ public class PessoaBean implements Serializable {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	public String getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
 	public String getTelefone1() {
 		return telefone1;
 	}
@@ -102,10 +99,10 @@ public class PessoaBean implements Serializable {
 	public void setData_criacao(String data_criacao) {
 		this.data_criacao = data_criacao;
 	}
-	public String getNumero() {
+	public int getNumero() {
 		return numero;
 	}
-	public void setNumero(String numero) {
+	public void setNumero(int numero) {
 		this.numero = numero;
 	}
 
@@ -117,6 +114,46 @@ public class PessoaBean implements Serializable {
 
 	public void setAutenticado(boolean autenticado) {
 		this.autenticado = autenticado;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getCidade() {
+		return cidade;
+	}
+
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+
+	public String getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+
+	public String getRua() {
+		return rua;
+	}
+
+
+	public void setRua(String rua) {
+		this.rua = rua;
 	}
 	
 	

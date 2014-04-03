@@ -141,9 +141,8 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 					<div class="center_prod_box_big">
 
 						<div class="contact_form">
-							<form id="cliente" method="post" action="DAO/pessoaAction.php">
-
-								<input type="hidden" name="acao" value="novo">
+							<form id="cliente" method="post" action="action/novoUsuario.jsp">
+								
 
 								<div class="form_row">
 									<label class="contact"><strong>Nome completo:</strong></label>
@@ -190,11 +189,21 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 									<label class="contact"><strong>CEP:</strong></label> <input
 										type="text" id="cep" class="contact_input"
 										name="cep" />
-								</div>							
+								</div>	
+														
+           							<div class="form_row">
+                                        <label class="contact"><strong>Cidade:</strong></label>
+                                        <input type="text" name="cidade" class="contact_input" value=""/>
+                                    </div>
+                                    
 
+                                    <div class="form_row">
+                                        <label class="contact"><strong>Estado:</strong></label>
+                                        <input type="text" name="estado" id="endcep" class="contact_input" value=""/>
+                                    </div>
 								<div class="form_row">
-									<label class="contact"><strong>Endereço:</strong></label> <input
-										type="text" class="contact_input" name="endereco" />
+									<label class="contact"><strong>rua:</strong></label> <input
+										type="text" class="contact_input" name="rua" />
 								</div>	
 								
 								<div class="form_row">
