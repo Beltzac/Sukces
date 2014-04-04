@@ -245,9 +245,9 @@
 		$("#proddimensao").mask("999x999x999");
 	});
 </script>
-
 </head>
-<body>
+<body onLoad="updateCat()">
+	
 
 
 	<div id="main_container">
@@ -481,7 +481,7 @@
 							<form id="Categoria" method="post" action="action/categoria.jsp" name="Categoria" >
 							<div class="form_row">
 							
-							<select id="categoriaSelect" name = "id">
+							<select id="categoriaSelect" name = "id" onChange="updateCat()">
 							
 						   <%@  page import="java.util.List"%> 
 							<%	
@@ -492,6 +492,13 @@
 							}							
 							%>
 							</select>
+							<script>
+								function updateCat(){
+										item = document.getElementById("categoriaSelect");
+										categoria = item.options[item.selectedIndex].innerHTML;
+										document.getElementById("categoriaNome").value = categoria;
+									}
+							</script>
 								</div>
 
 								<div class="form_row">
@@ -504,6 +511,7 @@
 									<input class="submit" type="submit" value="Novo" name="novo" />
 									<input class="submit" type="submit" value="Deletar" name="deletar" />
 								</div>
+
 							</form>
 
 						</div>
