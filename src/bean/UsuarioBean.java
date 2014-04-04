@@ -22,7 +22,7 @@ public class UsuarioBean implements Serializable {
 	private int numero;
 	private String telefone1;
 	private String telefone2;
-	private boolean administrador = false;
+	private boolean administrador;
 	private String data_criacao;
 
 	public String getNome() {

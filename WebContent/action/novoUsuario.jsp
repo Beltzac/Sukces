@@ -1,12 +1,11 @@
-<%@page import="dao.PessoaDAO"%>
+<%@page import="dao.UsuarioDAO"%>
 
-<jsp:useBean id="usuario" class="bean.PessoaBean" />
-<jsp:setProperty property="*" name="usuario" />
+<jsp:useBean id="usuario" class="bean.UsuarioBean" />
+<jsp:setProperty property="*" name="novo" />
 
 <%
  
-	PessoaDAO dao = new PessoaDAO();
-	System.out.println(request.getHeader("Referer"));	
+	UsuarioDAO dao = new UsuarioDAO();	
 	dao.gravar(usuario);	
 	response.sendRedirect(request.getHeader("Referer"));
 	

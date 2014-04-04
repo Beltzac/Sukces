@@ -13,17 +13,18 @@
 <script src="js/jquery.maskedinput.js"></script>
 <script src="js/boxOver.js"></script>
 
-
-<script>
-	$(function() {
-		$("#accordion")
-				.accordion(
-						<?php
+<!-- <?php
                     if (isset($_GET['action']) && $_GET['action'] == 'pessoa')
                         echo '{active: 1}';
                     if (isset($_GET['action']) && $_GET['action'] == 'fabricante')
                         echo '{active: 2}';
-                    ?>);
+                    ?>
+                     -->
+
+<script>
+	$(function() {
+		$("#accordion").accordion();
+		
 		$(document).ready(function() {
 			$("#datepicker2").datepicker({
 				onSelect : function(dateText, inst) {
@@ -559,7 +560,30 @@
 						</div>
 					</div>
 
+					<h3>Categorias</h3>
 
+					<div>
+						<div class="contact_form">
+
+							<form id="Categoria" method="post" action="action/categoriaAction.jsp">
+
+								<input type="hidden" name="id" value="<?php echo $pessoa->get('id') ?>">
+
+								<div class="form_row">
+									<label class="contact"><strong>Nome:</strong></label>
+									<input type="text" name="nome" class="contact_input"
+										value="<?php echo $pessoa->get('nome') ?>" />
+								</div>
+								
+								<div class="form_row">
+									<input class="submit" type="submit" value="Atualizar" name="acao" />
+									<input class="submit" type="submit" value="Novo" name="acao" />
+									<input class="submit" type="submit" value="Deletar" name="acao" />
+								</div>
+							</form>
+
+						</div>
+					</div>
 
 					<h3>Relatórios</h3>
 

@@ -8,9 +8,11 @@
     <body>
 <div id="main_container">
 
-             <%@ include file="header.jsp"%>       
+             <%@ include file="header.jsp"%>    
+                
              <% 	
-				if(!usuario.isAutenticado() || !usuario.isAdministrador()) response.sendRedirect("index.jsp");
+             if (!loginBean.isAutenticado() || !loginBean.getUsuario().isAdministrador())
+ 				response.sendRedirect("index.jsp");
 			%>
 
             <div id="main_content">

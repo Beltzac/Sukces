@@ -1,11 +1,17 @@
 <%@page import="dao.UsuarioDAO"%>
 
-<jsp:useBean id="usuario" scope="session" class="bean.UsuarioBean" />
+<jsp:useBean id="usuario" class="bean.UsuarioBean" />
 <jsp:setProperty property="*" name="usuario" />
+
+<jsp:useBean id="loginBean" scope="session" class="bean.LoginBean" />
 
 <%
 	UsuarioDAO dao = new UsuarioDAO();
-	System.out.println(request.getHeader("Referer"));	
+
+	// Para não mandar o booleano de administrador pelo form
+	usuario.setAdministrador(loginBean.getUsuario().isAdministrador());
+	
 	dao.gravar(usuario);	
+	loginBean.setUsuario(usuario);
 	response.sendRedirect(request.getHeader("Referer"));
 %>

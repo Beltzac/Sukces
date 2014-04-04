@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Minha conta - Lolwtf Mobile</title>
+        <title>Minha conta - Sukces</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="text/javascript" src="js/boxOver.js"></script>
 
@@ -86,38 +86,7 @@
             });
 
         </script>
-<!-- 
-        <?php
 
-        require_once 'DAO/PessoaDAO.php';
-        require_once 'DAO/EnderecoDAO.php';
-        require_once 'DAO/PedidoDAO.php';
-        require_once 'DAO/carrinhoDAO.php';
-
-        $pessoa = new Pessoa();
-        $endereco = new Endereco();
-        
-        if (isset($_SESSION['id'])) {
-            $pessoaDAO = new PessoaDAO();
-            $select = $pessoaDAO->selectByCod($_SESSION['id']);
-            if ($select) {
-                $pessoa = $select;
-
-                $enderecoDAO = new EnderecoDAO();
-                $select2 = $enderecoDAO->selectByCod($pessoa->get('cod_end'));
-                if ($select2) {
-                    $endereco = $select2;
-                } else {
-                    header('Location: index.php');
-                }
-            } else {
-                header('Location: index.php');
-            }
-        } else {
-            header('Location: index.php');
-        }
-        ?>     
-         -->
     </head>
     <body>
 
@@ -127,6 +96,13 @@
              <% 	
 				if(!loginBean.isAutenticado()) response.sendRedirect("index.jsp");
 			%>       
+			
+	   <script>        
+
+            $(function() {           
+            $('#estado').val( "${loginBean.usuario.estado}" );
+            });
+        </script>
 
             <div id="main_content">
                
@@ -159,14 +135,7 @@
                             </table>
 
                         </div>
-                        
-                        <%
-                        
-                        
-                        
-                        
-                        %>
-                        
+                    
 
                         <h3>Detalhes da minha conta</h3>
 
@@ -188,12 +157,12 @@
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Telefone 1:</strong></label>
-                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${loginBean.usuario.telefone1}"/>
+                                        <input type="text" name="telefone1" id="telefone1" class="contact_input" value="${loginBean.usuario.telefone1}"/>
                                     </div>
                                     
                                      <div class="form_row">
                                         <label class="contact"><strong>Telefone 2:</strong></label>
-                                        <input type="text" name="telefone" id="clitelefone" class="contact_input" value="${loginBean.usuario.telefone2}"/>
+                                        <input type="text" name="telefone2" id="telefone2" class="contact_input" value="${loginBean.usuario.telefone2}"/>
                                     </div>  
 
                                     <div class="form_row">
@@ -204,25 +173,8 @@
                                      <div class="form_row">
                                         <label class="contact"><strong>CNPJ:</strong></label>
                                         <input type="text" name="cnpj" id="cnpj" class="contact_input" value="${loginBean.usuario.cnpj}"/>
-                                    </div>                                   
-
-                                    <div class="form_row">
-                                        <label class="contact"><strong>Senha atual:</strong></label>
-                                        <input type="password" class="contact_input" name="senhaatual" />
-                                    </div>
-
-                                    <div class="form_row">
-                                        <label class="contact"><strong>Nova senha:</strong></label>
-                                        <input type="password" class="contact_input" name="senha" />
-                                    </div>
-
-                                    <div class="form_row">
-                                        <label class="contact"><strong>Confirme senha:</strong></label>
-                                        <input type="password" class="contact_input" name="senha2" />
                                     </div>
                                     
-                                   
-
                                     <div class="form_row">
                                         <label class="contact"><strong>CEP:</strong></label>
                                         <input type="text" name="cep" id="cep" class="contact_input" value="${loginBean.usuario.cep}"/>
@@ -240,7 +192,36 @@
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Estado:</strong></label>
-                                        <input type="text" name="estado" id="endcep" class="contact_input" value="${loginBean.usuario.estado}"/>
+                                           <select name="estado" id="estado" class="form-control" >								
+								<option value="pr">Paraná</option>
+								<option value="ac">Acre</option>
+								<option value="al">Alagoas</option>
+								<option value="ap">Amapá</option>
+								<option value="am">Amazonas</option>
+								<option value="ba">Bahia</option>
+								<option value="ce">Ceará</option>
+								<option value="df">Distrito Federal</option>
+								<option value="es">Espirito Santo</option>
+								<option value="go">Goiás</option>
+								<option value="ma">Maranhão</option>
+								<option value="ms">Mato Grosso do Sul</option>
+								<option value="mt">Mato Grosso</option>
+								<option value="mg">Minas Gerais</option>
+								<option value="pa">Pará</option>
+								<option value="pb">Paraíba</option>								
+								<option value="pe">Pernambuco</option>
+								<option value="pi">Piauí</option>
+								<option value="rj">Rio de Janeiro</option>
+								<option value="rn">Rio Grande do Norte</option>
+								<option value="rs">Rio Grande do Sul</option>
+								<option value="ro">Rondônia</option>
+								<option value="rr">Roraima</option>
+								<option value="sc">Santa Catarina</option>
+								<option value="sp">São Paulo</option>
+								<option value="se">Sergipe</option>
+								<option value="to">Tocantins</option>
+							</select>
+                                    
                                     </div>
 
                                     <div class="form_row">
@@ -257,7 +238,35 @@
                             </form>
                         </div>
 
-                        
+                        <h3>Alterar senha</h3>
+
+                        <div>
+                            <form action="action/atualizarUsuario.jsp" id="pessoa" method="post">
+                                <div class="contact_form">
+                                
+                                 <div class="form_row">
+                                        <label class="contact"><strong>Senha atual:</strong></label>
+                                        <input type="password" class="contact_input" name="senhaatual" />
+                                    </div>
+
+                                    <div class="form_row">
+                                        <label class="contact"><strong>Nova senha:</strong></label>
+                                        <input type="password" class="contact_input" name="senha" />
+                                    </div>
+
+                                    <div class="form_row">
+                                        <label class="contact"><strong>Confirme senha:</strong></label>
+                                        <input type="password" class="contact_input" name="senha2" />
+                                    </div>
+                                    
+                                    <div class="form_row">                                    
+                                        <input class="submit" type="submit" value="Atualizar" name=""/>
+                                    </div>
+                                
+                                </div>                                
+                            </form> 
+                                
+                        </div>
 
                     </div>
 
