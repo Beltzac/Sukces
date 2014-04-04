@@ -10,7 +10,7 @@ public interface IDAO<T> {
 
 	List<T> pesquisar(String texto, String[] campos) throws Exception;
 
-	void gravar(T obj) throws Exception;
+	void gravar(T obj, boolean update) throws Exception;
 
 	int deletar(int id) throws Exception;
 

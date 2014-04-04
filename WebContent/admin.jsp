@@ -1,3 +1,6 @@
+<%@page import="javax.faces.context.ResponseWriter"%>
+<%@page import="dao.CategoriaDAO"%>
+<%@page import="bean.CategoriaBean"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,13 +16,6 @@
 <script src="js/jquery.maskedinput.js"></script>
 <script src="js/boxOver.js"></script>
 
-<!-- <?php
-                    if (isset($_GET['action']) && $_GET['action'] == 'pessoa')
-                        echo '{active: 1}';
-                    if (isset($_GET['action']) && $_GET['action'] == 'fabricante')
-                        echo '{active: 2}';
-                    ?>
-                     -->
 
 <script>
 	$(function() {
@@ -224,107 +220,7 @@
 		$("#proddimensao").mask("999x999x999");
 	});
 </script>
-<!-- 
-<?php
-        require_once 'DAO/ProdutoDAO.php';
-        require_once 'DAO/PessoaDAO.php';
-        require_once 'DAO/EnderecoDAO.php';
-        require_once 'DAO/MarcaDAO.php';
-        $produto = new Produto();
-        $pessoa = new Pessoa();
-        $endereco = new Endereco();
-        $fabricante = new Marca();
 
-
-        $estados = array(
-            "AC" => "Acre",
-            "AL" => "Alagoas",
-            "AM" => "Amazonas",
-            "AP" => "Amapá",
-            "BA" => "Bahia",
-            "CE" => "Ceará",
-            "DF" => "Distrito Federal",
-            "ES" => "Espirito Santo",
-            "GO" => "Goiás",
-            "MA" => "Maranhão",
-            "MG" => "Minas Gerais",
-            "MS" => "Mato Grosso do Sul",
-            "MT" => "Mato Grosso",
-            "PA" => "Pará",
-            "PB" => "Paraíba",
-            "PE" => "Pernambuco",
-            "PI" => "Piauí",
-            "PR" => "Paraná",
-            "RJ" => "Rio de Janeiro",
-            "RN" => "Rio Grande do Norte",
-            "RO" => "Rondônia",
-            "RR" => "Roraima",
-            "RS" => "Rio Grande do Sul",
-            "SC" => "Santa Catarina",
-            "SE" => "Sergipe",
-            "SP" => "São Paulo",
-            "TO" => "Tocantins"
-        );
-        
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                case 'produto':
-                    if (isset($_GET['cod'])) {
-                        $pdao = new ProdutoDAO();
-                        $select = $pdao->selectByCod($_GET['cod']);
-                        if ($select) {
-                            $produto = $select;
-                        } else {
-                            header('Location: admin.php');
-                        }
-                    } else {
-                        header('Location: admin.php');
-                    }
-                    break;
-
-                case 'pessoa':
-                    if (isset($_GET['cod'])) {
-                        $pessoaDAO = new PessoaDAO();
-                        $select = $pessoaDAO->selectByCod($_GET['cod']);
-                        if ($select) {
-                            $pessoa = $select;
-
-                            $enderecoDAO = new EnderecoDAO();
-                            $select2 = $enderecoDAO->selectByCod($pessoa->get('cod_end'));
-                            if ($select2) {
-                                $endereco = $select2;
-                            } else {
-                                header('Location: admin.php');
-                            }
-                        } else {
-                            header('Location: admin.php');
-                        }
-                    } else {
-                        header('Location: admin.php');
-                    }
-                    break;
-
-                case 'fabricante':
-                    if (isset($_GET['cod'])) {
-                        $marcaDao = new MarcaDAO();
-                        $select = $marcaDao->selectByCod($_GET['cod']);
-                        if ($select) {
-                            $fabricante = $select;
-                        } else {
-                            header('Location: admin.php');
-                        }
-                    } else {
-                        header('Location: admin.php');
-                    }
-                    break;
-
-                default:
-                    header('Location: admin.php');
-                    break;
-            }
-        }
-        ?>
- -->
 </head>
 <body>
 
@@ -538,15 +434,7 @@
 								<div class="form_row">
 									<label class="contact"><strong>Estado:</strong></label> <select
 										name="estado" class="contact_input">
-										<?php
-                                            foreach ($estados as $key => $value) {
-
-                                                if ($key == $endereco->get('estado'))
-                                                    echo "<option selected value='" . $key . "'>" . $value . "</option>";
-                                                else
-                                                    echo "<option value='" . $key . "'>" . $value . "</option>";
-                                            }
-                                            ?>
+							
 									</select>
 								</div>
 
@@ -565,20 +453,31 @@
 					<div>
 						<div class="contact_form">
 
-							<form id="Categoria" method="post" action="action/categoriaAction.jsp">
-
-								<input type="hidden" name="id" value="<?php echo $pessoa->get('id') ?>">
+							<form id="Categoria" method="post" action="action/categoria.jsp">
+							<div class="form_row">
+							
+							<select id="categoriaSelect" name = "id">
+							
+						   <%@  page import="java.util.List"%> 
+							<%	
+							CategoriaDAO c = new CategoriaDAO();
+							List<CategoriaBean> lista = c.carregarTodos();
+							for(CategoriaBean categoria : lista){								
+								out.println("<option value=\"" + categoria.getId() +"\">" + categoria.getNome() + "</option>");								
+							}							
+							%>
+							</select>
+								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Nome:</strong></label>
-									<input type="text" name="nome" class="contact_input"
-										value="<?php echo $pessoa->get('nome') ?>" />
+									<input type="text" id="categoriaNome" name="nome" class="contact_input" value="" />
 								</div>
 								
 								<div class="form_row">
-									<input class="submit" type="submit" value="Atualizar" name="acao" />
-									<input class="submit" type="submit" value="Novo" name="acao" />
-									<input class="submit" type="submit" value="Deletar" name="acao" />
+									<input class="submit" type="submit" value="Atualizar" name="atualizar" />
+									<input class="submit" type="submit" value="Novo" name="novo" />
+									<input class="submit" type="submit" value="Deletar" name="deletar" />
 								</div>
 							</form>
 

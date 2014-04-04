@@ -104,9 +104,9 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 	}
 
 	@Override
-	public void gravar(UsuarioBean obj) throws Exception {
+	public void gravar(UsuarioBean obj, boolean update) throws Exception {
 		
-		if (obj.getId() == -1){
+		if (!update){
 			System.out.println("Criando conta: " + obj.getEmail());
 			
 			stmtGravar.setString(1, obj.getNome());

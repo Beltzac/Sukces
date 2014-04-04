@@ -11,7 +11,7 @@
 	// Para não mandar o booleano de administrador pelo form
 	usuario.setAdministrador(loginBean.getUsuario().isAdministrador());
 	
-	dao.gravar(usuario);	
+	dao.gravar(usuario,true);	
 	loginBean.setUsuario(usuario);
 	response.sendRedirect(request.getHeader("Referer"));
 %>

@@ -1,21 +1,3 @@
-<!--<?php
-require_once 'funcoes.php';
-require_once 'DAO/ProdutoDAO.php';
-require_once 'DAO/MarcaDAO.php';
-require_once 'DAO/carrinhoDAO.php';
-//include_once 'php_fast_cache.php';
-
-//$p = phpFastCache::get("produtoDireito");
-
-$pdao = new ProdutoDAO();
-    $p = $pdao->selectByCod(11);
-
-$nome = $p->get('nome');
-$preco = $p->get('preco');
-$codigo = $p->get('cod_prod');
-$imagem = imagem($p->get('cod_prod'));
-?>
--->
 <div class="right_content">
 
     <div class="title_box">
