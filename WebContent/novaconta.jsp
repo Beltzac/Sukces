@@ -62,6 +62,10 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 												cpf : {
 													required : true,
 													minlength : 11
+												},
+												cnpj : {
+													required : true,
+													minlength : 14
 												}
 
 											},
@@ -101,6 +105,10 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 												cpf : {
 													required : "Digite seu CPF",
 													minlength : ""
+												},
+												cnpj : {
+													required : "Digite seu CNPJ",
+													minlength : ""
 												}
 
 											}
@@ -111,6 +119,7 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 	$(document).ready(function() {
 		//$("#campoNascimento").mask("99/99/9999");
 		$("#cpf").mask("999.999.999-99");
+		$("#cnpj").mask("99.999.999.9999-99");
 		$("#cep").mask("99.999-999");
 		$("#telefone1").mask("(99)9999-9999");
 		$("#telefone2").mask("(99)9999-9999");
@@ -181,7 +190,7 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 								
 							    <div class="form_row">
 									<label class="contact"><strong>CNPJ:</strong></label> <input
-										type="text" id="cpf" class="contact_input"
+										type="text" id="cnpj" class="contact_input"
 										name="cnpj" />
 								</div>
 								
@@ -199,35 +208,35 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Estado:</strong></label>                                       
-                                        <select name="estado" class="form-control" >								
-								<option value="pr">Paraná</option>
-								<option value="ac">Acre</option>
-								<option value="al">Alagoas</option>
-								<option value="ap">Amapá</option>
-								<option value="am">Amazonas</option>
-								<option value="ba">Bahia</option>
-								<option value="ce">Ceará</option>
-								<option value="df">Distrito Federal</option>
-								<option value="es">Espirito Santo</option>
-								<option value="go">Goiás</option>
-								<option value="ma">Maranhão</option>
-								<option value="ms">Mato Grosso do Sul</option>
-								<option value="mt">Mato Grosso</option>
-								<option value="mg">Minas Gerais</option>
-								<option value="pa">Pará</option>
-								<option value="pb">Paraíba</option>								
-								<option value="pe">Pernambuco</option>
-								<option value="pi">Piauí</option>
-								<option value="rj">Rio de Janeiro</option>
-								<option value="rn">Rio Grande do Norte</option>
-								<option value="rs">Rio Grande do Sul</option>
-								<option value="ro">Rondônia</option>
-								<option value="rr">Roraima</option>
-								<option value="sc">Santa Catarina</option>
-								<option value="sp">São Paulo</option>
-								<option value="se">Sergipe</option>
-								<option value="to">Tocantins</option>
-							</select>
+                                        <select name="estado" >								
+										<option value="pr">Paraná</option>
+										<option value="ac">Acre</option>
+										<option value="al">Alagoas</option>
+										<option value="ap">Amapá</option>
+										<option value="am">Amazonas</option>
+										<option value="ba">Bahia</option>
+										<option value="ce">Ceará</option>
+										<option value="df">Distrito Federal</option>
+										<option value="es">Espirito Santo</option>
+										<option value="go">Goiás</option>
+										<option value="ma">Maranhão</option>
+										<option value="ms">Mato Grosso do Sul</option>
+										<option value="mt">Mato Grosso</option>
+										<option value="mg">Minas Gerais</option>
+										<option value="pa">Pará</option>
+										<option value="pb">Paraíba</option>								
+										<option value="pe">Pernambuco</option>
+										<option value="pi">Piauí</option>
+										<option value="rj">Rio de Janeiro</option>
+										<option value="rn">Rio Grande do Norte</option>
+										<option value="rs">Rio Grande do Sul</option>
+										<option value="ro">Rondônia</option>
+										<option value="rr">Roraima</option>
+										<option value="sc">Santa Catarina</option>
+										<option value="sp">São Paulo</option>
+										<option value="se">Sergipe</option>
+										<option value="to">Tocantins</option>
+									</select>
                                     </div>
 								<div class="form_row">
 									<label class="contact"><strong>rua:</strong></label> <input

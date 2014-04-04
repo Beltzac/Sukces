@@ -22,7 +22,8 @@
                 $("#cep").mask("99.999-999");
                 $("#telefone1").mask("(99)9999-9999");
                 $("#telefone2").mask("(99)9999-9999");               
-                $("#cpf").mask("999.999.999-99");                
+                $("#cpf").mask("999.999.999-99");    
+                $("#cnpj").mask("99.999.999.9999-99");            
             });
         </script>
         <script>
@@ -54,6 +55,10 @@
                             required: true,
                             email: true
                         },
+                        cnpj : {
+							required : true,
+							minlength : 14
+						}
                     },
                     // Define as mensagens de erro para cada regra
                     messages: {
@@ -121,7 +126,7 @@
                             <table border='1'>
                                 <tr><td>Código</td><td>Status</td><td>Pagamento</td><td>Forma de Envio</td><td>Valor</td><td>Visualizar</td></tr>
 <!-- 
-                                <?php
+                                /*<?php
                                 $peddao = new PedidoDAO();
                                 $cardao = new carrinhoDAO();
                                 $form = $peddao->selectAllPessoa($_SESSION['id']);
@@ -130,7 +135,7 @@
                                     $valor = $cardao->total($value->get('cod_pedido'));
                                     echo "<tr><td>" . $value->get('cod_pedido') . "</td><td>" . $value->get('situacao') . "</td><td>" . $value->get('forma_d_pag') . "</td><td>" . $value->get('forma_d_entreg') . "</td><td> R$ ".$valor[0]. "</td><td><a href='detalhePedido.php?cod=" . $value->get('cod_pedido') . "'>Link</a></td></tr>";
                                 }
-                                ?>
+                                ?>*/
  -->
                             </table>
 
