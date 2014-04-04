@@ -1,7 +1,7 @@
 <%@page import="dao.UsuarioDAO"%>
 
 <jsp:useBean id="usuario" class="bean.UsuarioBean" />
-<jsp:setProperty property="*" name="novo" />
+<jsp:setProperty property="*" name="usuario" />
 
 <%
  

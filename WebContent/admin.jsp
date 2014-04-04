@@ -208,6 +208,31 @@
 										});
 					});
 </script>
+<script>
+	$(document)
+			.ready(
+					function() {
+						$("#Categoria")
+								.validate(
+										{
+											// Define as regras
+											rules : {
+												nome : {
+													// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+													required : true,
+													minlength : 3
+												}
+											},
+											// Define as mensagens de erro para cada regra
+											messages : {
+												nome : {
+													required : "Digite o nome da Categoria",
+													minlength : "O nome da Categoria deve ter pelo menos 3 caracteres"
+												}
+											}
+										});
+					});
+</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#clitelefone").mask("(99)9999-9999");
@@ -453,7 +478,7 @@
 					<div>
 						<div class="contact_form">
 
-							<form id="Categoria" method="post" action="action/categoria.jsp">
+							<form id="Categoria" method="post" action="action/categoria.jsp" name="Categoria" >
 							<div class="form_row">
 							
 							<select id="categoriaSelect" name = "id">
