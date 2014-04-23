@@ -7,6 +7,7 @@
 <title>Erro</title>
 </head>
 <body>
+<h1>Beep Beep</h1>
 	<h1>${erro}</h1>
 </body>
 </html>

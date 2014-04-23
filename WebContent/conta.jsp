@@ -145,7 +145,7 @@
                         <h3>Detalhes da minha conta</h3>
 
                         <div>
-                            <form action="action/atualizarUsuario.jsp" id="pessoa" method="post">
+                            <form action="Controladora?action=atualizarUsuario" id="pessoa" method="post">
                                 <div class="contact_form">
                                    
                                     <input type="hidden" name="id" value="${loginBean.usuario.id}">                                   

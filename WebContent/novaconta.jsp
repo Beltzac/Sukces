@@ -150,7 +150,7 @@ if (isset($_SESSION['logado']) && $_SESSION['logado']) {
 					<div class="center_prod_box_big">
 
 						<div class="contact_form">
-							<form id="cliente" method="post" action="action/novoUsuario.jsp">
+							<form id="cliente" method="post" action="Controladora?action=novoUsuario">
 								
 
 								<div class="form_row">

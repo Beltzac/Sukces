@@ -118,7 +118,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 			stmtGravar.setString(7, obj.getRua());
 			stmtGravar.setString(8, obj.getCidade());
 			stmtGravar.setString(9, obj.getEstado());
-			stmtGravar.setInt(10, obj.getNumero());
+			stmtGravar.setString(10, obj.getNumero());
 			stmtGravar.setString(11, obj.getTelefone1());
 			stmtGravar.setString(12, obj.getTelefone2());
 			stmtGravar.setBoolean(13, obj.isAdministrador());	
@@ -136,7 +136,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 			stmtAtualizar.setString(6, obj.getRua());
 			stmtAtualizar.setString(7, obj.getCidade());
 			stmtAtualizar.setString(8, obj.getEstado());
-			stmtAtualizar.setInt(9, obj.getNumero());
+			stmtAtualizar.setString(9, obj.getNumero());
 			stmtAtualizar.setString(10, obj.getTelefone1());
 			stmtAtualizar.setString(11, obj.getTelefone2());
 			stmtAtualizar.setBoolean(12, obj.isAdministrador());

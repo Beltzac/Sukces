@@ -478,7 +478,7 @@
 					<div>
 						<div class="contact_form">
 
-							<form id="Categoria" method="post" action="action/categoria.jsp" name="Categoria" >
+							<form id="Categoria" method="post" action="Controladora?action=categoria" name="Categoria" >
 							<div class="form_row">
 							
 							<select id="categoriaSelect" name = "id" onChange="updateCat()">

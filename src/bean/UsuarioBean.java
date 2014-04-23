@@ -9,7 +9,7 @@ public class UsuarioBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int id = -1;
+	private int id;
 	private String nome;
 	private String email;
 	private String senha;
@@ -19,7 +19,7 @@ public class UsuarioBean implements Serializable {
 	private String cidade; 
 	private String estado;
 	private String rua;
-	private int numero;
+	private String numero;
 	private String telefone1;
 	private String telefone2;
 	private boolean administrador;
@@ -85,11 +85,11 @@ public class UsuarioBean implements Serializable {
 	public void setData_criacao(String data_criacao) {
 		this.data_criacao = data_criacao;
 	}
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setNumero(String string) {
+		this.numero = string;
 	}
 
 	public int getId() {
