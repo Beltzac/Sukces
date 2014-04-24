@@ -352,39 +352,39 @@
 								<div class="form_row">
 									<label class="contact"><strong>Nome completo:</strong></label>
 									<input type="text" name="nome" class="contact_input"
-										value="<?php echo $pessoa->get('nome') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Email:</strong></label> <input
 										type="text" name="email" class="contact_input"
-										value="<?php echo $pessoa->get('email') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Telefone:</strong></label> <input
 										type="text" name="telefone" id="clitelefone"
 										class="contact_input"
-										value="<?php echo $pessoa->get('telefone') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>RG:</strong></label> <input
 										type="text" name="rg" id="clirg" class="contact_input"
-										value="<?php echo $pessoa->get('rg') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>CPF:</strong></label> <input
 										type="text" name="cpf" id="clicpf" class="contact_input"
-										value="<?php echo $pessoa->get('cpf') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Data de
 											nascimento:</strong></label> <input type="text" name="nascimento"
 										class="contact_input" id="datepicker"
-										value="<?php echo $pessoa->get('nascimento') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
