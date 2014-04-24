@@ -276,12 +276,12 @@
 								enctype="multipart/form-data">
 
 								<input type="hidden"
-									value="<?php echo $produto->get('cod_prod') ?>" name="codigo" />
+									value="" name="codigo" />
 
 								<div class="form_row">
 									<label class="contact"><strong>Nome:</strong></label> <input
 										type="text" class="contact_input" name="nome"
-										value="<?php echo $produto->get('nome') ?>" />
+										value="" />
 								</div>
 
 
@@ -289,20 +289,6 @@
 								<div class="form_row">
 									<label class="contact"><strong>Categoria:</strong></label> <select
 										name="categoria" class="contact_input">
-										<?php
-                                            require_once 'DAO/CategoriaDAO.php';
-                                            $cdao = new CategoriaDAO();
-
-                                            $categoria = $cdao->selectAll();
-
-                                            foreach ($categoria as $value) {
-
-                                                if ($value->get('cod') == $produto->get('categoria'))
-                                                    echo "<option selected value='" . $value->get('cod') . "'>" . $value->get('nome') . "</option>";
-                                                else
-                                                    echo "<option value='" . $value->get('cod') . "'>" . $value->get('nome') . "</option>";
-                                            }
-                                            ?>
 									</select>
 
 
@@ -312,26 +298,26 @@
 									<label class="contact"><strong>Dimensões:</strong></label> <input
 										type="text" class="contact_input" id="proddimensao"
 										name="dimensoes"
-										value="<?php echo $produto->get('dimensoes') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Preço:</strong></label> <input
 										type="text" id="prodpreco" class="contact_input" name="preco"
-										value="<?php echo $produto->get('preco') ?>" />
+										value="" />
 								</div>
 
 
 								<div class="form_row">
 									<label class="contact"><strong>Peso:</strong></label> <input
 										type="text" class="contact_input" id="prodpeso" name="peso"
-										value="<?php echo $produto->get('peso') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Estoque:</strong></label> <input
 										type="text" id="prodestoque" class="contact_input"
-										name="estoque" value="<?php echo $produto->get('estoque') ?>" />
+										name="estoque" value="" />
 								</div>
 
 								<div class="form_row">
@@ -342,7 +328,7 @@
 
 								<div class="form_row">
 									<label class="contact"><strong>Descrição:</strong></label>
-									<textarea class="contact_textarea" name="descricao"><?php echo $produto->get('descricao') ?></textarea>
+									<textarea class="contact_textarea" name="descricao"></textarea>
 
 								</div>
 
@@ -376,46 +362,46 @@
 								<div class="form_row">
 									<label class="contact"><strong>Nome completo:</strong></label>
 									<input type="text" name="nome" class="contact_input"
-										value="<?php echo $pessoa->get('nome') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Email:</strong></label> <input
 										type="text" name="email" class="contact_input"
-										value="<?php echo $pessoa->get('email') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Telefone:</strong></label> <input
 										type="text" name="telefone" id="clitelefone"
 										class="contact_input"
-										value="<?php echo $pessoa->get('telefone') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>RG:</strong></label> <input
 										type="text" name="rg" id="clirg" class="contact_input"
-										value="<?php echo $pessoa->get('rg') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>CPF:</strong></label> <input
 										type="text" name="cpf" id="clicpf" class="contact_input"
-										value="<?php echo $pessoa->get('cpf') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Data de
 											nascimento:</strong></label> <input type="text" name="nascimento"
 										class="contact_input" id="datepicker"
-										value="<?php echo $pessoa->get('nascimento') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Nivel de
 											Acesso:</strong></label> <input type="text" name="nivel_d_aces"
 										class="contact_input"
-										value="<?php echo $pessoa->get('nivel_d_aces') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
@@ -424,36 +410,36 @@
 								</div>
 
 								<input type="hidden" name="cod_end"
-									value="<?php echo $endereco->get('cod_end') ?>">
+									value="">
 
 								<div class="form_row">
 									<label class="contact"><strong>Rua:</strong></label> <input
 										type="text" name="rua" class="contact_input"
-										value="<?php echo $endereco->get('rua') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>CEP:</strong></label> <input
 										type="text" name="cep" id="endcep" class="contact_input"
-										value="<?php echo $endereco->get('cep') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>N�mero:</strong></label> <input
 										type="text" name="num" class="contact_input"
-										value="<?php echo $endereco->get('num') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Complemento:</strong></label> <input
 										type="text" name="complemento" class="contact_input"
-										value="<?php echo $endereco->get('complemento') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Cidade:</strong></label> <input
 										type="text" name="cidade" class="contact_input"
-										value="<?php echo $endereco->get('cidade') ?>" />
+										value="" />
 								</div>
 
 								<div class="form_row">
