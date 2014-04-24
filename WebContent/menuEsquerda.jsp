@@ -1,57 +1,27 @@
-<!--
-<?php
-require_once 'funcoes.php';
-require_once 'DAO/ProdutoDAO.php';
-require_once 'DAO/CategoriaDAO.php';
-//include_once 'php_fast_cache.php';
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-//$p = phpFastCache::get("produtoEsquerdo");
-
-/*if (!$p) {
-    $pdao = new ProdutoDAO();
-    $p = $pdao->selectByCod(33);
-    phpFastCache::set("produtoEsquerdo", $p, 600);
-}*/
-
-$pdao = new ProdutoDAO();
-    $p = $pdao->selectByCod(33);
-
-$nome = $p->get('nome');
-$preco = $p->get('preco');
-$codigo = $p->get('cod_prod');
-$imagem = imagem($p->get('cod_prod'));
-?>
--->
 <div class="left_content">
     <div class="title_box">
         Categorias
     </div>
 
     <ul class="left_menu">
-    <!--
-        <?php
-        /*$categorias = phpFastCache::get("categorias");
 
-        if (!$categorias) {
-            $cdao = new CategoriaDAO();
-            $categorias = $cdao->selectAll();
-            phpFastCache::set("categorias", $categorias, 600);
-        }*/
-		    $cdao = new CategoriaDAO();
-            $categorias = $cdao->selectAll();
-        $i = 0;
-        foreach ($categorias as $value) {
-
-            if ($i % 2 == 0) {
-                echo '<li class="odd">';
-            } else {
-                echo '<li class="even">';
-            }
-            echo '<a href="pesquisa.php?pesquisa=' . $value->get('nome') . '">' . $value->get('nome') . '</a></li>';
-            $i++;
-        }
-        ?>
-        -->
+        <c:forEach items="${listaCategorias}" var="item"  varStatus="cont">
+        	<c:choose>
+        		<c:when test="${cont.index % 2 == 1}">
+        		<li class="odd">
+        		</c:when>
+        		
+        		<c:otherwise>
+        		<li class="even">        		
+        		</c:otherwise>
+        	</c:choose>
+        	
+        	<a href="">${item.nome}</a>        	
+        	
+        	</li>
+        </c:forEach>
     </ul>
 
     <div class="title_box">

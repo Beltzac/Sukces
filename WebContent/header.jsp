@@ -1,5 +1,4 @@
 <jsp:useBean id="loginBean" scope="session" class="bean.LoginBean"/>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div id="header">
 

@@ -20,7 +20,7 @@
 <script>
 	$(function() {
 		$("#accordion").accordion();
-		
+
 		$(document).ready(function() {
 			$("#datepicker2").datepicker({
 				onSelect : function(dateText, inst) {
@@ -247,7 +247,7 @@
 </script>
 </head>
 <body onLoad="updateCat()">
-	
+
 
 
 	<div id="main_container">
@@ -272,67 +272,49 @@
 					<h3>Produtos</h3>
 					<div>
 						<div class="contact_form">
-							<form id="produto" method="post" action="DAO/produtoAction.php"
+							<form id="produto" method="post"
+								action="Controladora?action=produto"
 								enctype="multipart/form-data">
 
-								<input type="hidden"
-									value="<?php echo $produto->get('cod_prod') ?>" name="codigo" />
-
-								<div class="form_row">
-									<label class="contact"><strong>Nome:</strong></label> <input
-										type="text" class="contact_input" name="nome"
-										value="<?php echo $produto->get('nome') ?>" />
-								</div>
+								<input type="hidden" value="${produto.id}" name="id" />
 
 
 
 								<div class="form_row">
 									<label class="contact"><strong>Categoria:</strong></label> <select
-										name="categoria" class="contact_input">
-										<?php
-                                            require_once 'DAO/CategoriaDAO.php';
-                                            $cdao = new CategoriaDAO();
+										id="categoriaSelect" name="categoria">
 
-                                            $categoria = $cdao->selectAll();
-
-                                            foreach ($categoria as $value) {
-
-                                                if ($value->get('cod') == $produto->get('categoria'))
-                                                    echo "<option selected value='" . $value->get('cod') . "'>" . $value->get('nome') . "</option>";
-                                                else
-                                                    echo "<option value='" . $value->get('cod') . "'>" . $value->get('nome') . "</option>";
-                                            }
-                                            ?>
+										<%@  page import="java.util.List"%>
+										<%
+											CategoriaDAO c2 = new CategoriaDAO();
+															List<CategoriaBean> lista2 = c2.carregarTodos();
+															for(CategoriaBean categoria : lista2){								
+																out.println("<option value=\"" + categoria.getId() +"\">" + categoria.getNome() + "</option>");								
+															}
+										%>
 									</select>
 
-
-								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Dimens√µes:</strong></label> <input
-										type="text" class="contact_input" id="proddimensao"
-										name="dimensoes"
-										value="<?php echo $produto->get('dimensoes') ?>" />
-								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Pre√ßo:</strong></label> <input
-										type="text" id="prodpreco" class="contact_input" name="preco"
-										value="<?php echo $produto->get('preco') ?>" />
 								</div>
 
 
 								<div class="form_row">
-									<label class="contact"><strong>Peso:</strong></label> <input
-										type="text" class="contact_input" id="prodpeso" name="peso"
-										value="<?php echo $produto->get('peso') ?>" />
+									<label class="contact"><strong>Nome:</strong></label> <input
+										type="text" class="contact_input" name="nome"
+										value="${produto.nome}" />
 								</div>
 
 								<div class="form_row">
-									<label class="contact"><strong>Estoque:</strong></label> <input
-										type="text" id="prodestoque" class="contact_input"
-										name="estoque" value="<?php echo $produto->get('estoque') ?>" />
+									<label class="contact"><strong>PreÁo:</strong></label> <input
+										type="text" class="contact_input" name="preco"
+										value="${produto.preco}" />
 								</div>
+
+								<div class="form_row">
+									<label class="contact"><strong>DescriÁ„o:</strong></label> <input
+										type="text" class="contact_input" name="descricao"
+										value="${produto.descricao}" />
+								</div>
+
 
 								<div class="form_row">
 									<label class="contact"><strong>Imagem:</strong></label> <input
@@ -341,16 +323,10 @@
 
 
 								<div class="form_row">
-									<label class="contact"><strong>Descri√ß√£o:</strong></label>
-									<textarea class="contact_textarea" name="descricao"><?php echo $produto->get('descricao') ?></textarea>
-
-								</div>
-
-								<div class="form_row">
-									<input class="submit" type="submit" value="Novo" name="tipo" />
+									<input class="submit" type="submit" value="Novo" name="novo" />
 									<input class="submit" type="submit" value="Atualizar"
-										name="tipo" /> <input class="submit" type="submit"
-										value="Deletar" name="tipo" />
+										name="atualizar" /> <input class="submit" type="submit"
+										value="Deletar" name="deletar" />
 
 								</div>
 							</form>
@@ -459,7 +435,7 @@
 								<div class="form_row">
 									<label class="contact"><strong>Estado:</strong></label> <select
 										name="estado" class="contact_input">
-							
+
 									</select>
 								</div>
 
@@ -478,38 +454,43 @@
 					<div>
 						<div class="contact_form">
 
-							<form id="Categoria" method="post" action="Controladora?action=categoria" name="Categoria" >
-							<div class="form_row">
-							
-							<select id="categoriaSelect" name = "id" onChange="updateCat()">
-							
-						   <%@  page import="java.util.List"%> 
-							<%	
-							CategoriaDAO c = new CategoriaDAO();
-							List<CategoriaBean> lista = c.carregarTodos();
-							for(CategoriaBean categoria : lista){								
-								out.println("<option value=\"" + categoria.getId() +"\">" + categoria.getNome() + "</option>");								
-							}							
-							%>
-							</select>
-							<script>
-								function updateCat(){
-										item = document.getElementById("categoriaSelect");
-										categoria = item.options[item.selectedIndex].innerHTML;
-										document.getElementById("categoriaNome").value = categoria;
-									}
-							</script>
+							<form id="Categoria" method="post"
+								action="Controladora?action=categoria" name="Categoria">
+								<div class="form_row">
+
+									<select id="categoriaSelect" name="id" onChange="updateCat()">
+
+										<%@  page import="java.util.List"%>
+										<%
+											CategoriaDAO c = new CategoriaDAO();
+															List<CategoriaBean> lista = c.carregarTodos();
+															for(CategoriaBean categoria : lista){								
+																out.println("<option value=\"" + categoria.getId() +"\">" + categoria.getNome() + "</option>");								
+															}
+										%>
+									</select>
+									<script>
+										function updateCat() {
+											item = document
+													.getElementById("categoriaSelect");
+											categoria = item.options[item.selectedIndex].innerHTML;
+											document
+													.getElementById("categoriaNome").value = categoria;
+										}
+									</script>
 								</div>
 
 								<div class="form_row">
-									<label class="contact"><strong>Nome:</strong></label>
-									<input type="text" id="categoriaNome" name="nome" class="contact_input" value="" />
+									<label class="contact"><strong>Nome:</strong></label> <input
+										type="text" id="categoriaNome" name="nome"
+										class="contact_input" value="" />
 								</div>
-								
+
 								<div class="form_row">
-									<input class="submit" type="submit" value="Atualizar" name="atualizar" />
-									<input class="submit" type="submit" value="Novo" name="novo" />
-									<input class="submit" type="submit" value="Deletar" name="deletar" />
+									<input class="submit" type="submit" value="Atualizar"
+										name="atualizar" /> <input class="submit" type="submit"
+										value="Novo" name="novo" /> <input class="submit"
+										type="submit" value="Deletar" name="deletar" />
 								</div>
 
 							</form>

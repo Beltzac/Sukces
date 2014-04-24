@@ -1,24 +1,40 @@
 package servlet;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
-import dao.CategoriaDAO;
-import dao.UsuarioDAO;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+
+import util.FormUtil;
 import bean.CategoriaBean;
 import bean.LoginBean;
+import bean.ProdutoBean;
 import bean.UsuarioBean;
+import dao.CategoriaDAO;
+import dao.ProdutoDAO;
+import dao.UsuarioDAO;
 
 /**
  * Servlet implementation class Controladora
  */
 @WebServlet("/Controladora")
+@MultipartConfig
 public class Controladora extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -40,13 +56,17 @@ public class Controladora extends HttpServlet {
 		LoginBean loginBean;
 		
 		UsuarioDAO usuarioDAO = null;
+		
+		String path = getServletContext().getRealPath("/");
+		
+		//carrega categorias, etc
+		carregarObjetosComuns(request, response);
+		
 
 		switch (action) {
 		case "login":
 
-			loginBean = new LoginBean();
-			loginBean.setEmail(request.getParameter("email"));
-			loginBean.setSenha(request.getParameter("senha"));
+			loginBean = FormUtil.populate(LoginBean.class,request);	
 
 			if (loginBean.autenticar()) {
 				System.out.println("Usuario logando:" + loginBean.getEmail());
@@ -73,35 +93,33 @@ public class Controladora extends HttpServlet {
 			
 		case"categoria":
 			
-			CategoriaDAO dao = null;
+			CategoriaDAO categoriaDao = null;
 			try {
-				dao = new CategoriaDAO();
+				categoriaDao = new CategoriaDAO();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			CategoriaBean categoria = new CategoriaBean();
 			
-			categoria.setNome(request.getParameter("nome"));		
-			
+			CategoriaBean categoria = FormUtil.populate(CategoriaBean.class,request);					
 			
 			if (request.getParameter("atualizar") != null)
 				try {
-					dao.gravar(categoria, true);
+					categoriaDao.gravar(categoria, true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			else if (request.getParameter("novo") != null)
 				try {
-					dao.gravar(categoria, false);
+					categoriaDao.gravar(categoria, false);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			else if (request.getParameter("deletar") != null)
 				try {
-					dao.deletar(categoria.getId());
+					categoriaDao.deletar(categoria.getId());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -120,21 +138,7 @@ public class Controladora extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			UsuarioBean usuario = new UsuarioBean();
-			
-			usuario.setNome(request.getParameter("nome"));
-			usuario.setEmail(request.getParameter("email"));			
-			usuario.setCpf(request.getParameter("cpf"));
-			usuario.setCnpj(request.getParameter("cnpj"));
-			usuario.setCep(request.getParameter("cep"));
-			usuario.setCidade(request.getParameter("cidade"));
-			usuario.setEstado(request.getParameter("estado"));
-			usuario.setRua(request.getParameter("rua"));
-			usuario.setNumero(request.getParameter("numero"));
-			usuario.setTelefone1(request.getParameter("telefone1"));
-			usuario.setTelefone2(request.getParameter("telefone2"));
-			
-			usuario.setSenha(request.getParameter("senha"));			
+			UsuarioBean usuario = FormUtil.populate(UsuarioBean.class,request);	
 			
 			try {
 				usuarioDAO.gravar(usuario,false);
@@ -155,23 +159,10 @@ public class Controladora extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			UsuarioBean usuarioNovo = new UsuarioBean();
+			UsuarioBean usuarioNovo = FormUtil.populate(UsuarioBean.class,request);
 			
-			loginBean = (LoginBean) session.getAttribute("loginBean");	
-			
-			usuarioNovo.setId(Integer.valueOf(request.getParameter("id")));
-			usuarioNovo.setNome(request.getParameter("nome"));
-			usuarioNovo.setEmail(request.getParameter("email"));			
-			usuarioNovo.setCpf(request.getParameter("cpf"));
-			usuarioNovo.setCnpj(request.getParameter("cnpj"));
-			usuarioNovo.setCep(request.getParameter("cep"));
-			usuarioNovo.setCidade(request.getParameter("cidade"));
-			usuarioNovo.setEstado(request.getParameter("estado"));
-			usuarioNovo.setRua(request.getParameter("rua"));
-			usuarioNovo.setNumero(request.getParameter("numero"));
-			usuarioNovo.setTelefone1(request.getParameter("telefone1"));
-			usuarioNovo.setTelefone2(request.getParameter("telefone2"));
-			
+			loginBean = (LoginBean) session.getAttribute("loginBean");				
+
 
 			// Para não mandar o booleano de administrador pelo form
 			usuarioNovo.setAdministrador(loginBean.getUsuario().isAdministrador());
@@ -186,11 +177,173 @@ public class Controladora extends HttpServlet {
 			response.sendRedirect(request.getHeader("Referer"));
 			
 			break;
+			
+			
+			
+		case"produto":
+			
+			ProdutoDAO produtoDao = null;
+			try {
+				produtoDao = new ProdutoDAO();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ProdutoBean produto = FormUtil.populate(ProdutoBean.class,request);
+			Part filePart = null;
+			
+			if (request.getParameter("atualizar") != null){				
+	
+				try {
+					filePart = request.getPart("imagem"); // Retrieves <input type="file" name="file">
+				    String filename = getFilename(filePart);
+				    produto.setExtencao(FilenameUtils.getExtension(filename));
+				    
+				    
+					produtoDao.gravar(produto, true);
+					
+					
+				    
+				    InputStream filecontent = filePart.getInputStream();	    					
+				    OutputStream os = new FileOutputStream(path + produto.getImagemURL());		
+				    
+				    IOUtils.copy(filecontent, os);
+
+				    filecontent.close();
+					os.close();		
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}else if (request.getParameter("novo") != null){
+				try {
+					
+					filePart = request.getPart("imagem"); // Retrieves <input type="file" name="file">
+				    String filename = getFilename(filePart);
+				    produto.setExtencao(FilenameUtils.getExtension(filename));
+					
+					produtoDao.gravar(produto, false);	
+					
+				    
+				    InputStream filecontent = filePart.getInputStream();	    					
+				    OutputStream os = new FileOutputStream(path + produto.getImagemURL());		
+				    
+				    IOUtils.copy(filecontent, os);
+
+				    filecontent.close();
+					os.close();		
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}}
+			else if (request.getParameter("deletar") != null){
+				try {
+					produtoDao.deletar(produto.getId());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}}
+			
+			//atualiza imagem
+			if(request.getParameter("atualizar") != null || request.getParameter("novo") != null){	
+				
+			}else if(request.getParameter("deletar") != null){
+				Files.deleteIfExists(Paths.get(produto.getImagemURL()));
+			}
+
+			response.sendRedirect(request.getHeader("Referer"));
+			
+			break;
+			
+			
+			
+			
+		case "index":
+			
+			ProdutoDAO produtoDAO = null;
+			try {
+				produtoDAO = new ProdutoDAO();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			List<ProdutoBean> listaDestaque = null;
+			try {
+				listaDestaque = produtoDAO.carregarTodos();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			request.setAttribute("listaDestaque", listaDestaque);
+			
+			forward(request, response, "../index.jsp");			
+			
+			break;
+			
+		case "conta":
+			
+			forward(request, response, "../conta.jsp");	
+			break;
+			
+		case "carrinho":
+			
+			
+			forward(request, response, "../carrinho.jsp");	
+			break;
+			
+		case "quemsomos":
+			
+			forward(request, response, "../quemsomos.jsp");	
+			break;
+			
+		case "contato":
+			
+			forward(request, response, "../contato.jsp");	
+			break;
+			
+		case "admin":
+			
+			
+			forward(request, response, "../admin.jsp");	
+			break;
+			
+		case "novaconta":
+			
+			forward(request, response, "../novaconta.jsp");			
+			break;
 
 		default:
 			response.sendRedirect("../erro.jsp");
 			break;
 		}
+		
+	}
+
+	private void carregarObjetosComuns(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		CategoriaDAO categoriaDAO = null;
+		try {
+			categoriaDAO = new CategoriaDAO();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		List<CategoriaBean> listaCategorias = null;
+		try {
+			listaCategorias = categoriaDAO.carregarTodos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("listaCategorias", listaCategorias);
 		
 	}
 
@@ -211,5 +364,28 @@ public class Controladora extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {		
 		processRequest(request, response); 
+	}
+	
+	private static String getFilename(Part part) {
+	    for (String cd : part.getHeader("content-disposition").split(";")) {
+	        if (cd.trim().startsWith("filename")) {
+	            String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+	            return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.
+	        }
+	    }
+	    return null;
+	}
+	
+	private void forward(HttpServletRequest request, HttpServletResponse response,String path){
+		RequestDispatcher rd = request.getRequestDispatcher(path);
+		  try {
+			rd.forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
