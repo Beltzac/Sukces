@@ -1,6 +1,9 @@
-<%@page import="javax.faces.context.ResponseWriter"%>
-<%@page import="dao.CategoriaDAO"%>
-<%@page import="bean.CategoriaBean"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${!loginBean.autenticado || !loginBean.usuario.administrador}">
+	<c:redirect url="Controladora?action=index"/>
+</c:if>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -253,10 +256,6 @@
 	<div id="main_container">
 
 		<%@ include file="header.jsp"%>
-		<%
-			if (!loginBean.isAutenticado() || !loginBean.getUsuario().isAdministrador())
-				response.sendRedirect("index.jsp");
-		%>
 
 		<div id="main_content">
 
@@ -281,17 +280,13 @@
 
 
 								<div class="form_row">
-									<label class="contact"><strong>Categoria:</strong></label> <select
-										id="categoriaSelect" name="categoria">
-
-										<%@  page import="java.util.List"%>
-										<%
-											CategoriaDAO c2 = new CategoriaDAO();
-															List<CategoriaBean> lista2 = c2.carregarTodos();
-															for(CategoriaBean categoria : lista2){								
-																out.println("<option value=\"" + categoria.getId() +"\">" + categoria.getNome() + "</option>");								
-															}
-										%>
+									<label class="contact"><strong>Categoria:</strong></label>											
+									
+									
+									 <select id="categoriaSelect" name="categoria">
+										 <c:forEach items="${listaCategorias}" var="item"  varStatus="cont">      
+        	                            	<option value="${item.id}">${item.nome}</option>  
+        							 	</c:forEach>
 									</select>
 
 								</div>
@@ -453,15 +448,9 @@
 								<div class="form_row">
 
 									<select id="categoriaSelect" name="id" onChange="updateCat()">
-
-										<%@  page import="java.util.List"%>
-										<%
-											CategoriaDAO c = new CategoriaDAO();
-															List<CategoriaBean> lista = c.carregarTodos();
-															for(CategoriaBean categoria : lista){								
-																out.println("<option value=\"" + categoria.getId() +"\">" + categoria.getNome() + "</option>");								
-															}
-										%>
+										<c:forEach items="${listaCategorias}" var="item"  varStatus="cont">      
+	        	                            <option value="${item.id}">${item.nome}</option>  
+    	    							 </c:forEach>
 									</select>
 									<script>
 										function updateCat() {
@@ -505,7 +494,7 @@
 									</div>
 								</div>
 								<div class='form_row'>
-									<label class='contact'><strong>At&eacute: </strong></label>
+									<label class='contact'><strong>Até: </strong></label>
 									<div type="hidden" id="thedate1">
 										<input type="text" class="contact_input" id="thedate"
 											name="thedate" />

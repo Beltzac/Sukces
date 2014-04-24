@@ -1,10 +1,8 @@
-<?php
-include 'session_start.php';
-if (!$_SESSION['logado']) {
-    header('Location: index.php');
-    exit();
-}
-?>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${!loginBean.autenticado}">
+	<c:redirect url="Controladora?action=index"/>
+</c:if>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
