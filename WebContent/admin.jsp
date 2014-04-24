@@ -337,115 +337,109 @@
 
 					<div>
 						<div class="contact_form">
-
-							<form action="pesquisaPessoa.php" method="get">
-								<input type="text" name="pesquisa" class="newsletter_input"
-									value="" /> <input class="submit" type="submit"
-									value="Pesquisar" name="tipo" />
-							</form>
-
-							<form id="cliente" method="post" action="dao/pessoaAction.php">
-
-								<input type="hidden" name="id"
-									value="<?php echo $pessoa->get('id') ?>">
+							<form id="cliente" method="post" action="Controladora?action=novoUsuario">
+								
 
 								<div class="form_row">
 									<label class="contact"><strong>Nome completo:</strong></label>
-									<input type="text" name="nome" class="contact_input"
-										value="" />
+									<input type="text" class="contact_input" name="nome" />
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Email:</strong></label> <input
-										type="text" name="email" class="contact_input"
-										value="" />
+										type="text" class="contact_input" name="email" />
 								</div>
 
 								<div class="form_row">
-									<label class="contact"><strong>Telefone:</strong></label> <input
-										type="text" name="telefone" id="clitelefone"
-										class="contact_input"
-										value="" />
+									<label class="contact"><strong>Senha:</strong></label> <input
+										type="password" class="contact_input" name="senha" />
 								</div>
 
+
 								<div class="form_row">
-									<label class="contact"><strong>RG:</strong></label> <input
-										type="text" name="rg" id="clirg" class="contact_input"
-										value="" />
+									<label class="contact"><strong>Telefone 1:</strong></label> <input
+										type="text" id="telefone1" class="contact_input"
+										name="telefone1" />
 								</div>
+								
+								<div class="form_row">
+									<label class="contact"><strong>Telefone 2:</strong></label> <input
+										type="text" id="telefone2" class="contact_input"
+										name="telefone2" />
+								</div>
+							
 
 								<div class="form_row">
 									<label class="contact"><strong>CPF:</strong></label> <input
-										type="text" name="cpf" id="clicpf" class="contact_input"
-										value="" />
+										type="text" id="cpf" class="contact_input"
+										name="cpf" />
 								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Data de
-											nascimento:</strong></label> <input type="text" name="nascimento"
-										class="contact_input" id="datepicker"
-										value="" />
+								
+							    <div class="form_row">
+									<label class="contact"><strong>CNPJ:</strong></label> <input
+										type="text" id="cnpj" class="contact_input"
+										name="cnpj" />
 								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Nivel de
-											Acesso:</strong></label> <input type="text" name="nivel_d_aces"
-										class="contact_input"
-										value="<?php echo $pessoa->get('nivel_d_aces') ?>" />
-								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Nova senha:</strong></label> <input
-										type="text" class="contact_input" name="senha" />
-								</div>
-
-								<input type="hidden" name="cod_end"
-									value="<?php echo $endereco->get('cod_end') ?>">
-
-								<div class="form_row">
-									<label class="contact"><strong>Rua:</strong></label> <input
-										type="text" name="rua" class="contact_input"
-										value="<?php echo $endereco->get('rua') ?>" />
-								</div>
-
+								
 								<div class="form_row">
 									<label class="contact"><strong>CEP:</strong></label> <input
-										type="text" name="cep" id="endcep" class="contact_input"
-										value="<?php echo $endereco->get('cep') ?>" />
-								</div>
+										type="text" id="cep" class="contact_input"
+										name="cep" />
+								</div>	
+														
+           							<div class="form_row">
+                                        <label class="contact"><strong>Cidade:</strong></label>
+                                        <input type="text" name="cidade" class="contact_input" value=""/>
+                                    </div>
+                                    
 
+                                    <div class="form_row">
+                                        <label class="contact"><strong>Estado:</strong></label>                                       
+                                        <select name="estado" >								
+										<option value="pr">Paraná</option>
+										<option value="ac">Acre</option>
+										<option value="al">Alagoas</option>
+										<option value="ap">Amapá</option>
+										<option value="am">Amazonas</option>
+										<option value="ba">Bahia</option>
+										<option value="ce">Ceará</option>
+										<option value="df">Distrito Federal</option>
+										<option value="es">Espirito Santo</option>
+										<option value="go">Goiás</option>
+										<option value="ma">Maranhão</option>
+										<option value="ms">Mato Grosso do Sul</option>
+										<option value="mt">Mato Grosso</option>
+										<option value="mg">Minas Gerais</option>
+										<option value="pa">Pará</option>
+										<option value="pb">Paraíba</option>								
+										<option value="pe">Pernambuco</option>
+										<option value="pi">Piauí</option>
+										<option value="rj">Rio de Janeiro</option>
+										<option value="rn">Rio Grande do Norte</option>
+										<option value="rs">Rio Grande do Sul</option>
+										<option value="ro">Rondônia</option>
+										<option value="rr">Roraima</option>
+										<option value="sc">Santa Catarina</option>
+										<option value="sp">São Paulo</option>
+										<option value="se">Sergipe</option>
+										<option value="to">Tocantins</option>
+									</select>
+                                    </div>
+								<div class="form_row">
+									<label class="contact"><strong>rua:</strong></label> <input
+										type="text" class="contact_input" name="rua" />
+								</div>	
+								
 								<div class="form_row">
 									<label class="contact"><strong>Número:</strong></label> <input
-										type="text" name="num" class="contact_input"
-										value="<?php echo $endereco->get('num') ?>" />
-								</div>
+										type="text" class="contact_input" name="numero" />
+								</div>															
 
 								<div class="form_row">
-									<label class="contact"><strong>Complemento:</strong></label> <input
-										type="text" name="complemento" class="contact_input"
-										value="<?php echo $endereco->get('complemento') ?>" />
-								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Cidade:</strong></label> <input
-										type="text" name="cidade" class="contact_input"
-										value="<?php echo $endereco->get('cidade') ?>" />
-								</div>
-
-								<div class="form_row">
-									<label class="contact"><strong>Estado:</strong></label> <select
-										name="estado" class="contact_input">
-
-									</select>
-								</div>
-
-								<div class="form_row">
-									<input class="submit" type="submit" value="Atualizar"
-										name="acao" /> <input class="submit" type="submit"
-										value="Deletar" name="acao" />
+									<input class="submit" type="submit" value="Criar" />
 								</div>
 							</form>
-
+							
 						</div>
 					</div>
 

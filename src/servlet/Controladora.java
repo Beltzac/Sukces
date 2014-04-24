@@ -282,44 +282,44 @@ public class Controladora extends HttpServlet {
 			
 			request.setAttribute("listaDestaque", listaDestaque);
 			
-			forward(request, response, "../index.jsp");			
+			forward(request, response, "/index.jsp");			
 			
 			break;
 			
 		case "conta":
 			
-			forward(request, response, "../conta.jsp");	
+			forward(request, response, "/conta.jsp");	
 			break;
 			
 		case "carrinho":
 			
 			
-			forward(request, response, "../carrinho.jsp");	
+			forward(request, response, "/carrinho.jsp");	
 			break;
 			
 		case "quemsomos":
 			
-			forward(request, response, "../quemsomos.jsp");	
+			forward(request, response, "/quemsomos.jsp");	
 			break;
 			
 		case "contato":
 			
-			forward(request, response, "../contato.jsp");	
+			forward(request, response, "/contato.jsp");	
 			break;
 			
 		case "admin":
 			
 			
-			forward(request, response, "../admin.jsp");	
+			forward(request, response, "/admin.jsp");	
 			break;
 			
 		case "novaconta":
 			
-			forward(request, response, "../novaconta.jsp");			
+			forward(request, response, "/novaconta.jsp");			
 			break;
 
 		default:
-			response.sendRedirect("../erro.jsp");
+			forward(request, response, "/erro.jsp");			
 			break;
 		}
 		
