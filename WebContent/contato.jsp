@@ -94,31 +94,31 @@ $(document).ready(function(){
 						<div class="center_prod_box_big">
 
 							<div class="contact_form">
-								<form id="contato" method="post" action="contato.php">
+								<form id="contato" method="post" action="Controladora?action=enviarEmail">
 									
 									
 																	<div class="form_row">
 										<label class="contact"><strong>Nome:</strong></label>
-										<input type="text" class="contact_input" name="campoNome" />
+										<input type="text" class="contact_input" name="nome" />
 									</div>
 
 									<div class="form_row">
 										<label class="contact"><strong>Email:</strong></label>
-										<input type="text" class="contact_input" name="campoEmail" />
+										<input type="text" class="contact_input" name="email" />
 									</div>
 
 									<div class="form_row">
 										<label class="contact"><strong>Telefone:</strong></label>
-										<input type="text" id="telefone" class="contact_input" name="campoTelefone"/>
+										<input type="text" id="telefone" class="contact_input" name="telefone"/>
 									</div>
 
 									<div class="form_row">
 										<label class="contact"><strong>Mensagem</strong></label>
-										<textarea name="campoMsg" class="contact_input"></textarea>
+										<textarea name="mensagem" class="contact_input"></textarea>
 									</div>
 
 									<div class="form_row">
-										<input class="submit" type="submit" value="Criar" />
+										<input class="submit" type="submit" value="Enviar" />
 
 									</div>
 
