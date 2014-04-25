@@ -119,7 +119,7 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 	
 public void atualizarSemImagem(ProdutoBean obj) throws Exception {		
 		
-		stmtAtualizar = con.prepareStatement("UPDATE produto SET nome = ?, categoria = ?, preco = ?, descricao = ?, extencao = ? WHERE id = ?");
+		stmtAtualizar = con.prepareStatement("UPDATE produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?");
 				
 
 			System.out.println("Atualizando produto: " + obj.toString());
@@ -127,8 +127,8 @@ public void atualizarSemImagem(ProdutoBean obj) throws Exception {
 			stmtAtualizar.setString(1, obj.getNome());
 			stmtAtualizar.setInt(2, obj.getCategoria());
 			stmtAtualizar.setDouble(3, obj.getPreco());
-			stmtAtualizar.setString(5, obj.getDescricao());					
-			stmtAtualizar.setInt(6, obj.getId());
+			stmtAtualizar.setString(4, obj.getDescricao());					
+			stmtAtualizar.setInt(5, obj.getId());
 			
 			stmtAtualizar.executeUpdate();					
 			

@@ -227,12 +227,12 @@ public class Controladora extends HttpServlet {
 					filePart = request.getPart("imagem"); 
 				   
 				    
-				    if(filePart != null){
+				    if(filePart != null && filePart.getSize() != 0){
 					    String filename = getFilename(filePart);
 					    produto.setExtencao(FilenameUtils.getExtension(filename));
 					    
 					    
-						produtoDao.gravar(produto, true);					
+					    produtoDao.gravar(produto, true);					
 						
 					    
 					    InputStream filecontent = filePart.getInputStream();	    					
@@ -243,7 +243,7 @@ public class Controladora extends HttpServlet {
 					    filecontent.close();
 						os.close();		
 				    }else{
-				    	produtoDAO.atualizarSemImagem(produto);
+				    	produtoDao.atualizarSemImagem(produto);
 				    }
 					
 				} catch (Exception e) {					
