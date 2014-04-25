@@ -308,9 +308,8 @@
 								</div>
 
 								<div class="form_row">
-									<label class="contact"><strong>Descrição:</strong></label> <input
-										type="text" class="contact_input" name="descricao"
-										value="${produto.descricao}" />
+									<label class="contact"><strong>Descrição:</strong></label>
+									<textarea class="contact_input" name="descricao" value="${produto.descricao}"></textarea>
 								</div>
 
 

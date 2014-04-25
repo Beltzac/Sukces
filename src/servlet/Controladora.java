@@ -318,6 +318,11 @@ public class Controladora extends HttpServlet {
 			forward(request, response, "/conta.jsp");	
 			break;
 			
+		case "enviarEmail":
+			
+			forward(request, response, "/conta.jsp");	
+			break;
+			
 		case "carrinho":
 			
 			
