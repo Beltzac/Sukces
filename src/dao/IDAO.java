@@ -8,7 +8,7 @@ public interface IDAO<T> {
 
 	List<T> carregarTodos() throws Exception;
 
-	List<T> pesquisar(String texto, String[] campos) throws Exception;
+	List<T> pesquisar(String texto, List<String> campos) throws Exception;
 
 	void gravar(T obj, boolean update) throws Exception;
 

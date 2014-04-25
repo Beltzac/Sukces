@@ -21,21 +21,11 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 
 	public CategoriaDAO() throws Exception {
 		con = ConnectionFactory.getConnection();
-
-		stmtGravar = con
-				.prepareStatement("INSERT INTO categoria (nome) VALUES (?)");
-		
-		stmtAtualizar = con
-				.prepareStatement("UPDATE categoria SET nome = ? WHERE id = ?");		
-		
-		stmtCarregar = con.prepareStatement("SELECT * FROM categoria WHERE id = ?");		
-		stmtCarregarTodos = con.prepareStatement("SELECT * FROM categoria");
-		stmtDeletar = con.prepareStatement("DELETE FROM categoria WHERE id = ?");
-
 	}
 
 	@Override
 	public CategoriaBean carregar(int id) throws Exception {
+		stmtCarregar = con.prepareStatement("SELECT * FROM categoria WHERE id = ?");		
 		stmtCarregar.setInt(1, id);
 		ResultSet rs = stmtCarregar.executeQuery();
 		CategoriaBean o = null;
@@ -44,7 +34,6 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 			BeanProcessor bp = new BeanProcessor();
 			o = bp.toBean(rs, CategoriaBean.class);
 		}
-
 		rs.close();
 		return o;
 	}
@@ -52,6 +41,7 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 
 	@Override
 	public List<CategoriaBean> carregarTodos() throws Exception {
+		stmtCarregarTodos = con.prepareStatement("SELECT * FROM categoria");
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
 		List<CategoriaBean> l = bp.toBeanList(rs, CategoriaBean.class);
@@ -62,34 +52,32 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 	@Override
 	public void gravar(CategoriaBean obj, boolean update) throws Exception {
 		
+		
 		System.out.println("Gravando categoria: " + obj.toString());
 		
 		if (!update){
-			
-			
-			stmtGravar.setString(1, obj.getNome());		
-			
+			stmtGravar = con.prepareStatement("INSERT INTO categoria (nome) VALUES (?)");			
+			stmtGravar.setString(1, obj.getNome());					
 			stmtGravar.executeUpdate();
 			
 		} else {			
-			
+			stmtAtualizar = con.prepareStatement("UPDATE categoria SET nome = ? WHERE id = ?");	
 			stmtAtualizar.setString(1, obj.getNome());
-			stmtAtualizar.setInt(2, obj.getId());
-			
-			stmtAtualizar.executeUpdate();					
-			
+			stmtAtualizar.setInt(2, obj.getId());			
+			stmtAtualizar.executeUpdate();	
 		}
 
 	}
 
 	@Override
 	public int deletar(int id) throws Exception {
+		stmtDeletar = con.prepareStatement("DELETE FROM categoria WHERE id = ?");
 		stmtDeletar.setInt(1, id);
 		return stmtDeletar.executeUpdate();
 	}
 
 	@Override
-	public List<CategoriaBean> pesquisar(String texto, String[] campos)
+	public List<CategoriaBean> pesquisar(String texto, List<String> campos)
 			throws Exception {
 		// TODO Auto-generated method stub
 		return null;

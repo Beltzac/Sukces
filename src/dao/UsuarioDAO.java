@@ -23,24 +23,11 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	public UsuarioDAO() throws Exception {
 		con = ConnectionFactory.getConnection();
-
-		stmtGravar = con
-				.prepareStatement("INSERT INTO usuario (nome, email, senha, cpf, cnpj, cep, rua,cidade,estado, numero, telefone1, telefone2, administrador, data_criacao) VALUES (?,?,MD5(?),?,?,?,?,?,?,?,?,?,?,CURRENT_DATE())");
-		
-		stmtAtualizar = con
-				.prepareStatement("UPDATE usuario SET nome = ?, email = ?, cpf = ?, cnpj = ?, cep = ?, rua = ?,cidade = ?,estado = ?, numero = ?, telefone1 = ?, telefone2 = ?, administrador = ? WHERE id = ?");
-		
-		
-		
-		stmtCarregar = con.prepareStatement("SELECT * FROM usuario WHERE id = ?");
-		stmtLogin = con.prepareStatement("SELECT * FROM usuario WHERE email = ? AND senha = MD5(?)");
-		stmtCarregarTodos = con.prepareStatement("SELECT * FROM usuario");
-		stmtDeletar = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
-
 	}
 
 	@Override
 	public UsuarioBean carregar(int id) throws Exception {
+		stmtCarregar = con.prepareStatement("SELECT * FROM usuario WHERE id = ?");
 		stmtCarregar.setInt(1, id);
 		ResultSet rs = stmtCarregar.executeQuery();
 		UsuarioBean o = null;
@@ -54,7 +41,8 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 		return o;
 	}
 	
-	public UsuarioBean carregar(String email, String senha) throws Exception{
+	public UsuarioBean carregar(String email, String senha) throws Exception{		
+		stmtLogin = con.prepareStatement("SELECT * FROM usuario WHERE email = ? AND senha = MD5(?)");
 		stmtLogin.setString(1, email);
 		stmtLogin.setString(2, senha);
 		ResultSet rs = stmtLogin.executeQuery();
@@ -72,6 +60,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	@Override
 	public List<UsuarioBean> carregarTodos() throws Exception {
+		stmtCarregarTodos = con.prepareStatement("SELECT * FROM usuario");
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
 		List<UsuarioBean> l = bp.toBeanList(rs, UsuarioBean.class);
@@ -80,7 +69,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 	}
 
 	@Override
-	public List<UsuarioBean> pesquisar(String texto, String[] campos)
+	public List<UsuarioBean> pesquisar(String texto, List<String> campos)
 			throws Exception {
 
 		String sql;
@@ -88,12 +77,11 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 		sql = "SELECT * FROM usuario WHERE ";
 
 		for (String campo : campos) {
-			sql += campo + " LIKE %" + texto + "%" + " AND ";
+			sql += campo + " LIKE '%" + texto + "%'" + " OR ";
 		}
 
 		// Remove último AND
-		sql = sql.substring(0, sql.length() - 4);
-
+		sql = sql.substring(0, sql.length() - 4);		
 		stmtPesquisar = con.prepareStatement(sql);
 		ResultSet rs = stmtPesquisar.executeQuery();
 
@@ -108,7 +96,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 		
 		if (!update){
 			System.out.println("Criando conta: " + obj.getEmail());
-			
+			stmtGravar = con.prepareStatement("INSERT INTO usuario (nome, email, senha, cpf, cnpj, cep, rua,cidade,estado, numero, telefone1, telefone2, administrador, data_criacao) VALUES (?,?,MD5(?),?,?,?,?,?,?,?,?,?,?,CURRENT_DATE())");
 			stmtGravar.setString(1, obj.getNome());
 			stmtGravar.setString(2, obj.getEmail());
 			stmtGravar.setString(3, obj.getSenha());
@@ -127,7 +115,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 			
 		} else {
 			System.out.println("Atualizando conta: " + obj.getEmail());
-			
+			stmtAtualizar = con.prepareStatement("UPDATE usuario SET nome = ?, email = ?, cpf = ?, cnpj = ?, cep = ?, rua = ?,cidade = ?,estado = ?, numero = ?, telefone1 = ?, telefone2 = ?, administrador = ? WHERE id = ?");
 			stmtAtualizar.setString(1, obj.getNome());
 			stmtAtualizar.setString(2, obj.getEmail());			
 			stmtAtualizar.setString(3, obj.getCpf());
@@ -150,6 +138,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	@Override
 	public int deletar(int id) throws Exception {
+		stmtDeletar = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
 		stmtDeletar.setInt(1, id);
 		return stmtDeletar.executeUpdate();
 	}

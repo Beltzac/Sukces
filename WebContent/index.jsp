@@ -58,9 +58,9 @@
 
 						<div class="prod_details_tab">
 							<a
-								href="Controladora?action=detalhesProduto&id=${destaque.id}"
+								href=""
 								class="prod_buy">+ Carrinho</a> <a
-								href="details.php?cod=<?php echo $codigo ?>"
+								href="Controladora?action=detalhesProduto&id=${destaque.id}"
 								class="prod_details">Detalhes</a>
 
 							<c:if

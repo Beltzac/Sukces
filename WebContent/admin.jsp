@@ -132,7 +132,7 @@
 													minlength : "O nome deve ter pelo menos 3 caracteres"
 												},
 												descricao : {
-													required : "Digite o sua mensagem",
+													required : "Digite a descrição",
 													minlength : "Sua mensagem deve conter, no m&iacutenimo, 10 caracteres"
 												}
 
@@ -255,6 +255,12 @@
 	<div id="main_container">
 
 		<%@ include file="header.jsp"%>
+		
+		  <script> 
+				            $(function() {           
+				            $('#estado').val( "${usuario.estado}" );
+				            });
+       	</script>
 
 		<div id="main_content">
 
@@ -309,7 +315,7 @@
 
 								<div class="form_row">
 									<label class="contact"><strong>Descrição:</strong></label>
-									<textarea class="contact_input" name="descricao" value="${produto.descricao}"></textarea>
+									<textarea class="contact_input" name="descricao" >${produto.descricao}</textarea>
 								</div>
 
 
@@ -331,10 +337,25 @@
 						</div>
 					</div>
 					<h3>Clientes</h3>
+					
+					   
 
 					<div>
 						<div class="contact_form">
-							<form id="cliente" method="post" action="Controladora?action=atualizarUsuario">
+						<form id="cliente" method="post" action="Controladora?action=usuarios">
+								<div class="form_row">
+									<label class="contact"><strong>Pesquisar:</strong></label>
+									<input type="text" class="contact_input" name="pesquisa" value=""/>
+								</div>
+								<div class="form_row">
+									<input class="submit" type="submit" value="Ir"/>
+							    </div>
+						</form>
+						<hr>
+						
+						
+						
+							<form id="cliente" method="post" action="Controladora?action=atualizarUsuarioAdmin">
 								
 								<input type="hidden" value="${usuario.id}" name="id" />
 
@@ -389,12 +410,7 @@
                                         <label class="contact"><strong>Cidade:</strong></label>
                                         <input type="text" name="cidade" class="contact_input" value="${usuario.cidade}"/>
                                     </div>
-                                    
-                                     <script>       
-            							$(function() {           
-           									 $('#estado').val( "${usuario.estado}" );
-           								 });
-     								</script>
+                                                                        
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Estado:</strong></label>                                       
@@ -436,8 +452,8 @@
 								<div class="form_row">
 									<label class="contact"><strong>Número:</strong></label> <input
 										type="text" class="contact_input" name="numero" value="${usuario.numero}"/>
-								</div>															
-
+								</div>								
+								
 										<div class="form_row">								
 									<input class="submit" type="submit" value="Atualizar"
 										name="atualizar" /> <input class="submit" type="submit"

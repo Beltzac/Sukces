@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -42,8 +43,7 @@ public class Controladora extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public Controladora() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();		
 	}
 	
 	private void processRequest(HttpServletRequest request,
@@ -78,7 +78,7 @@ public class Controladora extends HttpServlet {
 				session.setAttribute("loginBean", loginBean);
 				response.sendRedirect(request.getHeader("Referer"));
 			} else {
-				forward(request, response, "/index.jsp");	
+				paginaErro(request, response, "Login e/ou senha incorretos", null);
 			}
 
 			break;
@@ -111,26 +111,26 @@ public class Controladora extends HttpServlet {
 			if (request.getParameter("atualizar") != null)
 				try {
 					categoriaDao.gravar(categoria, true);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao atualizar a categoria", e.getMessage());	
 				}
 			else if (request.getParameter("novo") != null)
 				try {
 					categoriaDao.gravar(categoria, false);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao cadastrar a categoria", e.getMessage());	
 				}
 			else if (request.getParameter("deletar") != null)
 				try {
 					categoriaDao.deletar(categoria.getId());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao deletar a categoria", e.getMessage());		
 				}
 
-			forward(request, response, "Controladora?action=admin&sub=categoria");	
+			response.sendRedirect("Controladora?action=admin&sub=categoria");	
 			
 			break;
 		case "novoUsuario":
@@ -148,11 +148,11 @@ public class Controladora extends HttpServlet {
 			try {
 				usuarioDAO.gravar(usuario,false);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				paginaErro(request, response, "Erro ao cadastrar sua conta", e1.getMessage());				
 			}	
 			
-			forward(request, response, "Controladora");			
+			response.sendRedirect("Controladora");			
 
 			break;
 		case "atualizarUsuario":
@@ -161,7 +161,7 @@ public class Controladora extends HttpServlet {
 			try {
 				usuarioDAO = new UsuarioDAO();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				// todo auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -176,14 +176,36 @@ public class Controladora extends HttpServlet {
 			try {
 				usuarioDAO.gravar(usuarioNovo,true);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao atualizar sua conta", e.getMessage());					
 			}	
 			loginBean.setUsuario(usuarioNovo);
-			forward(request, response, request.getHeader("Referer"));		
+			response.sendRedirect(request.getHeader("Referer"));		
 			
 			break;
 			
+		case "atualizarUsuarioAdmin":
+
+			usuarioDAO = null;
+			try {
+				usuarioDAO = new UsuarioDAO();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			UsuarioBean usuarioAdmin = FormUtil.populate(UsuarioBean.class,request);
+			
+			try {
+				usuarioDAO.gravar(usuarioAdmin,true);
+			} catch (Exception e) {				
+				e.printStackTrace();
+				paginaErro(request, response, "Erro ao atualizar a conta do usuario", e.getMessage());	
+			}	
+			
+			response.sendRedirect(request.getHeader("Referer"));		
+			
+			break;
 			
 			
 		case"produto":
@@ -207,8 +229,7 @@ public class Controladora extends HttpServlet {
 				    produto.setExtencao(FilenameUtils.getExtension(filename));
 				    
 				    
-					produtoDao.gravar(produto, true);
-					
+					produtoDao.gravar(produto, true);					
 					
 				    
 				    InputStream filecontent = filePart.getInputStream();	    					
@@ -219,9 +240,9 @@ public class Controladora extends HttpServlet {
 				    filecontent.close();
 					os.close();		
 					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao atualizar produto", e.getMessage());	
 				}
 				
 			}else if (request.getParameter("novo") != null){
@@ -243,16 +264,16 @@ public class Controladora extends HttpServlet {
 					os.close();		
 					
 					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao cadastrar produto", e.getMessage());	
 				}}
 			else if (request.getParameter("deletar") != null){
 				try {
 					produtoDao.deletar(produto.getId());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao deletar produto", e.getMessage());	
 				}}
 			
 			//atualiza imagem
@@ -274,13 +295,14 @@ public class Controladora extends HttpServlet {
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				
 			}
 			List<ProdutoBean> listaDestaque = null;
 			try {
 				listaDestaque = produtoDAO.carregarTodos();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {				
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao listar produtos", e.getMessage());	
 			}
 			
 			request.setAttribute("listaDestaque", listaDestaque);
@@ -303,9 +325,9 @@ public class Controladora extends HttpServlet {
 			 ProdutoBean p = null;
 			try {
 				p = produtoDAO.carregar(id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {				
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao carregar dados do produto", e.getMessage());	
 			}
 			 
 			request.setAttribute("produto", p);
@@ -355,9 +377,9 @@ public class Controladora extends HttpServlet {
 				
 				try {
 					produtoAlterar = produtoDAO.carregar(Integer.valueOf(request.getParameter("id")));				
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao carregar dados do produto", e.getMessage());	
 				}
 				
 				request.setAttribute("produto",produtoAlterar);
@@ -379,9 +401,9 @@ public class Controladora extends HttpServlet {
 				
 				try {
 					usuarioAlterar = usuarioDAO.carregar(Integer.valueOf(request.getParameter("id")));				
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
+					paginaErro(request, response, "Erro ao carregar dados do usuário", e.getMessage());	
 				}
 				
 				request.setAttribute("usuario",usuarioAlterar);
@@ -397,6 +419,42 @@ public class Controladora extends HttpServlet {
 			
 			forward(request, response, "/admin.jsp");	
 			
+			break;
+			
+		case "usuarios":
+			
+			try {
+				usuarioDAO = new UsuarioDAO();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			List<UsuarioBean> listaUsuarios = null;
+			
+			List<String> campos = new ArrayList<>();
+			campos.add("nome");
+			campos.add("email");
+			campos.add("cpf");
+			campos.add("cnpj");
+			
+			
+			try {	
+				String pesquisa = request.getParameter("pesquisa");
+				
+				if(pesquisa != null && pesquisa.length() > 0)				
+				listaUsuarios = usuarioDAO.pesquisar(pesquisa, campos);	
+				else
+				listaUsuarios = usuarioDAO.carregarTodos();		
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+				paginaErro(request, response, "Erro ao carregar lista de usuários", e.getMessage());	
+			}
+			
+			request.setAttribute("listaUsuarios",listaUsuarios);
+			
+			forward(request, response, "/usuarios.jsp");			
 			break;
 			
 		case "novaconta":
@@ -425,9 +483,9 @@ public class Controladora extends HttpServlet {
 		List<CategoriaBean> listaCategorias = null;
 		try {
 			listaCategorias = categoriaDAO.carregarTodos();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {			
 			e.printStackTrace();
+			paginaErro(request, response, "Erro ao carregar lista de categorias", e.getMessage());	
 		}
 		
 		request.setAttribute("listaCategorias", listaCategorias);
@@ -475,6 +533,7 @@ public class Controladora extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	private void paginaErro(HttpServletRequest request, HttpServletResponse response,String mensagem, String stacktrace){
 		request.setAttribute("mensagem", mensagem);

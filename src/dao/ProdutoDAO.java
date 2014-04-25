@@ -54,7 +54,7 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 	}
 
 	@Override
-	public List<ProdutoBean> pesquisar(String texto, String[] campos)
+	public List<ProdutoBean> pesquisar(String texto,  List<String> campos)
 			throws Exception {
 
 		String sql;
@@ -62,7 +62,7 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 		sql = "SELECT * FROM produto WHERE ";
 
 		for (String campo : campos) {
-			sql += campo + " LIKE %" + texto + "%" + " AND ";
+			sql += campo + " LIKE '%" + texto + "%'" + " OR ";
 		}
 
 		// Remove último AND

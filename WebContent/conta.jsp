@@ -128,17 +128,7 @@
                             <table border='1'>
                                 <tr><td>Código</td><td>Status</td><td>Pagamento</td><td>Forma de Envio</td><td>Valor</td><td>Visualizar</td></tr>
 <!-- 
-                                /*<?php
-                                $peddao = new PedidoDAO();
-                                $cardao = new carrinhoDAO();
-                                $form = $peddao->selectAllPessoa($_SESSION['id']);
-
-                                foreach ($form as $value) {
-                                    $valor = $cardao->total($value->get('cod_pedido'));
-                                    echo "<tr><td>" . $value->get('cod_pedido') . "</td><td>" . $value->get('situacao') . "</td><td>" . $value->get('forma_d_pag') . "</td><td>" . $value->get('forma_d_entreg') . "</td><td> R$ ".$valor[0]. "</td><td><a href='detalhePedido.php?cod=" . $value->get('cod_pedido') . "'>Link</a></td></tr>";
-                                }
-                                ?>*/
- -->
+            -->
                             </table>
 
                         </div>

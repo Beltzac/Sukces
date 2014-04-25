@@ -1,12 +1,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:if test="${!loginBean.autenticado}">
+<c:if test="${!loginBean.autenticado || !loginBean.usuario.administrador}">
 	<c:redirect url="Controladora?action=index"/>
 </c:if>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Carrinho</title>
+        <title>Usuários</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="text/javascript" src="js/boxOver.js"></script>
         <script src="js/jquery-2.0.2.min.js"></script>
@@ -28,32 +29,20 @@
                 <div class="center_content">
 
                     <div class="center_title_bar">
-                        Meu carrinho
+                       Usuários
                     </div>
+					
+					          <table border='1' style="font-size:8;">
+                                <tr><td>Id</td><td>Nome</td><td>Email</td><td>CPF</td><td>CNPJ</td><td>Telefone 1</td><td>Telefone 2</td><td></td></tr>
 
-                    <?php
-                    require_once 'DAO/carrinhoDAO.php';
+								 <c:forEach items="${listaUsuarios}" var="usuario">      
+								 <tr><td>${usuario.id}</td><td>${usuario.nome}</td><td>${usuario.email}</td><td>${usuario.cpf}</td><td>${usuario.cnpj}</td><td>${usuario.telefone1}</td><td>${usuario.telefone2}</td><td><a href="Controladora?action=admin&sub=usuario&id=${usuario.id}">Editar</a></td></tr>
+        	           			 </c:forEach>
+                             </table>
 
-                    //inicializa o carrinho se necessario            
-                    if (!$_SESSION['carrinho'] || !isset($_SESSION['carrinho'])) {
-                        header('Location: dao/carrinhoAction.php?tipo=iniciar');
-                    }
-
-                    $cardao = new carrinhoDAO();
-                    $produtos = $cardao->selectProdutosPedido($_SESSION['carrinho']);
-
-                    foreach ($produtos as $value) {
-                        carrinhoProduto($value[0], $value[1]);
-                    }
-
-                    $t = $cardao->total($_SESSION['carrinho']);
-                    echo 'Total:' . $t[0];
-                    ?>
-
-                    <div class="form_row">
-                        <a href="formapag.php" class="prod_buy">Finalizar</a>
-                    </div>
-                   </div><!-- center -->
+					
+     
+               </div><!-- center -->
             
                 
  <%@ include file="menuDireita.jsp"%>   
