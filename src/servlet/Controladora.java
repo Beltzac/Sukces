@@ -50,19 +50,24 @@ public class Controladora extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException{
 
 		String action = request.getParameter("action");
+		String sub = request.getParameter("sub");
 
 		HttpSession session = request.getSession();
 
 		LoginBean loginBean;
 		
 		UsuarioDAO usuarioDAO = null;
+		ProdutoDAO produtoDAO = null;
 		
 		String path = getServletContext().getRealPath("/");
-		
+
 		//carrega categorias, etc
 		carregarObjetosComuns(request, response);
 		
-
+		
+		if (action == null){
+			forward(request, response, "/index.jsp");		
+		}else
 		switch (action) {
 		case "login":
 
@@ -206,7 +211,7 @@ public class Controladora extends HttpServlet {
 					
 				    
 				    InputStream filecontent = filePart.getInputStream();	    					
-				    OutputStream os = new FileOutputStream(path + produto.getImagemURL());		
+				    OutputStream os = new FileOutputStream(path+"/"+ produto.getImagemURL());		
 				    
 				    IOUtils.copy(filecontent, os);
 
@@ -229,7 +234,7 @@ public class Controladora extends HttpServlet {
 					
 				    
 				    InputStream filecontent = filePart.getInputStream();	    					
-				    OutputStream os = new FileOutputStream(path + produto.getImagemURL());		
+				    OutputStream os = new FileOutputStream(path +"/"+ produto.getImagemURL());		
 				    
 				    IOUtils.copy(filecontent, os);
 
@@ -265,7 +270,7 @@ public class Controladora extends HttpServlet {
 			
 		case "index":
 			
-			ProdutoDAO produtoDAO = null;
+			 produtoDAO = null;
 			try {
 				produtoDAO = new ProdutoDAO();
 			} catch (Exception e1) {
@@ -284,6 +289,30 @@ public class Controladora extends HttpServlet {
 			
 			forward(request, response, "/index.jsp");			
 			
+			break;
+			
+		case "detalhesProduto":
+			
+			 try {
+				produtoDAO = new ProdutoDAO();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			 int id = Integer.valueOf(request.getParameter("id"));
+			 
+			 ProdutoBean p = null;
+			try {
+				p = produtoDAO.carregar(id);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			request.setAttribute("produto", p);
+			
+			forward(request, response, "/detalhesProduto.jsp");	
 			break;
 			
 		case "conta":
@@ -308,16 +337,62 @@ public class Controladora extends HttpServlet {
 			break;
 			
 		case "admin":
+			if(sub!=null)		
+			switch (sub) {
 			
+			case "produto":
+				try {
+					produtoDAO = new ProdutoDAO();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				ProdutoBean produtoAlterar = null;
+				
+				try {
+					produtoAlterar = produtoDAO.carregar(Integer.valueOf(request.getParameter("id")));				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				request.setAttribute("produto",produtoAlterar);
+				
+				break;
+				
+			case "usuario":
+				try {
+					usuarioDAO = new UsuarioDAO();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				UsuarioBean usuarioAlterar = null;
+				
+				try {
+					usuarioAlterar = usuarioDAO.carregar(Integer.valueOf(request.getParameter("id")));				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				request.setAttribute("usuario",usuarioAlterar);
+				
+				break;				
+			}
 			
 			forward(request, response, "/admin.jsp");	
+			
 			break;
 			
 		case "novaconta":
 			
 			forward(request, response, "/novaconta.jsp");			
 			break;
-
+			
+	
 		default:
 			forward(request, response, "/erro.jsp");			
 			break;

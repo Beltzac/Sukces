@@ -763,7 +763,23 @@ TABLE TR.alt TD
 .img
 {
     width: auto;
-    max-width: 100px;
+    max-width: 120px;
     height: auto;
-    max-height: 70px;
+    max-height: 90px;
 }
+.imgAdmin
+{
+    width: auto;
+    max-width: 400px;
+    height: auto;
+    max-height: 400px;
+}
+.imgDetalhes
+{
+    width: auto;
+    max-width: 180px;
+    height: auto;
+    max-height: 180px;
+}
+
+

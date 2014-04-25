@@ -9,7 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Administração</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
-<link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript" src="js/boxOver.js"></script>
 <link rel="stylesheet" href="jquery-ui.min.css" />
 
@@ -275,6 +274,10 @@
 								action="Controladora?action=produto"
 								enctype="multipart/form-data">
 
+ 							<div class="product_img_big">
+                         		  <img src="${produto.imagemURL}" alt="${produto.nome}" class="imgAdmin" >
+                            </div>
+
 								<input type="hidden" value="${produto.id}" name="id" />
 
 
@@ -332,17 +335,18 @@
 
 					<div>
 						<div class="contact_form">
-							<form id="cliente" method="post" action="Controladora?action=novoUsuario">
+							<form id="cliente" method="post" action="Controladora?action=atualizarUsuario">
 								
+								<input type="hidden" value="${usuario.id}" name="id" />
 
 								<div class="form_row">
 									<label class="contact"><strong>Nome completo:</strong></label>
-									<input type="text" class="contact_input" name="nome" />
+									<input type="text" class="contact_input" name="nome" value="${usuario.nome}"/>
 								</div>
 
 								<div class="form_row">
 									<label class="contact"><strong>Email:</strong></label> <input
-										type="text" class="contact_input" name="email" />
+										type="text" class="contact_input" name="email" value="${usuario.email}" />
 								</div>
 
 								<div class="form_row">
@@ -354,39 +358,44 @@
 								<div class="form_row">
 									<label class="contact"><strong>Telefone 1:</strong></label> <input
 										type="text" id="telefone1" class="contact_input"
-										name="telefone1" />
+										name="telefone1" value="${usuario.telefone1}" />
 								</div>
 								
 								<div class="form_row">
 									<label class="contact"><strong>Telefone 2:</strong></label> <input
 										type="text" id="telefone2" class="contact_input"
-										name="telefone2" />
+										name="telefone2" value="${usuario.telefone2}"/>
 								</div>
 							
 
 								<div class="form_row">
 									<label class="contact"><strong>CPF:</strong></label> <input
 										type="text" id="cpf" class="contact_input"
-										name="cpf" />
+										name="cpf" value="${usuario.cpf}"/>
 								</div>
 								
 							    <div class="form_row">
 									<label class="contact"><strong>CNPJ:</strong></label> <input
 										type="text" id="cnpj" class="contact_input"
-										name="cnpj" />
+										name="cnpj" value="${usuario.cnpj}"/>
 								</div>
 								
 								<div class="form_row">
 									<label class="contact"><strong>CEP:</strong></label> <input
 										type="text" id="cep" class="contact_input"
-										name="cep" />
+										name="cep" value="${usuario.cep}"/>
 								</div>	
 														
            							<div class="form_row">
                                         <label class="contact"><strong>Cidade:</strong></label>
-                                        <input type="text" name="cidade" class="contact_input" value=""/>
+                                        <input type="text" name="cidade" class="contact_input" value="${usuario.cidade}"/>
                                     </div>
                                     
+                                     <script>       
+            							$(function() {           
+           									 $('#estado').val( "${usuario.estado}" );
+           								 });
+     								</script>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Estado:</strong></label>                                       
@@ -422,16 +431,19 @@
                                     </div>
 								<div class="form_row">
 									<label class="contact"><strong>rua:</strong></label> <input
-										type="text" class="contact_input" name="rua" />
+										type="text" class="contact_input" name="rua" value="${usuario.rua}"/>
 								</div>	
 								
 								<div class="form_row">
 									<label class="contact"><strong>Número:</strong></label> <input
-										type="text" class="contact_input" name="numero" />
+										type="text" class="contact_input" name="numero" value="${usuario.numero}"/>
 								</div>															
 
-								<div class="form_row">
-									<input class="submit" type="submit" value="Criar" />
+										<div class="form_row">								
+									<input class="submit" type="submit" value="Atualizar"
+										name="atualizar" /> <input class="submit" type="submit"
+										value="Deletar" name="deletar" />
+
 								</div>
 							</form>
 							

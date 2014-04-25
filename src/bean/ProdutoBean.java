@@ -16,8 +16,7 @@ public class ProdutoBean implements Serializable {
 	private String descricao;
 	private String extencao;
 	private String data_criacao;
-	
-	private String localImagem = "/imagensProdutos";
+	private String localImagem = "imagensProdutos";
 	
  	@Override
 	public String toString() {
@@ -65,6 +64,7 @@ public class ProdutoBean implements Serializable {
 	public String getImagemURL() {
 		return localImagem +"/" +id + "." + extencao;
 	}
+	
 	public String getExtencao() {
 		return extencao;
 	}
