@@ -78,7 +78,7 @@ public class Controladora extends HttpServlet {
 				session.setAttribute("loginBean", loginBean);
 				response.sendRedirect(request.getHeader("Referer"));
 			} else {
-				response.sendRedirect("../index.jsp");
+				forward(request, response, "/index.jsp");	
 			}
 
 			break;
@@ -92,7 +92,7 @@ public class Controladora extends HttpServlet {
 				}
 				session.invalidate();				
 			}
-			response.sendRedirect("../index.jsp");
+			response.sendRedirect("Controladora");
 
 			break;
 			
@@ -130,7 +130,7 @@ public class Controladora extends HttpServlet {
 					e.printStackTrace();
 				}
 
-			response.sendRedirect(request.getHeader("Referer"));
+			forward(request, response, "Controladora?action=admin&sub=categoria");	
 			
 			break;
 		case "novoUsuario":
@@ -151,7 +151,8 @@ public class Controladora extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}	
-			response.sendRedirect(request.getHeader("Referer"));
+			
+			forward(request, response, "Controladora");			
 
 			break;
 		case "atualizarUsuario":
@@ -179,7 +180,7 @@ public class Controladora extends HttpServlet {
 				e.printStackTrace();
 			}	
 			loginBean.setUsuario(usuarioNovo);
-			response.sendRedirect(request.getHeader("Referer"));
+			forward(request, response, request.getHeader("Referer"));		
 			
 			break;
 			
@@ -263,10 +264,7 @@ public class Controladora extends HttpServlet {
 
 			response.sendRedirect(request.getHeader("Referer"));
 			
-			break;
-			
-			
-			
+			break;			
 			
 		case "index":
 			
@@ -359,6 +357,9 @@ public class Controladora extends HttpServlet {
 				
 				request.setAttribute("produto",produtoAlterar);
 				
+				//seta qual aba do accordeon fica aberta
+				request.setAttribute("active",0);	
+				
 				break;
 				
 			case "usuario":
@@ -379,9 +380,15 @@ public class Controladora extends HttpServlet {
 				}
 				
 				request.setAttribute("usuario",usuarioAlterar);
+				request.setAttribute("active",1);	
+				break;		
 				
-				break;				
+				case "categoria":
+					request.setAttribute("active",2);	
+				break;
 			}
+			
+		
 			
 			forward(request, response, "/admin.jsp");	
 			
@@ -394,7 +401,7 @@ public class Controladora extends HttpServlet {
 			
 	
 		default:
-			forward(request, response, "/erro.jsp");			
+			paginaErro(request, response, "Ação Inexistente", null);	
 			break;
 		}
 		
@@ -463,4 +470,12 @@ public class Controladora extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	private void paginaErro(HttpServletRequest request, HttpServletResponse response,String mensagem, String stacktrace){
+		request.setAttribute("mensagem", mensagem);
+		request.setAttribute("stacktrace", stacktrace);
+		request.setAttribute("voltar", request.getHeader("Referer"));	
+		forward(request, response, "/erro.jsp");		
+	}
+	
 }

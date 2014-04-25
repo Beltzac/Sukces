@@ -21,7 +21,7 @@
 
 <script>
 	$(function() {
-		$("#accordion").accordion();
+		$("#accordion").accordion({active: ${active == null? 0 : active} });
 
 		$(document).ready(function() {
 			$("#datepicker2").datepicker({
