@@ -224,21 +224,27 @@ public class Controladora extends HttpServlet {
 			if (request.getParameter("atualizar") != null){				
 	
 				try {
-					filePart = request.getPart("imagem"); // Retrieves <input type="file" name="file">
-				    String filename = getFilename(filePart);
-				    produto.setExtencao(FilenameUtils.getExtension(filename));
+					filePart = request.getPart("imagem"); 
+				   
 				    
-				    
-					produtoDao.gravar(produto, true);					
-					
-				    
-				    InputStream filecontent = filePart.getInputStream();	    					
-				    OutputStream os = new FileOutputStream(path+"/"+ produto.getImagemURL());		
-				    
-				    IOUtils.copy(filecontent, os);
-
-				    filecontent.close();
-					os.close();		
+				    if(filePart != null){
+					    String filename = getFilename(filePart);
+					    produto.setExtencao(FilenameUtils.getExtension(filename));
+					    
+					    
+						produtoDao.gravar(produto, true);					
+						
+					    
+					    InputStream filecontent = filePart.getInputStream();	    					
+					    OutputStream os = new FileOutputStream(path+"/"+ produto.getImagemURL());		
+					    
+					    IOUtils.copy(filecontent, os);
+	
+					    filecontent.close();
+						os.close();		
+				    }else{
+				    	produtoDAO.atualizarSemImagem(produto);
+				    }
 					
 				} catch (Exception e) {					
 					e.printStackTrace();
@@ -248,7 +254,7 @@ public class Controladora extends HttpServlet {
 			}else if (request.getParameter("novo") != null){
 				try {
 					
-					filePart = request.getPart("imagem"); // Retrieves <input type="file" name="file">
+					filePart = request.getPart("imagem"); 
 				    String filename = getFilename(filePart);
 				    produto.setExtencao(FilenameUtils.getExtension(filename));
 					
