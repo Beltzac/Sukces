@@ -359,8 +359,6 @@ public class Controladora extends HttpServlet {
 				
 			    String pesquisa2 = request.getParameter("pesquisa");
 			    
-			    System.out.println(pesquisa2);
-				
 				if(pesquisa2 != null && pesquisa2.length() > 0)				
 					listaProdutos = produtoDAO.pesquisar(pesquisa2, campos);
 				else

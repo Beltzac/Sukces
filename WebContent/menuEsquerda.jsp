@@ -24,24 +24,4 @@
         </c:forEach>
     </ul>
 
-    <div class="title_box">
-        Promoção!
-    </div>
-    <div class="border_box">
-        <div class="product_title">
-            <a href="details.jsp?cod=<?php echo $codigo; ?>"><?php echo $nome; ?></a>
-        </div>
-        <div class="product_img">
-            <a href="details.jsp?cod=<?php echo $codigo; ?>"><img src="<?php echo $imagem; ?>" alt="" title="" border="0" height = "100"/></a>
-        </div>
-        <div class="prod_price">
-            <span class="price">R$ <?php echo $preco; ?></span>
-        </div>
-    </div>
-    
-    <div class="banner_adds">
-
-        <a href="#"><img src="images/bann2.jpg" alt="" title="" border="0" /></a>
-    </div>
-
 </div><!-- menu esquerda -->
