@@ -29,24 +29,8 @@
 
 				<div class="center_title_bar">Meu carrinho</div>
 
-				<?php
-                    require_once 'DAO/carrinhoDAO.php';
 
-                    //inicializa o carrinho se necessario            
-                    if (!$_SESSION['carrinho'] || !isset($_SESSION['carrinho'])) {
-                        header('Location: dao/carrinhoAction.php?tipo=iniciar');
-                    }
-
-                    $cardao = new carrinhoDAO();
-                    $produtos = $cardao->selectProdutosPedido($_SESSION['carrinho']);
-
-                    foreach ($produtos as $value) {
-                        carrinhoProduto($value[0], $value[1]);
-                    }
-
-                    $t = $cardao->total($_SESSION['carrinho']);
-                    echo 'Total:' . $t[0];
-                    ?>
+	
 
 				<div class="form_row">
 					<a href="formapag.php" class="prod_buy">Finalizar</a>
