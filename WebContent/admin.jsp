@@ -20,90 +20,60 @@
 
 
 <script>
+
+	$(function() {           
+   		$('#estado').val( "${usuario.estado}" );
+    });
+    
 	$(function() {
 		$("#accordion").accordion({active: ${active == null? 0 : active} });
 
 		$(document).ready(function() {
-			$("#datepicker2").datepicker({
+			$("#data1").datepicker({
 				onSelect : function(dateText, inst) {
 					alert(dateText);
-					document.getElementById('datepicker2').value = dateText;
+					document.getElementById('data1').value = dateText;
 				}
 			});
 		});
 		$(document).ready(function() {
-			$("#thedate").datepicker({
+			$("#data2").datepicker({
 				onSelect : function(dateText, diferente) {
 					alert(dateText);
-					document.getElementById('thedate').value = dateText;
+					document.getElementById('data2').value = dateText;
 				}
 			});
 		});
+	
+		$("#data1").datepicker({
+		    dateFormat: 'dd/mm/yy',
+		    dayNames: ['Domingo','Segunda','Ter�a','Quarta','Quinta','Sexta','S�bado'],
+		    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+		    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S�b','Dom'],
+		    monthNames: ['Janeiro','Fevereiro','Mar�o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+		    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+		    nextText: 'Pr�ximo',
+		    prevText: 'Anterior',
+			weekHeader : "Semana",
+			changeMonth : true,
+			changeYear : true
+		});		
 
-		$("#datepicker").datepicker(
-				{
-					dateFormat : "dd/mm/yy",
-					dayNames : [ "Domingo", "Segunda", "Terça", "Quarta",
-							"Quinta", "Sexta", "Sábado" ],
-					dayNamesMin : [ "D", "S", "T", "Q", "Q", "S", "S" ],
-					dayNamesShort : [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex",
-							"Sáb" ],
-					monthNames : [ "Janeiro", "Fevereiro", "Março", "Abril",
-							"Maio", "Junho", "Julho", "Agosto", "Setembro",
-							"Outubro", "Novembro", "Dezembro" ],
-					monthNamesShort : [ "Jan", "Fev", "Mar", "Abr", "Mai",
-							"Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-					nextText : "Próximo",
-					prevText : "Anterior",
-					weekHeader : "Semana",
-					changeMonth : true,
-					changeYear : true
-				});
-
-		$("#datepicker2").datepicker(
-				{
-					dateFormat : "dd/mm/yy",
-					dayNames : [ "Domingo", "Segunda", "Terça", "Quarta",
-							"Quinta", "Sexta", "Sábado" ],
-					dayNamesMin : [ "D", "S", "T", "Q", "Q", "S", "S" ],
-					dayNamesShort : [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex",
-							"Sáb" ],
-					monthNames : [ "Janeiro", "Fevereiro", "Março", "Abril",
-							"Maio", "Junho", "Julho", "Agosto", "Setembro",
-							"Outubro", "Novembro", "Dezembro" ],
-					monthNamesShort : [ "Jan", "Fev", "Mar", "Abr", "Mai",
-							"Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-					nextText : "Próximo",
-					prevText : "Anterior",
-					weekHeader : "Semana",
-					changeMonth : true,
-					changeYear : true
-				});
-
-		$("#thedate").datepicker(
-				{
-					dateFormat : "dd/mm/yy",
-					dayNames : [ "Domingo", "Segunda", "Terça", "Quarta",
-							"Quinta", "Sexta", "Sábado" ],
-					dayNamesMin : [ "D", "S", "T", "Q", "Q", "S", "S" ],
-					dayNamesShort : [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex",
-							"Sáb" ],
-					monthNames : [ "Janeiro", "Fevereiro", "Março", "Abril",
-							"Maio", "Junho", "Julho", "Agosto", "Setembro",
-							"Outubro", "Novembro", "Dezembro" ],
-					monthNamesShort : [ "Jan", "Fev", "Mar", "Abr", "Mai",
-							"Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
-					nextText : "Próximo",
-					prevText : "Anterior",
-					weekHeader : "Semana",
-					changeMonth : true,
-					changeYear : true
-				});
-
-	});
-	var currentDate = $(".selector").datepicker("getDate");
-	document.write(currentDate);
-	//document.getElementsByName()
+		$("#data2").datepicker({
+		    dateFormat: 'dd/mm/yy',
+		    dayNames: ['Domingo','Segunda','Ter�a','Quarta','Quinta','Sexta','S�bado'],
+		    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+		    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S�b','Dom'],
+		    monthNames: ['Janeiro','Fevereiro','Mar�o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+		    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+		    nextText: 'Pr�ximo',
+		    prevText: 'Anterior',
+		    weekHeader : "Semana",
+			changeMonth : true,
+			changeYear : true
+		});	
+		
+	});	
 </script>
 
 <script>
@@ -257,10 +227,8 @@
 		<%@ include file="header.jsp"%>
 		
 		  <script> 
-				            $(function() {           
-				            $('#estado').val( "${usuario.estado}" );
-				            });
-       	</script>
+				            
+        </script>
 
 		<div id="main_content">
 
@@ -414,7 +382,7 @@
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Estado:</strong></label>                                       
-                                        <select name="estado" >								
+                                        <select name="estado" id="estado">								
 										<option value="pr">Paran�</option>
 										<option value="ac">Acre</option>
 										<option value="al">Alagoas</option>
@@ -515,16 +483,16 @@
 							<form method='post' action='relatorios.php'>
 								<div class='form_row'>
 									<label class='contact'><strong>De: </strong></label>
-									<div type="text" id="datepicker22">
-										<input type="text" class="contact_input" id="datepicker2"
-											name="datepicker2" />
+									<div type="text">
+										<input type="text" class="contact_input" id="data1"
+											name="data1" />
 									</div>
 								</div>
 								<div class='form_row'>
 									<label class='contact'><strong>At�: </strong></label>
-									<div type="hidden" id="thedate1">
-										<input type="text" class="contact_input" id="thedate"
-											name="thedate" />
+									<div type="hidden">
+										<input type="text" class="contact_input" id="data2"
+											name="data2" />
 									</div>
 								</div>
 								<br /> <br /> <input type='radio' name='op' value='op1'>
