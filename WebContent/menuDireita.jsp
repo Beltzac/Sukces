@@ -3,7 +3,7 @@
 
 	<div class="title_box">Pesquisa</div>
 	<div class="border_box">
-		<form action="pesquisa.jsp" method="get">
+		<form action="Controladora?action=pesquisaProduto" method="post">
 			<input type="text" name="pesquisa" class="newsletter_input" value="" />
 			<input class="submit" type="submit" value="Pesquisar" name="tipo" />
 		</form>

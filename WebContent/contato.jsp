@@ -7,8 +7,7 @@ include 'session_start.php';
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Contato
 		</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script type="text/javascript" src="js/boxOver.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" />		
 		<script src="js/jquery-2.0.2.min.js"></script>
 		<script src="js/jquery.validate.min.js"></script>
 		<script src="js/jquery.maskedinput.js"></script>

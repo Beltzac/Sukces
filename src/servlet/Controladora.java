@@ -338,6 +338,46 @@ public class Controladora extends HttpServlet {
 			
 			break;
 			
+		case "pesquisaProduto":
+			
+			 produtoDAO = null;
+			try {
+				produtoDAO = new ProdutoDAO();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Produto)", e1.getMessage());	
+				return;  				
+			}
+			
+			List<ProdutoBean> listaProdutos = null;
+			List<String> campos = new ArrayList<>();
+			campos.add("nome");
+			campos.add("categoria");
+			campos.add("descricao");
+			
+			try {
+				
+			    String pesquisa2 = request.getParameter("pesquisa");
+			    
+			    System.out.println(pesquisa2);
+				
+				if(pesquisa2 != null && pesquisa2.length() > 0)				
+					listaProdutos = produtoDAO.pesquisar(pesquisa2, campos);
+				else
+					listaProdutos = produtoDAO.carregarTodos();					
+			
+			} catch (Exception e) {				
+				e.printStackTrace();
+				paginaErro(request, response, "Erro ao pesquisar produtos", e.getMessage());	
+				return;  
+			}
+			
+			request.setAttribute("listaProdutos", listaProdutos);
+			
+			forward(request, response, "/pesquisaProduto.jsp");			
+			
+			break;
+			
 		case "detalhesProduto":
 			
 			 try {
@@ -472,19 +512,19 @@ public class Controladora extends HttpServlet {
 			
 			List<UsuarioBean> listaUsuarios = null;
 			
-			List<String> campos = new ArrayList<>();
-			campos.add("nome");
-			campos.add("email");
-			campos.add("cpf");
-			campos.add("cnpj");
+			List<String> campos2 = new ArrayList<>();
+			campos2.add("nome");
+			campos2.add("email");
+			campos2.add("cpf");
+			campos2.add("cnpj");
 						
 			try {	
 				String pesquisa = request.getParameter("pesquisa");
 				
 				if(pesquisa != null && pesquisa.length() > 0)				
-				listaUsuarios = usuarioDAO.pesquisar(pesquisa, campos);	
+					listaUsuarios = usuarioDAO.pesquisar(pesquisa, campos2);	
 				else
-				listaUsuarios = usuarioDAO.carregarTodos();		
+					listaUsuarios = usuarioDAO.carregarTodos();		
 				
 			} catch (Exception e) {				
 				e.printStackTrace();

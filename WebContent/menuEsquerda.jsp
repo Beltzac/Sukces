@@ -18,7 +18,7 @@
         		</c:otherwise>
         	</c:choose>
         	
-        	<a href="">${item.nome}</a>        	
+        	<a href="Controladora?action=pesquisaProduto&pesquisa=${item.id}">${item.nome}</a>        	
         	
         	</li>
         </c:forEach>

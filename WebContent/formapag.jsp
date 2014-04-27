@@ -6,10 +6,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
 		<title>Forma de pagamento</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script type="text/javascript" src="js/boxOver.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" />		
 	</head>
 	<body>
 

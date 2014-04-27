@@ -9,20 +9,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Administração</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
-<script type="text/javascript" src="js/boxOver.js"></script>
 <link rel="stylesheet" href="jquery-ui.min.css" />
-
 <script src="js/jquery-2.0.2.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.maskedinput.js"></script>
-<script src="js/boxOver.js"></script>
-
 
 <script>
 
 	$(function() {           
    		$('#estado').val( "${usuario.estado}" );
+    });
+
+	$(function() {           
+   		$('#categoriaSelect').val( "${produto.categoria}" );
     });
     
 	$(function() {
@@ -243,7 +243,19 @@
 
 					<h3>Produtos</h3>
 					<div>
-						<div class="contact_form">
+						<div class="contact_form">	
+						
+						<form id="cliente" method="post" action="Controladora?action=pesquisaProduto">
+								<div class="form_row">
+									<label class="contact"><strong>Pesquisar:</strong></label>
+									<input type="text" class="contact_input" name="pesquisa" value=""/>
+								</div>
+								<div class="form_row">
+									<input class="submit" type="submit" value="Ir"/>
+							    </div>
+						</form>
+						
+						<hr>
 							<form id="produto" method="post"
 								action="Controladora?action=produto"
 								enctype="multipart/form-data">

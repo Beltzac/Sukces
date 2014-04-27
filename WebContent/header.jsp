@@ -1,5 +1,3 @@
-<jsp:useBean id="loginBean" scope="session" class="bean.LoginBean"/>
-
 <div id="header">
 
     <div class="top_right">
