@@ -66,7 +66,7 @@ public class Controladora extends HttpServlet {
 		
 		
 		if (action == null){
-			forward(request, response, "/index.jsp");		
+			response.sendRedirect("Controladora?action=index");					
 		}else
 		switch (action) {
 		case "login":
@@ -92,18 +92,21 @@ public class Controladora extends HttpServlet {
 				}
 				session.invalidate();				
 			}
-			response.sendRedirect("Controladora");
+			response.sendRedirect("Controladora?action=index");
 
 			break;
 			
 		case"categoria":
-			
+			if(!filtroAdmin(request, response)){
+				return;
+			}		
 			CategoriaDAO categoriaDao = null;
 			try {
 				categoriaDao = new CategoriaDAO();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Categoria)", e.getMessage());	
+				return;  
 			}
 			
 			CategoriaBean categoria = FormUtil.populate(CategoriaBean.class,request);					
@@ -114,6 +117,7 @@ public class Controladora extends HttpServlet {
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao atualizar a categoria", e.getMessage());	
+					return;  
 				}
 			else if (request.getParameter("novo") != null)
 				try {
@@ -121,13 +125,15 @@ public class Controladora extends HttpServlet {
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao cadastrar a categoria", e.getMessage());	
+					return;  
 				}
 			else if (request.getParameter("deletar") != null)
 				try {
 					categoriaDao.deletar(categoria.getId());
 				} catch (Exception e) {					
 					e.printStackTrace();
-					paginaErro(request, response, "Erro ao deletar a categoria", e.getMessage());		
+					paginaErro(request, response, "Erro ao deletar a categoria", e.getMessage());	
+					return;  
 				}
 
 			response.sendRedirect("Controladora?action=admin&sub=categoria");	
@@ -139,8 +145,9 @@ public class Controladora extends HttpServlet {
 			try {
 				usuarioDAO = new UsuarioDAO();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Usuário)", e.getMessage());	
+				return;  
 			}
 			
 			UsuarioBean usuario = FormUtil.populate(UsuarioBean.class,request);	
@@ -149,26 +156,30 @@ public class Controladora extends HttpServlet {
 				usuarioDAO.gravar(usuario,false);
 			} catch (Exception e1) {
 				e1.printStackTrace();
-				paginaErro(request, response, "Erro ao cadastrar sua conta", e1.getMessage());				
+				paginaErro(request, response, "Erro ao cadastrar sua conta", e1.getMessage());
+				return;  
 			}	
 			
-			response.sendRedirect("Controladora");			
+			response.sendRedirect("Controladora?action=index");		
 
 			break;
 		case "atualizarUsuario":
+			if(!filtroLogado(request, response)){
+				return;
+			}		
 
 			usuarioDAO = null;
 			try {
 				usuarioDAO = new UsuarioDAO();
 			} catch (Exception e) {
-				// todo auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Usuário)", e.getMessage());	
+				return;  
 			}
 			
 			UsuarioBean usuarioNovo = FormUtil.populate(UsuarioBean.class,request);
 			
-			loginBean = (LoginBean) session.getAttribute("loginBean");				
-
+			loginBean = (LoginBean) session.getAttribute("loginBean");
 
 			// Para não mandar o booleano de administrador pelo form
 			usuarioNovo.setAdministrador(loginBean.getUsuario().isAdministrador());
@@ -177,7 +188,8 @@ public class Controladora extends HttpServlet {
 				usuarioDAO.gravar(usuarioNovo,true);
 			} catch (Exception e) {
 				e.printStackTrace();
-				paginaErro(request, response, "Erro ao atualizar sua conta", e.getMessage());					
+				paginaErro(request, response, "Erro ao atualizar sua conta", e.getMessage());	
+				return;  
 			}	
 			loginBean.setUsuario(usuarioNovo);
 			response.sendRedirect(request.getHeader("Referer"));		
@@ -185,13 +197,16 @@ public class Controladora extends HttpServlet {
 			break;
 			
 		case "atualizarUsuarioAdmin":
-
+			if(!filtroAdmin(request, response)){
+				return;
+			}		
 			usuarioDAO = null;
 			try {
 				usuarioDAO = new UsuarioDAO();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Usuário)", e.getMessage());	
+				return;  
 			}
 			
 			UsuarioBean usuarioAdmin = FormUtil.populate(UsuarioBean.class,request);
@@ -201,6 +216,7 @@ public class Controladora extends HttpServlet {
 			} catch (Exception e) {				
 				e.printStackTrace();
 				paginaErro(request, response, "Erro ao atualizar a conta do usuario", e.getMessage());	
+				return;  
 			}	
 			
 			response.sendRedirect(request.getHeader("Referer"));		
@@ -209,13 +225,16 @@ public class Controladora extends HttpServlet {
 			
 			
 		case"produto":
-			
+			if(!filtroAdmin(request, response)){
+				return;
+			}		
 			ProdutoDAO produtoDao = null;
 			try {
 				produtoDao = new ProdutoDAO();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Produto)", e.getMessage());	
+				return;  
 			}
 			
 			ProdutoBean produto = FormUtil.populate(ProdutoBean.class,request);
@@ -229,11 +248,9 @@ public class Controladora extends HttpServlet {
 				    
 				    if(filePart != null && filePart.getSize() != 0){
 					    String filename = getFilename(filePart);
-					    produto.setExtencao(FilenameUtils.getExtension(filename));
+					    produto.setExtencao(FilenameUtils.getExtension(filename));					    
 					    
-					    
-					    produtoDao.gravar(produto, true);					
-						
+					    produtoDao.gravar(produto, true);
 					    
 					    InputStream filecontent = filePart.getInputStream();	    					
 					    OutputStream os = new FileOutputStream(path+"/"+ produto.getImagemURL());		
@@ -249,6 +266,7 @@ public class Controladora extends HttpServlet {
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao atualizar produto", e.getMessage());	
+					return;  
 				}
 				
 			}else if (request.getParameter("novo") != null){
@@ -267,12 +285,12 @@ public class Controladora extends HttpServlet {
 				    IOUtils.copy(filecontent, os);
 
 				    filecontent.close();
-					os.close();		
-					
+					os.close();						
 					
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao cadastrar produto", e.getMessage());	
+					return;  
 				}}
 			else if (request.getParameter("deletar") != null){
 				try {
@@ -280,6 +298,7 @@ public class Controladora extends HttpServlet {
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao deletar produto", e.getMessage());	
+					return;  
 				}}
 			
 			//atualiza imagem
@@ -299,16 +318,18 @@ public class Controladora extends HttpServlet {
 			try {
 				produtoDAO = new ProdutoDAO();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				
+				paginaErro(request, response, "Erro ao processar (Produto)", e1.getMessage());	
+				return;  				
 			}
+			
 			List<ProdutoBean> listaDestaque = null;
 			try {
 				listaDestaque = produtoDAO.carregarTodos();
 			} catch (Exception e) {				
 				e.printStackTrace();
 				paginaErro(request, response, "Erro ao listar produtos", e.getMessage());	
+				return;  
 			}
 			
 			request.setAttribute("listaDestaque", listaDestaque);
@@ -322,8 +343,9 @@ public class Controladora extends HttpServlet {
 			 try {
 				produtoDAO = new ProdutoDAO();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Produto)", e.getMessage());	
+				return;  
 			}
 			
 			 int id = Integer.valueOf(request.getParameter("id"));
@@ -334,6 +356,7 @@ public class Controladora extends HttpServlet {
 			} catch (Exception e) {				
 				e.printStackTrace();
 				paginaErro(request, response, "Erro ao carregar dados do produto", e.getMessage());	
+				return;  
 			}
 			 
 			request.setAttribute("produto", p);
@@ -342,7 +365,9 @@ public class Controladora extends HttpServlet {
 			break;
 			
 		case "conta":
-			
+			if(!filtroLogado(request, response)){
+				return;
+			}	
 			forward(request, response, "/conta.jsp");	
 			break;
 			
@@ -352,8 +377,9 @@ public class Controladora extends HttpServlet {
 			break;
 			
 		case "carrinho":
-			
-			
+			if(!filtroLogado(request, response)){
+				return;
+			}		
 			forward(request, response, "/carrinho.jsp");	
 			break;
 			
@@ -368,15 +394,19 @@ public class Controladora extends HttpServlet {
 			break;
 			
 		case "admin":
+			if(!filtroAdmin(request, response)){
+				return;
+			}
 			if(sub!=null)		
 			switch (sub) {
 			
 			case "produto":
 				try {
 					produtoDAO = new ProdutoDAO();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
+				} catch (Exception e1) {					
 					e1.printStackTrace();
+					paginaErro(request, response, "Erro ao processar (Produto)", e1.getMessage());	
+					return;  
 				}
 				
 				ProdutoBean produtoAlterar = null;
@@ -386,6 +416,7 @@ public class Controladora extends HttpServlet {
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao carregar dados do produto", e.getMessage());	
+					return;  
 				}
 				
 				request.setAttribute("produto",produtoAlterar);
@@ -395,12 +426,13 @@ public class Controladora extends HttpServlet {
 				
 				break;
 				
-			case "usuario":
+			case "usuario":				
 				try {
 					usuarioDAO = new UsuarioDAO();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					paginaErro(request, response, "Erro ao processar (Usuário)", e1.getMessage());	
+					return;  
 				}
 				
 				UsuarioBean usuarioAlterar = null;
@@ -410,6 +442,7 @@ public class Controladora extends HttpServlet {
 				} catch (Exception e) {					
 					e.printStackTrace();
 					paginaErro(request, response, "Erro ao carregar dados do usuário", e.getMessage());	
+					return;  
 				}
 				
 				request.setAttribute("usuario",usuarioAlterar);
@@ -419,21 +452,22 @@ public class Controladora extends HttpServlet {
 				case "categoria":
 					request.setAttribute("active",2);	
 				break;
-			}
-			
-		
+			}	
 			
 			forward(request, response, "/admin.jsp");	
 			
 			break;
 			
 		case "usuarios":
-			
+			if(!filtroAdmin(request, response)){
+				return;
+			}
 			try {
 				usuarioDAO = new UsuarioDAO();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+			} catch (Exception e1) {				
 				e1.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Usuário)", e1.getMessage());	
+				return;  
 			}
 			
 			List<UsuarioBean> listaUsuarios = null;
@@ -443,8 +477,7 @@ public class Controladora extends HttpServlet {
 			campos.add("email");
 			campos.add("cpf");
 			campos.add("cnpj");
-			
-			
+						
 			try {	
 				String pesquisa = request.getParameter("pesquisa");
 				
@@ -456,6 +489,7 @@ public class Controladora extends HttpServlet {
 			} catch (Exception e) {				
 				e.printStackTrace();
 				paginaErro(request, response, "Erro ao carregar lista de usuários", e.getMessage());	
+				return;  
 			}
 			
 			request.setAttribute("listaUsuarios",listaUsuarios);
@@ -464,11 +498,15 @@ public class Controladora extends HttpServlet {
 			break;
 			
 		case "novaconta":
-			
+			session = request.getSession();
+			loginBean = (LoginBean) session.getAttribute("loginBean");
+			if(loginBean != null && loginBean.isAutenticado()){
+				response.sendRedirect("Controladora?action=index");	
+				return;  
+			}
 			forward(request, response, "/novaconta.jsp");			
 			break;
-			
-	
+				
 		default:
 			paginaErro(request, response, "Ação Inexistente", null);	
 			break;
@@ -482,9 +520,10 @@ public class Controladora extends HttpServlet {
 		CategoriaDAO categoriaDAO = null;
 		try {
 			categoriaDAO = new CategoriaDAO();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (Exception e1) {			
+			e1.printStackTrace();			
+			paginaErro(request, response, "Erro ao processar (Categoria)", e1.getMessage());
+			return;  
 		}
 		List<CategoriaBean> listaCategorias = null;
 		try {
@@ -492,6 +531,7 @@ public class Controladora extends HttpServlet {
 		} catch (Exception e) {			
 			e.printStackTrace();
 			paginaErro(request, response, "Erro ao carregar lista de categorias", e.getMessage());	
+			return;  
 		}
 		
 		request.setAttribute("listaCategorias", listaCategorias);
@@ -531,21 +571,41 @@ public class Controladora extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(path);
 		  try {
 			rd.forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (Exception e) {			
+			e.printStackTrace();				
+		} 
 	}
 	
-	
+	//Forward para a pagina de erro
 	private void paginaErro(HttpServletRequest request, HttpServletResponse response,String mensagem, String stacktrace){
 		request.setAttribute("mensagem", mensagem);
 		request.setAttribute("stacktrace", stacktrace);
-		request.setAttribute("voltar", request.getHeader("Referer"));	
-		forward(request, response, "/erro.jsp");		
+		request.setAttribute("voltar", "Controladora?action=index");	
+		forward(request, response, "/erro.jsp");				
 	}
 	
+	//verifica se está logado
+	private Boolean filtroLogado(HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		LoginBean loginBean = (LoginBean) session.getAttribute("loginBean");
+		if(loginBean == null || !loginBean.isAutenticado()){
+			paginaErro(request, response, "Você precisa logar para realizar esta ação", null);
+			return false;
+		}
+		return true;
+	}
+	
+	//verifica se é admin e está logado
+	private Boolean filtroAdmin(HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		LoginBean loginBean = (LoginBean) session.getAttribute("loginBean");
+		if(!filtroLogado(request, response)){
+			return false;
+		}
+		if(loginBean == null || loginBean.getUsuario() == null ||  !loginBean.getUsuario().isAdministrador()){
+			paginaErro(request, response, "Sua conta não possui os privilégios necessarios.", null);	
+			return false;
+		}
+		return true;
+	}	
 }
