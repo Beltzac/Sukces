@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <c:if test="${!loginBean.autenticado || !loginBean.usuario.administrador}">
 	<c:redirect url="Controladora?action=index"/>
 </c:if>

@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -27,10 +28,10 @@
 						height="113" border="0" class="oferta_img" alt="" title="" />
 
 					<div class="oferta_details">
-						<div class="oferta_title">Canecas Térmicas</div>
+						<div class="oferta_title">Canecas Mágicas</div>
 						<div class="oferta_text">É uma caneca preta que mostra a
 							foto apos a insercao de algum liquido quente.</div>
-						<a href="details.jsp" class="prod_buy">Detalhes</a>
+						<a href="Controladora?action=detalhesProduto&id=11" class="prod_buy">Detalhes</a>
 					</div>
 				</div>
 
@@ -51,7 +52,7 @@
 									class="img" /></a>
 							</div>
 							<div class="prod_price">
-								<span class="price">R$ ${destaque.preco}</span>
+								<span class="price">R$ <fmt:formatNumber value="${destaque.preco}" minFractionDigits="2"/></span>
 							</div>
 						</div>
 

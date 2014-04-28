@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -32,7 +33,7 @@
 									class="img" /></a>
 							</div>
 							<div class="prod_price">
-								<span class="price">R$ ${produto.preco}</span>
+								<span class="price">R$ <fmt:formatNumber value="${produto.preco}" minFractionDigits="2"/></span>
 							</div>
 						</div>
 

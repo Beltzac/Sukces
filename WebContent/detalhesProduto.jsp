@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:if test="${produto == null}">
 	<c:redirect url="Controladora?action=index"/>
@@ -59,7 +60,7 @@
                                     <br />
                                 </div>
                                 <div class="prod_price_big">
-                                    <span class="price">R$ ${produto.preco}</span>
+                                    <span class="price">R$ <fmt:formatNumber value="${produto.preco}" minFractionDigits="2"/></span>
                                 </div>
 
                                 <form action="dao/carrinhoAction.php" method="get">
