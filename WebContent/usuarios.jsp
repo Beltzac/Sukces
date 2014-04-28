@@ -31,11 +31,23 @@
                        Usuários
                     </div>
 					
-					          <table border='1' style="font-size:8;">
-                                <tr><td>Id</td><td>Nome</td><td>Email</td><td>CPF</td><td>CNPJ</td><td>Telefone 1</td><td>Telefone 2</td><td></td></tr>
+					          <table border='1'> <!--style="font-size:10;">  -->
+                                <tr>
+                                	<td>Id</td>
+                                	<td>Nome</td>
+                                	<td>Email</td>
+                                	<td>Telefone 1</td>
+                                	<td>Ação</td>
+                                </tr>
 
 								 <c:forEach items="${listaUsuarios}" var="usuario">      
-								 <tr><td>${usuario.id}</td><td>${usuario.nome}</td><td>${usuario.email}</td><td>${usuario.cpf}</td><td>${usuario.cnpj}</td><td>${usuario.telefone1}</td><td>${usuario.telefone2}</td><td><a href="Controladora?action=admin&sub=usuario&id=${usuario.id}">Editar</a></td></tr>
+								 <tr>
+								 	<td>${usuario.id}</td>
+								 	<td>${usuario.nome}</td>
+								 	<td>${usuario.email}</td>
+								 	<td>${usuario.telefone1}</td>
+								 	<td><a href="Controladora?action=admin&sub=usuario&id=${usuario.id}">Editar</a></td>
+								 </tr>
         	           			 </c:forEach>
                              </table>
 
