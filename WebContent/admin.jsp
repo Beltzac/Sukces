@@ -207,14 +207,12 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#clitelefone").mask("(99)9999-9999");
-		$("#prodpreco").mask("99999,99");
-		$("#prodestoque").mask("999");
-		$("#clicpf").mask("999.999.999-99");
-		$("#clicep").mask("99.999-999");
-		$("#clirg").mask("99.999.999-9");
-		$("#prodpeso").mask("99999g");
-		$("#proddimensao").mask("999x999x999");
+		$("#telefone1").mask("(99)9999-9999");
+		$("#telefone2").mask("(99)9999-9999");
+		$("#preco").mask("99999.99");
+		$("#cpf").mask("999.999.999-99");
+		$("#cep").mask("99.999-999");
+		$("#cnpj").mask("99.999.999.9999-99");
 	});
 </script>
 </head>
@@ -289,7 +287,7 @@
 
 								<div class="form_row">
 									<label class="contact"><strong>Preço:</strong></label> <input
-										type="text" class="contact_input" name="preco"
+										type="text" class="contact_input" id="preco" name="preco"
 										value="${produto.preco}" />
 								</div>
 
