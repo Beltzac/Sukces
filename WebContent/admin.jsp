@@ -424,14 +424,18 @@
 									</select>
                                     </div>
 								<div class="form_row">
-									<label class="contact"><strong>rua:</strong></label> <input
+									<label class="contact"><strong>Rua:</strong></label> <input
 										type="text" class="contact_input" name="rua" value="${usuario.rua}"/>
 								</div>	
 								
 								<div class="form_row">
 									<label class="contact"><strong>Número:</strong></label> <input
 										type="text" class="contact_input" name="numero" value="${usuario.numero}"/>
-								</div>								
+								</div>
+								<div class="form_row">
+									<label class="contact"><strong>Adm:</strong></label> <input
+										type="checkbox" class="contact" name="administrador" value="1"/>
+								</div>									
 								
 										<div class="form_row">								
 									<input class="submit" type="submit" value="Atualizar"
