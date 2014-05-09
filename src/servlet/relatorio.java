@@ -39,11 +39,11 @@ public class relatorio extends HttpServlet {
     	String jasp = "/web/sukces-produtos.jasper";
     	
     	String option = request.getParameter("option");
-    	//jasp = option;
+    	jasp = option;
     	if(option == "usuario"){
-    		 jasp = "/web/usuario-sukces.jasper";
+    		jasp = "/web/usuario-sukces.jasper";
     	}else if (option == "produto"){
-    		 jasp = "/web/sukces-produtos.jasper";
+    		jasp = "/web/sukces-produtos.jasper";
     	}
 		
 		Connection con = null;

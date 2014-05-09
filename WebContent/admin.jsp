@@ -511,8 +511,8 @@
 									</div>
 								</div>--%>
 								<br /> <br /> 
-								<input type='radio' name='option' value='usuario'> Usuários <br /> 
-								<input type='radio' name='option' value='produto'> Produtos <br /> 
+								<input type='radio' name='option' value='/web/usuario-sukces.jasper'> Usuários <br /> 
+								<input type='radio' name='option' value='/web/sukces-produtos.jasper'> Produtos <br /> 
 								<input type='submit' value='OK'>
 							</form>
 
