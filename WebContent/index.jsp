@@ -52,13 +52,13 @@
 									class="img" /></a>
 							</div>
 							<div class="prod_price">
-								<span class="price">R$ <fmt:formatNumber value="${destaque.preco}" minFractionDigits="2"/></span>
+								<span class="price">R$ <fmt:formatNumber value="${destaque.preco}" type="currency"/></span>
 							</div>
 						</div>
 
 						<div class="prod_details_tab">
 							<a
-								href=""
+								href="Controladora?action=carrinho&sub=adicionar&id=${destaque.id}"
 								class="prod_buy">+ Carrinho</a> <a
 								href="Controladora?action=detalhesProduto&id=${destaque.id}"
 								class="prod_details">Detalhes</a>

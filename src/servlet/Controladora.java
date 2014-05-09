@@ -437,7 +437,7 @@ public class Controladora extends HttpServlet {
 			}
 			
 			switch (sub) {
-			case "adiciona":
+			case "adicionar":
 				int quantidade = Integer.valueOf(request.getParameter("quantidade"));
 				
 				try {
@@ -460,7 +460,7 @@ public class Controladora extends HttpServlet {
 				carrinho.adicionaProduto(produtoEscolhido, quantidade);
 				break;
 				
-			case "remove":
+			case "remover":
 				carrinho.removeProduto(idProduto);
 				break;
 			
