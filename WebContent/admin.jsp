@@ -495,8 +495,8 @@
 
 					<div>
 						<div>
-							<form method='post' action='relatorios.php'>
-								<div class='form_row'>
+							<form method='post' action='relatorio'>
+								<%--<div class='form_row'>
 									<label class='contact'><strong>De: </strong></label>
 									<div type="text">
 										<input type="text" class="contact_input" id="data1"
@@ -509,10 +509,11 @@
 										<input type="text" class="contact_input" id="data2"
 											name="data2" />
 									</div>
-								</div>
-								<br /> <br /> <input type='radio' name='op' value='op1'>
-								Clientes <br /> <input type='radio' name='op' value='op3'>
-								Venda <br /> <input type='submit' value='OK'>
+								</div>--%>
+								<br /> <br /> 
+								<input type='radio' name='option' value='usuario'> Usuários <br /> 
+								<input type='radio' name='option' value='produto'> Produtos <br /> 
+								<input type='submit' value='OK'>
 							</form>
 
 						</div>
