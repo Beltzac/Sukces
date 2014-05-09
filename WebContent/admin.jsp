@@ -304,11 +304,13 @@
 
 
 								<div class="form_row">
+									<c:if test="${empty produto}">
 									<input class="submit" type="submit" value="Novo" name="novo" />
-									<input class="submit" type="submit" value="Atualizar"
-										name="atualizar" /> <input class="submit" type="submit"
-										value="Deletar" name="deletar" />
-
+									</c:if>
+									<c:if test="${not empty produto}">
+										<input class="submit" type="submit" value="Atualizar" name="atualizar" />
+										<input class="submit" type="submit"	value="Deletar" name="deletar" />
+									</c:if>
 								</div>
 							</form>
 
@@ -328,10 +330,11 @@
 								<div class="form_row">
 									<input class="submit" type="submit" value="Ir"/>
 							    </div>
-						</form>
+						</form>						
+						
+						<c:if test="${not empty usuario}">
+						
 						<hr>
-						
-						
 						
 							<form id="cliente" method="post" action="Controladora?action=atualizarUsuarioAdmin">
 								
@@ -432,8 +435,8 @@
 										type="text" class="contact_input" name="numero" value="${usuario.numero}"/>
 								</div>
 								<div class="form_row">
-									<label class="contact"><strong>Adm:</strong></label> <input
-										type="checkbox" class="contact" name="administrador" value="1"/>
+									<label class="contact"><strong>Admin:</strong></label> <input
+										type="checkbox" class="contact" name="administrador" ${usuario.administrador?'checked':''}  value="true"/>
 								</div>									
 								
 										<div class="form_row">								
@@ -443,7 +446,7 @@
 
 								</div>
 							</form>
-							
+						</c:if>
 						</div>
 					</div>
 
@@ -463,11 +466,9 @@
 									</select>
 									<script>
 										function updateCat() {
-											item = document
-													.getElementById("categoriaSelect");
+											item = document.getElementById("categoriaSelect");
 											categoria = item.options[item.selectedIndex].innerHTML;
-											document
-													.getElementById("categoriaNome").value = categoria;
+											document.getElementById("categoriaNome").value = categoria;
 										}
 									</script>
 								</div>
@@ -510,8 +511,8 @@
 									</div>
 								</div>--%>
 								<br /> <br /> 
-								<input type='radio' name='option' value='/web/usuario-sukces.jasper'> Usuários <br /> 
-								<input type='radio' name='option' value='/web/sukces-produtos.jasper'> Produtos <br /> 
+								<input type='radio' name='option' value='usuarios' checked> Usuários <br /> 
+								<input type='radio' name='option' value='produtos'> Produtos <br /> 
 								<input type='submit' value='OK'>
 							</form>
 

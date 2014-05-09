@@ -467,10 +467,12 @@ public class Controladora extends Servlet {
 								"Erro ao processar (Produto)", e.getMessage());
 						return;
 					}
+					int quantidade;
+					ProdutoBean produtoEscolhido;
 
 					switch (sub) {
 					case "adicionar":
-						int quantidade;
+						
 
 						if (request.getParameter("quantidade") == null) {
 							quantidade = 1;
@@ -489,7 +491,7 @@ public class Controladora extends Servlet {
 							return;
 						}
 
-						ProdutoBean produtoEscolhido = null;
+						produtoEscolhido = null;
 						try {
 							produtoEscolhido = produtoDAO.carregar(idProduto);
 						} catch (Exception e2) {
@@ -507,8 +509,37 @@ public class Controladora extends Servlet {
 						carrinho.removeProduto(idProduto);
 						break;
 
-					case "alterar":
+					case "alterar":						
+						if (request.getParameter("quantidade") == null) {
+							quantidade = 1;
+						} else {
+							quantidade = Integer.valueOf(request
+									.getParameter("quantidade"));
+						}
 
+						try {
+							produtoDAO = new ProdutoDAO();
+						} catch (Exception e3) {
+							e3.printStackTrace();
+							paginaErro(request, response,
+									"Erro ao processar (Produto)",
+									e3.getMessage());
+							return;
+						}
+
+						produtoEscolhido = null;
+						try {
+							produtoEscolhido = produtoDAO.carregar(idProduto);
+						} catch (Exception e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+							paginaErro(request, response,
+									"Erro ao carregar dados do produto",
+									e2.getMessage());
+							return;
+						}
+						carrinho.removeProduto(idProduto);
+						carrinho.adicionaProduto(produtoEscolhido, quantidade);
 						break;
 					}
 				}

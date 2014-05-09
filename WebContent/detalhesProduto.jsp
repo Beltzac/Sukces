@@ -59,7 +59,7 @@
 							</div>
 							<form
 								action="Controladora?action=carrinho&sub=adicionar&id=${produto.id}"
-								method="get">
+								method="post">
 								<div class="prod_price2">
 									<p>
 										<input id="spinner" name="quantidade" value="1" />
@@ -67,9 +67,7 @@
 								</div>
 								<input type="hidden" name="tipo" value="adicionarProduto"/>
 								<input type="hidden" name="id" value="${produto.nome}"/>
-								<input type="submit" id="but" style="display: none;"/> <a
-									href="#" onclick="document.getElementById('but').click();"
-									class="prod_buy">Comprar</a>
+								<input type="submit" value="Comprar" class="prod_buy"/>
 							</form>
 
 							<c:if

@@ -62,9 +62,7 @@
 								<span class="price"><fmt:formatNumber
 										value="${item.preco}" type="currency" /></span>
 							</div>
-							<form
-								action="Controladora?action=carrinho&sub=atualizar&id=${item.produto.id}"
-								method="get">
+							<form action="Controladora?action=carrinho&sub=alterar&id=${item.produto.id}" method="post">
 
 								<div class="prod_price2">
 									<p>
@@ -74,18 +72,13 @@
 									</p>
 								</div>
 
-
-
 								<div class="carrinho_prod_details_tab2">
 									<a
 										href="Controladora?action=detalhesProduto&id=${item.produto.id}"
 										class="prod_details">Detalhes</a> <a
 										href="Controladora?action=carrinho&sub=remover&id=${item.produto.id}"
-										class="prod_buy">Remover</a> <input type="submit"
-										id="but${item.produto.id}" style="display: none;"> <a
-										href="#"
-										onclick="document.getElementById('but${item.produto.id}').click();"
-										class="prod_buy">Atualizar</a>
+										class="prod_buy">Remover</a> 
+										<input type="submit" value="Atualizar" class="prod_buy"/>
 								</div>
 							</form>
 						</div>

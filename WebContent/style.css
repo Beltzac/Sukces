@@ -535,8 +535,9 @@ A.prod_compare
     text-decoration: none;
     color: #159DCC;
 }
-A.prod_buy
+.prod_buy
 {
+	border: none;
     width: 75px;
     height: 24px;
     display: block;

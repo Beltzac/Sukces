@@ -30,19 +30,25 @@ public class relatorio extends Servlet {
 			return;
 		}
     	
-    	String jasp = "/web/sukces-produtos.jasper";
+    	String jasp;
     	
-    	String option = request.getParameter("option");
-    	jasp = option;
-    	if(option == "usuario"){
-    		jasp = "/web/usuario-sukces.jasper";
-    	}else if (option == "produto"){
-    		jasp = "/web/sukces-produtos.jasper";
-    	}
+    	switch (request.getParameter("option")) {
+		case "usuarios":
+			jasp = "/web/usuario-sukces.jasper";
+			break;
+			
+		case "produtos":
+			jasp = "/web/sukces-produtos.jasper";
+			break;
 		
+		default:
+			paginaErro(request, response, "Erro ao criar relatório (Parâmetro não existente)", null);
+			return;			
+		}
+    	
 		Connection con = null;
 		try {
-			con =ConnectionFactory.getConnection();
+			con = ConnectionFactory.getConnection();
 			String jasper = request.getContextPath() + jasp;
 			String host = "http://" + request.getServerName() + ":" + request.getServerPort();
 			URL jasperURL = new URL(host + jasper);
