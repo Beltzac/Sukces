@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import model.Carrinho;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -417,7 +419,56 @@ public class Controladora extends HttpServlet {
 		case "carrinho":
 			if(!filtroLogado(request, response)){
 				return;
-			}		
+			}
+			
+			Carrinho carrinho = (Carrinho)session.getAttribute("carrinho");
+			if(carrinho == null){
+				carrinho = new Carrinho();
+				session.setAttribute("carrinho", carrinho);
+			}	
+			
+			int idProduto = Integer.valueOf(request.getParameter("id"));
+			try {
+				produtoDAO = new ProdutoDAO();
+			} catch (Exception e) {
+				e.printStackTrace();
+				paginaErro(request, response, "Erro ao processar (Produto)", e.getMessage());	
+				return;  
+			}
+			
+			switch (sub) {
+			case "adiciona":
+				int quantidade = Integer.valueOf(request.getParameter("quantidade"));
+				
+				try {
+					produtoDAO = new ProdutoDAO();
+				} catch (Exception e3) {
+					e3.printStackTrace();
+					paginaErro(request, response, "Erro ao processar (Produto)", e3.getMessage());	
+					return;  
+				}
+				
+				ProdutoBean produtoEscolhido = null;
+				try {
+					produtoEscolhido = produtoDAO.carregar(idProduto);
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+					paginaErro(request, response, "Erro ao carregar dados do produto", e2.getMessage());	
+					return;  
+				}
+				carrinho.adicionaProduto(produtoEscolhido, quantidade);
+				break;
+				
+			case "remove":
+				carrinho.removeProduto(idProduto);
+				break;
+			
+			case "alterar":
+				
+				break;
+			}
+			
 			forward(request, response, "/carrinho.jsp");	
 			break;
 			

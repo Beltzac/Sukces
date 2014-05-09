@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="right_content">
 
 	<div class="title_box">Pesquisa</div>
@@ -12,18 +13,19 @@
 
 	<c:choose>
 		<c:when test="${loginBean.autenticado}">
+			<jsp:useBean id="carrinho" class="model.Carrinho" scope="session"/>
 
 			<div class="shopping_cart">
 				<div class="title_box">Carrinho</div>
 
 				<div class="cart_details">
-					<?php echo $_SESSION['quantidadeProdutos'] ?>
+					${carrinho.quantidadeItensUnicos}
 					item(s) <br /> <span class="border_cart"></span> Total: <span
-						class="price">R$ <?php echo $_SESSION['valorTotal'] ?></span>
+						class="price">R$ <fmt:formatNumber value="${carrinho.total}" type="currency"/> </span>
 				</div>
 
 				<div class="cart_icon">
-					<a href="carrinho.jsp" title=""><img
+					<a href="Controladora?action=carrinho" title=""><img
 						src="images/shoppingcart.png" alt="" title="" width="35"
 						height="35" border="0" /></a>
 				</div>

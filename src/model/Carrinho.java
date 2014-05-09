@@ -45,5 +45,9 @@ public class Carrinho implements Serializable {
 		}
 		return total;
 	}
+	
+	public int getQuantidadeItensUnicos(){		
+		return lista.size();
+	}
 
 }
