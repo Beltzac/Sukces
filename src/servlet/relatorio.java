@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import java.sql.*;
 import java.util.*;
@@ -18,7 +18,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 
-import bean.LoginBean;
 
 /**
  * Servlet implementation class relatorio
@@ -37,13 +36,14 @@ public class relatorio extends HttpServlet {
     @SuppressWarnings("rawtypes")
 	public void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
     	
-    	String jasp = "/web/usuario-sukces.jasper";
+    	String jasp = "/web/sukces-produtos.jasper";
     	
     	String option = request.getParameter("option");
+    	//jasp = option;
     	if(option == "usuario"){
-    		jasp = "/web/usuario-sukces.jasper";
+    		 jasp = "/web/usuario-sukces.jasper";
     	}else if (option == "produto"){
-    		jasp = "/web/sukces-produtos.jasper";
+    		 jasp = "/web/sukces-produtos.jasper";
     	}
 		
 		Connection con = null;
