@@ -19,7 +19,7 @@
 
 			<div class="center_content">
 				<div class="center_title_bar">Resultados da pesquisa</div>
-
+				<fmt:setLocale value="pt_BR"/>
 				<c:forEach items="${listaProdutos}" var="produto">
 					<div class="prod_box">
 
@@ -29,16 +29,16 @@
 							</div>
 							<div class="product_img">
 								<a href="Controladora?action=detalhesProduto&id=${produto.id}"><img
-									src="${produto.imagemURL}" alt="" title="" border="0"
+									src="${produto.imagemURL}" alt="${produto.nome}" title="" border="0"
 									class="img" /></a>
 							</div>
 							<div class="prod_price">
-								<span class="price">R$ <fmt:formatNumber value="${produto.preco}" minFractionDigits="2"/></span>
+								<span class="price"><fmt:formatNumber value="${produto.preco}" type="currency"/></span>
 							</div>
 						</div>
 
 						<div class="prod_details_tab">
-							<a href="" class="prod_buy">+ Carrinho</a> <a
+							<a href="Controladora?action=carrinho&sub=adicionar&id=${produto.id}" class="prod_buy">+ Carrinho</a> <a
 								href="Controladora?action=detalhesProduto&id=${produto.id}"
 								class="prod_details">Detalhes</a>
 

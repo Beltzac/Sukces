@@ -13,15 +13,14 @@
 
 	<c:choose>
 		<c:when test="${loginBean.autenticado}">
-			<jsp:useBean id="carrinho" class="model.Carrinho" scope="session"/>
-
+		
 			<div class="shopping_cart">
 				<div class="title_box">Carrinho</div>
 
 				<div class="cart_details">
 					${carrinho.quantidadeItensUnicos}
 					item(s) <br /> <span class="border_cart"></span> Total: <span
-						class="price">R$ <fmt:formatNumber value="${carrinho.total}" type="currency"/> </span>
+						class="price"><fmt:formatNumber value="${carrinho.total}" type="currency"/> </span>
 				</div>
 
 				<div class="cart_icon">
@@ -49,5 +48,5 @@
 
 		</c:otherwise>
 	</c:choose>
-	
+</div>
 <!-- menu direita -->

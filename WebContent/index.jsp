@@ -36,9 +36,7 @@
 				</div>
 
 				<div class="center_title_bar">Produtos em Destaque</div>
-
-
-
+				
 				<c:forEach items="${listaDestaque}" var="destaque">
 					<div class="prod_box">
 
@@ -52,7 +50,7 @@
 									class="img" /></a>
 							</div>
 							<div class="prod_price">
-								<span class="price">R$ <fmt:formatNumber value="${destaque.preco}" type="currency"/></span>
+								<span class="price"><fmt:formatNumber value="${destaque.preco}" type="currency"/></span>
 							</div>
 						</div>
 

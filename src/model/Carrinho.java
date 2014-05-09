@@ -35,18 +35,18 @@ public class Carrinho implements Serializable {
 	}
 	
 	public ArrayList<ItemCarrinho> getListaItens() {
-		return (ArrayList<ItemCarrinho>) lista.values();
+		return new ArrayList<ItemCarrinho>(lista.values());
 	}
 	
 	public double getTotal(){
 		double total = 0;
 		for(Entry<Integer, ItemCarrinho> entry : lista.entrySet()) {
 		    total += entry.getValue().getTotal();
-		}
+		}		
 		return total;
 	}
 	
-	public int getQuantidadeItensUnicos(){		
+	public int getQuantidadeItensUnicos(){				
 		return lista.size();
 	}
 

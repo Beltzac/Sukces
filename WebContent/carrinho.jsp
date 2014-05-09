@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:if test="${!loginBean.autenticado}">
 	<c:redirect url="Controladora?action=index" />
@@ -29,8 +30,71 @@
 
 				<div class="center_title_bar">Meu carrinho</div>
 
+				
+				<c:forEach items="${carrinho.listaItens}" var="item">
 
-	
+					<script>
+						$(function() {
+							$('#spinner${item.produto.id}').spinner({
+								step : 1,
+								numberFormat : "n",
+								min : 1,
+								max : 200
+							});
+						});
+					</script>
+
+					<div class="carrinho_box">
+
+						<div class="carrinho_center_prod_box2">
+							<div class="product_img2">
+								<a
+									href="Controladora?action=detalhesProduto&id=${item.produto.id}"><img
+									src="${item.produto.imagemURL}" alt="" title="" border="0"
+									class="img" /></a>
+							</div>
+							<div class="product_title2">
+								<a
+									href="Controladora?action=detalhesProduto&id=${item.produto.id}">${item.produto.nome}</a>
+							</div>
+
+							<div class="prod_price2">
+								<span class="price"><fmt:formatNumber
+										value="${item.preco}" type="currency" /></span>
+							</div>
+							<form
+								action="Controladora?action=carrinho&sub=atualizar&id=${item.produto.id}"
+								method="get">
+
+								<div class="prod_price2">
+									<p>
+										<label for="spinner${item.produto.id}">Quantidade:</label> <input
+											id="spinner${item.produto.id}" name="quantidade"
+											value="${item.quantidade}" />
+									</p>
+								</div>
+
+
+
+								<div class="carrinho_prod_details_tab2">
+									<a
+										href="Controladora?action=detalhesProduto&id=${item.produto.id}"
+										class="prod_details">Detalhes</a> <a
+										href="Controladora?action=carrinho&sub=remover&id=${item.produto.id}"
+										class="prod_buy">Remover</a> <input type="submit"
+										id="but${item.produto.id}" style="display: none;"> <a
+										href="#"
+										onclick="document.getElementById('but${item.produto.id}').click();"
+										class="prod_buy">Atualizar</a>
+								</div>
+							</form>
+						</div>
+						<br />
+					</div>
+					<br />
+
+				</c:forEach>
+
 
 				<div class="form_row">
 					<a href="formapag.php" class="prod_buy">Finalizar</a>
@@ -43,7 +107,7 @@
 
 		</div>
 		<!-- main index -->
-		
+
 		<%@ include file="footer.html"%>
 	</div>
 </body>
