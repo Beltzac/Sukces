@@ -29,6 +29,10 @@
 			<div class="center_content">
 
 				<div class="center_title_bar">Meu carrinho</div>
+				
+				<c:if test="${carrinho.quantidadeItensUnicos==0}">
+					<h2>Você não escolheu nenhum produto ainda</h2>
+				</c:if>
 
 				
 				<c:forEach items="${carrinho.listaItens}" var="item">
@@ -88,10 +92,13 @@
 
 				</c:forEach>
 
+				<c:if test="${carrinho.quantidadeItensUnicos>0}">
+					<div class="form_row">
+						<a href="formapag.php" class="prod_buy">Finalizar</a>
+					</div>
+				</c:if>
 
-				<div class="form_row">
-					<a href="formapag.php" class="prod_buy">Finalizar</a>
-				</div>
+				
 			</div>
 			<!-- center -->
 

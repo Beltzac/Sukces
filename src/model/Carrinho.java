@@ -27,7 +27,9 @@ public class Carrinho implements Serializable {
 	}
 
 	public void removeProduto(int idProduto) {
-		lista.remove(idProduto);
+		if (lista.containsKey(idProduto)){
+			lista.remove(idProduto);
+		}
 	}
 
 	public Hashtable<Integer, ItemCarrinho> getLista() {

@@ -209,6 +209,59 @@ public class Controladora extends Servlet {
 				response.sendRedirect(request.getHeader("Referer"));
 
 				break;
+				
+			case "atualizarSenha":
+				if (!filtroLogado(request, response)) {
+					return;
+				}
+				
+				String senhaNova1 = request.getParameter("senhaNova1");
+				String senhaNova2 = request.getParameter("senhaNova2");
+				String senhaAntiga = request.getParameter("senhaAntiga");
+
+				usuarioDAO = null;
+				try {
+					usuarioDAO = new UsuarioDAO();
+				} catch (Exception e) {
+					e.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao processar (Usuário)", e.getMessage());
+					return;
+				}				
+
+				
+				if(senhaNova1 != senhaNova2){
+					paginaErro(request, response,"Erro ao alterar sua senha", "Senha 1 e Senha 2 devem ser iguais.");
+					return;
+				}
+				
+				if(senhaNova1 == null || senhaNova1.length() < 6){
+					paginaErro(request, response,"Erro ao alterar sua senha", "Nova senha deve conter no minimo 6 caracteres.");
+					return;
+				}
+				
+				loginBean = (LoginBean) session.getAttribute("loginBean");
+				
+				
+				try {
+					
+					int registrosAlterados = 0;
+					registrosAlterados = usuarioDAO.alterarSenha(loginBean.getUsuario(), senhaNova1, senhaAntiga);
+					if (registrosAlterados != 1){
+						paginaErro(request, response, "Erro ao alterar sua senha", "Senha antiga incorreta");
+						return;
+					}
+					
+				} catch (Exception e4) {
+					e4.printStackTrace();
+					paginaErro(request, response, "Erro ao processar (Usuário)", e4.getMessage());
+					return;
+				}
+				
+				
+				response.sendRedirect(request.getHeader("Referer"));
+
+				break;
 
 			case "atualizarUsuarioAdmin":
 				if (!filtroAdmin(request, response)) {

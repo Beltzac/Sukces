@@ -236,22 +236,22 @@
                         <h3>Alterar senha</h3>
 
                         <div>
-                            <form action="action/atualizarUsuario.jsp" id="pessoa" method="post">
+                            <form action="Controladora?action=atualizarSenha" id="senha" method="post">
                                 <div class="contact_form">
                                 
                                  <div class="form_row">
                                         <label class="contact"><strong>Senha atual:</strong></label>
-                                        <input type="password" class="contact_input" name="senhaatual" />
+                                        <input type="password" class="contact_input" name="senhaAntiga" />
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Nova senha:</strong></label>
-                                        <input type="password" class="contact_input" name="senha" />
+                                        <input type="password" class="contact_input" name="senhaNova1" />
                                     </div>
 
                                     <div class="form_row">
                                         <label class="contact"><strong>Confirme senha:</strong></label>
-                                        <input type="password" class="contact_input" name="senha2" />
+                                        <input type="password" class="contact_input" name="senhaNova2" />
                                     </div>
                                     
                                     <div class="form_row">                                    

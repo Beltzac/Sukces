@@ -20,6 +20,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 	private PreparedStatement stmtGravar;
 	private PreparedStatement stmtAtualizar;
 	private PreparedStatement stmtDeletar;
+	private PreparedStatement stmtAlterarSenha;
 
 	public UsuarioDAO() throws Exception {
 		con = ConnectionFactory.getConnection();
@@ -141,6 +142,16 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 		stmtDeletar = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
 		stmtDeletar.setInt(1, id);
 		return stmtDeletar.executeUpdate();
+	}
+	
+public int alterarSenha(UsuarioBean obj, String senhaNova, String senhaAntiga) throws Exception {		
+	
+			System.out.println("Atualizando senha: " + obj.getEmail());
+			stmtAlterarSenha = con.prepareStatement("UPDATE usuario SET senha = MD5(?) WHERE id = ? AND senha = MD5(?)");
+			stmtAlterarSenha.setString(1, senhaNova);
+			stmtAlterarSenha.setInt(2, obj.getId());	
+			stmtAlterarSenha.setString(1, senhaAntiga);
+			return stmtAlterarSenha.executeUpdate();
 	}
 
 }
