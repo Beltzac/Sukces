@@ -12,19 +12,14 @@ import bean.CategoriaBean;
 public class CategoriaDAO implements IDAO<CategoriaBean> {
 
 	private Connection con;
-
-	private PreparedStatement stmtCarregar;
-	private PreparedStatement stmtCarregarTodos;
-	private PreparedStatement stmtGravar;
-	private PreparedStatement stmtAtualizar;
-	private PreparedStatement stmtDeletar;
-
+	
 	public CategoriaDAO() throws Exception {
 		con = ConnectionFactory.getConnection();
 	}
 
 	@Override
 	public CategoriaBean carregar(int id) throws Exception {
+		PreparedStatement stmtCarregar;
 		stmtCarregar = con.prepareStatement("SELECT * FROM categoria WHERE id = ?");		
 		stmtCarregar.setInt(1, id);
 		ResultSet rs = stmtCarregar.executeQuery();
@@ -41,6 +36,7 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 
 	@Override
 	public List<CategoriaBean> carregarTodos() throws Exception {
+		PreparedStatement stmtCarregarTodos;
 		stmtCarregarTodos = con.prepareStatement("SELECT * FROM categoria");
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
@@ -56,11 +52,13 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 		System.out.println("Gravando categoria: " + obj.toString());
 		
 		if (!update){
+			PreparedStatement stmtGravar;
 			stmtGravar = con.prepareStatement("INSERT INTO categoria (nome) VALUES (?)");			
 			stmtGravar.setString(1, obj.getNome());					
 			stmtGravar.executeUpdate();
 			
-		} else {			
+		} else {		
+			PreparedStatement stmtAtualizar;
 			stmtAtualizar = con.prepareStatement("UPDATE categoria SET nome = ? WHERE id = ?");	
 			stmtAtualizar.setString(1, obj.getNome());
 			stmtAtualizar.setInt(2, obj.getId());			
@@ -71,6 +69,7 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 
 	@Override
 	public int deletar(int id) throws Exception {
+		PreparedStatement stmtDeletar;
 		stmtDeletar = con.prepareStatement("DELETE FROM categoria WHERE id = ?");
 		stmtDeletar.setInt(1, id);
 		return stmtDeletar.executeUpdate();

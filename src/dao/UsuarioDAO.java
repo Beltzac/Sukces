@@ -13,21 +13,13 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	private Connection con;
 
-	private PreparedStatement stmtCarregar;
-	private PreparedStatement stmtCarregarTodos;
-	private PreparedStatement stmtPesquisar;
-	private PreparedStatement stmtLogin;
-	private PreparedStatement stmtGravar;
-	private PreparedStatement stmtAtualizar;
-	private PreparedStatement stmtDeletar;
-	private PreparedStatement stmtAlterarSenha;
-
 	public UsuarioDAO() throws Exception {
 		con = ConnectionFactory.getConnection();
 	}
 
 	@Override
 	public UsuarioBean carregar(int id) throws Exception {
+		PreparedStatement stmtCarregar;
 		stmtCarregar = con.prepareStatement("SELECT * FROM usuario WHERE id = ?");
 		stmtCarregar.setInt(1, id);
 		ResultSet rs = stmtCarregar.executeQuery();
@@ -43,6 +35,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 	}
 	
 	public UsuarioBean carregar(String email, String senha) throws Exception{		
+		PreparedStatement stmtLogin;
 		stmtLogin = con.prepareStatement("SELECT * FROM usuario WHERE email = ? AND senha = MD5(?)");
 		stmtLogin.setString(1, email);
 		stmtLogin.setString(2, senha);
@@ -61,6 +54,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	@Override
 	public List<UsuarioBean> carregarTodos() throws Exception {
+		PreparedStatement stmtCarregarTodos;
 		stmtCarregarTodos = con.prepareStatement("SELECT * FROM usuario");
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
@@ -72,10 +66,10 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 	@Override
 	public List<UsuarioBean> pesquisar(String texto, List<String> campos)
 			throws Exception {
-
-		String sql;
-
-		sql = "SELECT * FROM usuario WHERE ";
+		
+		PreparedStatement stmtPesquisar;
+		
+		String sql = "SELECT * FROM usuario WHERE ";		
 
 		for (String campo : campos) {
 			sql += campo + " LIKE '%" + texto + "%'" + " OR ";
@@ -95,7 +89,9 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 	@Override
 	public void gravar(UsuarioBean obj, boolean update) throws Exception {
 		
+		
 		if (!update){
+			PreparedStatement stmtGravar;
 			System.out.println("Criando conta: " + obj.getEmail());
 			stmtGravar = con.prepareStatement("INSERT INTO usuario (nome, email, senha, cpf, cnpj, cep, rua,cidade,estado, numero, telefone1, telefone2, administrador, data_criacao) VALUES (?,?,MD5(?),?,?,?,?,?,?,?,?,?,?,CURRENT_DATE())");
 			stmtGravar.setString(1, obj.getNome());
@@ -115,6 +111,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 			stmtGravar.executeUpdate();
 			
 		} else {
+			PreparedStatement stmtAtualizar;
 			System.out.println("Atualizando conta: " + obj.getEmail());
 			stmtAtualizar = con.prepareStatement("UPDATE usuario SET nome = ?, email = ?, cpf = ?, cnpj = ?, cep = ?, rua = ?,cidade = ?,estado = ?, numero = ?, telefone1 = ?, telefone2 = ?, administrador = ? WHERE id = ?");
 			stmtAtualizar.setString(1, obj.getNome());
@@ -139,13 +136,15 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 
 	@Override
 	public int deletar(int id) throws Exception {
+		PreparedStatement stmtDeletar;
 		stmtDeletar = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
 		stmtDeletar.setInt(1, id);
 		return stmtDeletar.executeUpdate();
 	}
 	
-public int alterarSenha(UsuarioBean obj, String senhaNova, String senhaAntiga) throws Exception {		
+public int alterarSenha(UsuarioBean obj, String senhaNova, String senhaAntiga) throws Exception {
 	
+			PreparedStatement stmtAlterarSenha;	
 			System.out.println("Atualizando senha: " + obj.getEmail());
 			stmtAlterarSenha = con.prepareStatement("UPDATE usuario SET senha = MD5(?) WHERE id = ? AND senha = MD5(?)");
 			stmtAlterarSenha.setString(1, senhaNova);

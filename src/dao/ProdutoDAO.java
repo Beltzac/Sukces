@@ -14,20 +14,14 @@ import com.mysql.jdbc.Statement;
 public class ProdutoDAO implements IDAO<ProdutoBean> {
 
 	private Connection con;
-
-	private PreparedStatement stmtCarregar;
-	private PreparedStatement stmtCarregarTodos;
-	private PreparedStatement stmtPesquisar;	
-	private PreparedStatement stmtGravar;
-	private PreparedStatement stmtAtualizar;
-	private PreparedStatement stmtDeletar;
-
+	
 	public ProdutoDAO() throws Exception {
 		con = ConnectionFactory.getConnection();	
 	}
 
 	@Override
 	public ProdutoBean carregar(int id) throws Exception {
+		PreparedStatement stmtCarregar;
 		stmtCarregar = con.prepareStatement("SELECT * FROM produto WHERE id = ?");
 		stmtCarregar.setInt(1, id);
 		ResultSet rs = stmtCarregar.executeQuery();
@@ -45,6 +39,7 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 
 	@Override
 	public List<ProdutoBean> carregarTodos() throws Exception {
+		PreparedStatement stmtCarregarTodos;
 		stmtCarregarTodos = con.prepareStatement("SELECT * FROM produto");
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
@@ -56,7 +51,7 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 	@Override
 	public List<ProdutoBean> pesquisar(String texto,  List<String> campos)
 			throws Exception {
-
+		PreparedStatement stmtPesquisar;
 		String sql;
 
 		sql = "SELECT * FROM produto WHERE ";
@@ -78,15 +73,12 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 	}
 
 	@Override
-	public void gravar(ProdutoBean obj, boolean update) throws Exception {
-		
-		stmtGravar = con.prepareStatement("INSERT INTO produto (nome, categoria, preco, descricao, extencao, data_criacao) VALUES (?,?,?,?,?,CURRENT_DATE())",Statement.RETURN_GENERATED_KEYS);
-		stmtAtualizar = con.prepareStatement("UPDATE produto SET nome = ?, categoria = ?, preco = ?, descricao = ?, extencao = ? WHERE id = ?");
-		
+	public void gravar(ProdutoBean obj, boolean update) throws Exception {		
 		
 		if (!update){
 			System.out.println("Criando produto: " + obj.toString());
-			
+			PreparedStatement stmtGravar;		
+			stmtGravar = con.prepareStatement("INSERT INTO produto (nome, categoria, preco, descricao, extencao, data_criacao) VALUES (?,?,?,?,?,CURRENT_DATE())",Statement.RETURN_GENERATED_KEYS);
 			stmtGravar.setString(1, obj.getNome());
 			stmtGravar.setInt(2, obj.getCategoria());
 			stmtGravar.setDouble(3, obj.getPreco());
@@ -103,7 +95,8 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 			
 		} else {
 			System.out.println("Atualizando produto: " + obj.toString());
-			
+			PreparedStatement stmtAtualizar;
+			stmtAtualizar = con.prepareStatement("UPDATE produto SET nome = ?, categoria = ?, preco = ?, descricao = ?, extencao = ? WHERE id = ?");
 			stmtAtualizar.setString(1, obj.getNome());
 			stmtAtualizar.setInt(2, obj.getCategoria());
 			stmtAtualizar.setDouble(3, obj.getPreco());
@@ -117,28 +110,24 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 
 	}
 	
-public void atualizarSemImagem(ProdutoBean obj) throws Exception {		
-		
-		stmtAtualizar = con.prepareStatement("UPDATE produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?");
-				
-
-			System.out.println("Atualizando produto: " + obj.toString());
+public void atualizarSemImagem(ProdutoBean obj) throws Exception {
+			System.out.println("Atualizando produto: " + obj.toString());		
 			
-			stmtAtualizar.setString(1, obj.getNome());
-			stmtAtualizar.setInt(2, obj.getCategoria());
-			stmtAtualizar.setDouble(3, obj.getPreco());
-			stmtAtualizar.setString(4, obj.getDescricao());					
-			stmtAtualizar.setInt(5, obj.getId());
-			
-			stmtAtualizar.executeUpdate();					
-			
-		
+			PreparedStatement stmtAtualizarSemImagem;			
+			stmtAtualizarSemImagem = con.prepareStatement("UPDATE produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?");
+			stmtAtualizarSemImagem.setString(1, obj.getNome());
+			stmtAtualizarSemImagem.setInt(2, obj.getCategoria());
+			stmtAtualizarSemImagem.setDouble(3, obj.getPreco());
+			stmtAtualizarSemImagem.setString(4, obj.getDescricao());					
+			stmtAtualizarSemImagem.setInt(5, obj.getId());			
+			stmtAtualizarSemImagem.executeUpdate();	
 
 	}
 
 
 	@Override
 	public int deletar(int id) throws Exception {
+		PreparedStatement stmtDeletar;
 		stmtDeletar = con.prepareStatement("DELETE FROM produto WHERE id = ?");
 		stmtDeletar.setInt(1, id);
 		return stmtDeletar.executeUpdate();
