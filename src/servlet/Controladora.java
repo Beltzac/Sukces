@@ -81,6 +81,7 @@ public class Controladora extends Servlet {
 				} else {
 					paginaErro(request, response,
 							"Login e/ou senha incorretos", null);
+					return;
 				}
 
 				break;
