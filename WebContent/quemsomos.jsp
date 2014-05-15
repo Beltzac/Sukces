@@ -40,10 +40,10 @@
                                 Jd. das Am&eacutericas - Curitiba - PR <br/>
                                 CEP: 81.520-260<br/>
                                 Telefone(41)3345-6789
+                                </font>
                             </td>
                         </tr>
-                    </table>
-                    </font>
+                    </table>                   
 
                  </div><!-- center -->
             

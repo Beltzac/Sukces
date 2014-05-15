@@ -547,8 +547,7 @@ public class Controladora extends Servlet {
 						produtoEscolhido = null;
 						try {
 							produtoEscolhido = produtoDAO.carregar(idProduto);
-						} catch (Exception e2) {
-							// TODO Auto-generated catch block
+						} catch (Exception e2) {							
 							e2.printStackTrace();
 							paginaErro(request, response,
 									"Erro ao carregar dados do produto",
@@ -583,8 +582,7 @@ public class Controladora extends Servlet {
 						produtoEscolhido = null;
 						try {
 							produtoEscolhido = produtoDAO.carregar(idProduto);
-						} catch (Exception e2) {
-							// TODO Auto-generated catch block
+						} catch (Exception e2) {							
 							e2.printStackTrace();
 							paginaErro(request, response,
 									"Erro ao carregar dados do produto",

@@ -25,8 +25,7 @@ public class LoginBean {
 					return true;		
 				}
 				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {				
 				e.printStackTrace();
 			}	
 		}
