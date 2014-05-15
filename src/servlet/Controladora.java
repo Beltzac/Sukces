@@ -217,7 +217,7 @@ public class Controladora extends Servlet {
 				
 				String senhaNova1 = request.getParameter("senhaNova1");
 				String senhaNova2 = request.getParameter("senhaNova2");
-				String senhaAntiga = request.getParameter("senhaAntiga");
+				String senhaAntiga = request.getParameter("senhaAntiga");	
 
 				usuarioDAO = null;
 				try {
@@ -230,7 +230,7 @@ public class Controladora extends Servlet {
 				}				
 
 				
-				if(senhaNova1 != senhaNova2){
+				if(!senhaNova1.equals(senhaNova2)){
 					paginaErro(request, response,"Erro ao alterar sua senha", "Senha 1 e Senha 2 devem ser iguais.");
 					return;
 				}

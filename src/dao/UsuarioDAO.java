@@ -150,7 +150,7 @@ public int alterarSenha(UsuarioBean obj, String senhaNova, String senhaAntiga) t
 			stmtAlterarSenha = con.prepareStatement("UPDATE usuario SET senha = MD5(?) WHERE id = ? AND senha = MD5(?)");
 			stmtAlterarSenha.setString(1, senhaNova);
 			stmtAlterarSenha.setInt(2, obj.getId());	
-			stmtAlterarSenha.setString(1, senhaAntiga);
+			stmtAlterarSenha.setString(3, senhaAntiga);
 			return stmtAlterarSenha.executeUpdate();
 	}
 
