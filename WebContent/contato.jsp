@@ -5,8 +5,7 @@ include 'session_start.php';
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Contato
-		</title>
+		<title>Contato</title>
 		<link rel="stylesheet" type="text/css" href="style.css" />		
 		<script src="js/jquery-2.0.2.min.js"></script>
 		<script src="js/jquery.validate.min.js"></script>
@@ -96,7 +95,7 @@ $(document).ready(function(){
 								<form id="contato" method="post" action="Controladora?action=enviarEmail">
 									
 									
-																	<div class="form_row">
+									<div class="form_row">
 										<label class="contact"><strong>Nome:</strong></label>
 										<input type="text" class="contact_input" name="nome" />
 									</div>

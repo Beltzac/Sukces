@@ -22,7 +22,7 @@
                         Nossa Empresa
                     </div>
 
-                    <table border="0">
+                    <table style="border-style: hidden;">
 
                         <tr>
                             <td><font size='2'>

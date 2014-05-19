@@ -63,7 +63,7 @@ public class UsuarioDAO implements IDAO<UsuarioBean> {
 		return l;
 	}
 
-	@Override
+
 	public List<UsuarioBean> pesquisar(String texto, List<String> campos)
 			throws Exception {
 		

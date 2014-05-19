@@ -48,7 +48,7 @@ public class ProdutoDAO implements IDAO<ProdutoBean> {
 		return l;
 	}
 
-	@Override
+
 	public List<ProdutoBean> pesquisar(String texto,  List<String> campos)
 			throws Exception {
 		PreparedStatement stmtPesquisar;

@@ -75,11 +75,4 @@ public class CategoriaDAO implements IDAO<CategoriaBean> {
 		return stmtDeletar.executeUpdate();
 	}
 
-	@Override
-	public List<CategoriaBean> pesquisar(String texto, List<String> campos)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
