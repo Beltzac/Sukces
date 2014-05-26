@@ -75,6 +75,20 @@
 											value="${item.quantidade}" />
 									</p>
 								</div>
+								
+								<div class="prod_price2">
+								Comentarios:
+									<p>									
+									<textarea rows="5" cols="30" name="comentarios">${item.comentarios}</textarea>										
+									</p>
+								</div>
+								
+								<div class="prod_price2">
+								Imagem:
+									<p>									
+									<input type="file" class="contact_input" name="imagem" />															
+									</p>
+								</div>
 
 								<div class="carrinho_prod_details_tab2">
 									<a
@@ -94,7 +108,7 @@
 
 				<c:if test="${carrinho.quantidadeItensUnicos>0}">
 					<div class="form_row">
-						<a href="formapag.php" class="prod_buy">Finalizar</a>
+						<a href="Controladora?action=carrinho&sub=finalizar" class="prod_buy">Finalizar</a>
 					</div>
 				</c:if>
 

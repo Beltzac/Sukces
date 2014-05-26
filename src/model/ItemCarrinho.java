@@ -8,6 +8,7 @@ public class ItemCarrinho {
 	private int quantidade;	
 	private double preco;
 	private String imagem;
+	private String comentarios;
 
 	public ProdutoBean getProduto() {
 		return produto;
@@ -43,6 +44,14 @@ public class ItemCarrinho {
 	
 	public double getTotal(){
 		return quantidade * preco;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
 	}
 
 }

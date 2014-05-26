@@ -9,7 +9,7 @@ public class CategoriaBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int id = -1;
+	private int id;
 	private String nome;
 
 

@@ -122,12 +122,21 @@
 
                         <div>
 
+  							<table border='1'> <!--style="font-size:10;">  -->
+                                <tr>
+                                	<td>Id</td>                                	
+                                	<td>Total</td>
+                                	<td>Status</td>                            
+                                </tr>
 
-                            <table border='1'>
-                                <tr><td>Código</td><td>Status</td><td>Pagamento</td><td>Forma de Envio</td><td>Valor</td><td>Visualizar</td></tr>
-<!-- 
-            -->
-                            </table>
+								 <c:forEach items="${listaPedidos}" var="pedido">      
+								 <tr>
+								 	<td>${pedido.id}</td>								 	
+								 	<td>${pedido.total}</td>
+								 	<td>${pedido.status}</td>								 	
+								 </tr>
+        	           			 </c:forEach>
+                             </table>
 
                         </div>
                     

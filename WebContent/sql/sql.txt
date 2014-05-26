@@ -1,0 +1,96 @@
+CREATE DATABASE  IF NOT EXISTS `sukces`;
+USE `sukces`;
+
+--
+-- Table structure for table `categoria`
+--
+
+DROP TABLE IF EXISTS `categoria`;
+CREATE TABLE `categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Table structure for table `produto`
+--
+
+DROP TABLE IF EXISTS `produto`;
+CREATE TABLE `produto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `categoria` int(11) NOT NULL,
+  `nome` varchar(200) NOT NULL,
+  `preco` double DEFAULT NULL,
+  `descricao` varchar(10000) DEFAULT NULL,
+  `extencao` varchar(5) DEFAULT NULL,
+  `data_criacao` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `produto_FKIndex1` (`categoria`),
+  CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(200) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `senha` varchar(100) NOT NULL,
+  `cpf` varchar(20) DEFAULT NULL,
+  `cnpj` varchar(20) DEFAULT NULL,
+  `telefone1` varchar(100) DEFAULT NULL,
+  `telefone2` varchar(100) DEFAULT NULL,
+  `rua` varchar(100) DEFAULT NULL,
+  `numero` int(10) DEFAULT NULL,
+  `cep` varchar(50) DEFAULT NULL,
+  `cidade` varchar(50) DEFAULT NULL,
+  `estado` varchar(50) DEFAULT NULL,
+  `administrador` tinyint(1) DEFAULT NULL,
+  `data_criacao` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cnpj_UNIQUE` (`cnpj`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Table structure for table `pedido`
+--
+
+DROP TABLE IF EXISTS `pedido`;
+CREATE TABLE `pedido` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `transactionCode` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `transactionCode_UNIQUE` (`transactionCode`),
+	CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Table structure for table `itemPedido`
+--
+
+DROP TABLE IF EXISTS `itemPedido`;
+CREATE TABLE `itemPedido` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `valor` double NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `pedido` int(11) NOT NULL,
+	`produto` int(11) NOT NULL,
+  `imagem` varchar(45) DEFAULT NULL,
+`comentarios` varchar(5000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+CONSTRAINT `itemPedido_ibfk_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT `itemPedido_ibfk_2` FOREIGN KEY (`produto`) REFERENCES `produto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+

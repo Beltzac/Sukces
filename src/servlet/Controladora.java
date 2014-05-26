@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -19,16 +20,21 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import model.Carrinho;
+import model.ItemCarrinho;
+import model.Pagamento;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 import util.FormUtil;
 import bean.CategoriaBean;
+import bean.ItemPedidoBean;
 import bean.LoginBean;
 import bean.ProdutoBean;
 import bean.UsuarioBean;
+import bean.PedidoBean;
 import dao.CategoriaDAO;
+import dao.PedidoDAO;
 import dao.ProdutoDAO;
 import dao.UsuarioDAO;
 
@@ -492,6 +498,28 @@ public class Controladora extends Servlet {
 				if (!filtroLogado(request, response)) {
 					return;
 				}
+				loginBean = (LoginBean) session.getAttribute("loginBean");
+				
+				PedidoDAO pedidodao = null;
+				try {
+					pedidodao = new PedidoDAO();
+				} catch (Exception e4) {
+					e4.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao carregar pedidos", e4.getMessage());
+					return;
+				}
+				
+				try {
+					request.setAttribute("listaPedidos", pedidodao.carregarTodos(loginBean.getUsuario().getId()));
+					
+				} catch (Exception e4) {
+					e4.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao carregar pedidos", e4.getMessage());
+					return;
+				}
+				
 				forward(request, response, "/conta.jsp");
 				break;
 
@@ -592,9 +620,69 @@ public class Controladora extends Servlet {
 						}
 						carrinho.removeProduto(idProduto);
 						carrinho.adicionaProduto(produtoEscolhido, quantidade);
-						break;
+						break;				
+					}
+				}else{
+					if(sub !=null)
+					switch (sub) {
+					
+						case "finalizar":							
+						loginBean = (LoginBean) session.getAttribute("loginBean");
+						Pagamento pagamento = new Pagamento();
+						String url = pagamento.enviaPagSeguro(carrinho, loginBean.getUsuario());
+						
+						
+						PedidoBean pedido = new PedidoBean();
+						pedido.setUsuario(loginBean.getUsuario().getId());
+						
+						ArrayList<ItemPedidoBean> lista = new ArrayList<>();
+						for (ItemCarrinho item : carrinho.getListaItens()) {
+							ItemPedidoBean itemPedido = new ItemPedidoBean();
+							
+							itemPedido.setComentarios(item.getComentarios());
+							itemPedido.setImagem(item.getImagem());
+							itemPedido.setProduto(item.getProduto().getId());
+							itemPedido.setQuantidade(item.getQuantidade());
+							itemPedido.setValor(item.getPreco());									
+							
+						}
+						
+						pedido.setItems(lista);
+						
+						Random rand = new Random();
+						pedido.setTransactionCode(rand.nextGaussian() +"-" + rand.nextFloat());
+						
+						PedidoDAO pdao = null;
+						try {
+							pdao = new PedidoDAO();
+						} catch (Exception e) {
+							e.printStackTrace();
+							paginaErro(request, response,
+									"Erro ao gravar pedido",
+									e.getMessage());
+							return;
+						}
+						
+						try {
+							pdao.gravar(pedido, false);
+						} catch (Exception e) {
+							e.printStackTrace();
+							paginaErro(request, response,
+									"Erro ao gravar pedido",
+									e.getMessage());
+							return;
+						}
+						
+						session.setAttribute("carrinho", null);
+						
+						
+						response.sendRedirect(url);	
+						break;		
+						
 					}
 				}
+				
+				
 				forward(request, response, "/carrinho.jsp");
 				break;
 

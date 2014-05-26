@@ -17,10 +17,10 @@ import dao.ConnectionFactory;
 
 
 @WebServlet("/relatorio")
-public class relatorio extends Servlet {
+public class Relatorio extends Servlet {
 	private static final long serialVersionUID = 1L;       
 
-    public relatorio() {
+    public Relatorio() {
         super();
     }
 
