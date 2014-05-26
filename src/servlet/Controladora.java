@@ -643,14 +643,15 @@ public class Controladora extends Servlet {
 							itemPedido.setImagem(item.getImagem());
 							itemPedido.setProduto(item.getProduto().getId());
 							itemPedido.setQuantidade(item.getQuantidade());
-							itemPedido.setValor(item.getPreco());									
+							itemPedido.setValor(item.getPreco());		
+							lista.add(itemPedido);
 							
 						}
 						
 						pedido.setItems(lista);
 						
-						Random rand = new Random();
-						pedido.setTransactionCode(rand.nextGaussian() +"-" + rand.nextFloat());
+						Random rand = new Random(System.nanoTime());
+						pedido.setTransactionCode(rand.nextGaussian() +"-kgf" + rand.nextFloat());
 						
 						PedidoDAO pdao = null;
 						try {
