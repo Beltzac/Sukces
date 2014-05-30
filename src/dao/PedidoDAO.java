@@ -100,7 +100,7 @@ public class PedidoDAO implements IDAO<PedidoBean> {
 				stmtGravarItem.setString(5, item.getImagem());
 				stmtGravarItem.setString(6, item.getComentarios());		
 				
-				stmtGravar.executeUpdate();
+				stmtGravarItem.executeUpdate();
 			}
 			
 		} else {

@@ -665,6 +665,7 @@ public class Controladora extends Servlet {
 						}
 						
 						try {
+							System.out.println("teste");
 							pdao.gravar(pedido, false);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -678,7 +679,7 @@ public class Controladora extends Servlet {
 						
 						
 						response.sendRedirect(url);	
-						break;		
+						return;		
 						
 					}
 				}
