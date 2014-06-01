@@ -496,20 +496,6 @@
 					<div>
 						<div>
 							<form method='post' action='relatorio'>
-								<%--<div class='form_row'>
-									<label class='contact'><strong>De: </strong></label>
-									<div type="text">
-										<input type="text" class="contact_input" id="data1"
-											name="data1" />
-									</div>
-								</div>
-								<div class='form_row'>
-									<label class='contact'><strong>Até: </strong></label>
-									<div type="hidden">
-										<input type="text" class="contact_input" id="data2"
-											name="data2" />
-									</div>
-								</div>--%>
 								<br /> <br /> 
 								<input type='radio' name='option' value='usuarios' checked> Usuários <br /> 
 								<input type='radio' name='option' value='produtos'> Produtos <br /> 
@@ -518,6 +504,37 @@
 
 						</div>
 
+					</div>
+					<h3>Relatório de Venda</h3>
+					<div>
+						<div>
+							
+							<table>
+								<thead>
+									<tr>
+										<td>Cliente</td>
+										<td>Pedido</td>
+										<td>Ação</td>
+									</tr>
+								</thead>
+								<tbody>
+								<c:forEach items="${listaPedidos}" var="ped">
+									<tr>
+										<td>${ped.usuario}</td>
+										<td>${ped.id}</td>
+										<td>
+											<form method="post" action="relatorio">
+												<input type='hidden' name='option' value='vendas'>
+												<input type='hidden' name='id' value="${ped.id}">
+												<input type='submit' value='Gerar'>
+											</form>
+										</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+							
+						</div>
 					</div>
 				</div>
 

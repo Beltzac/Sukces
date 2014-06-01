@@ -68,7 +68,16 @@ public class PedidoDAO implements IDAO<PedidoBean> {
 		rs.close();
 		return l;
 	}
-
+	
+	public List<PedidoBean> carregarAll() throws Exception {
+		PreparedStatement stmtCarregarTodos;
+		stmtCarregarTodos = con.prepareStatement("SELECT * FROM pedido");
+		ResultSet rs = stmtCarregarTodos.executeQuery();
+		BeanProcessor bp = new BeanProcessor();
+		List<PedidoBean> l = bp.toBeanList(rs, PedidoBean.class);
+		rs.close();
+		return l;
+	}
 
 
 

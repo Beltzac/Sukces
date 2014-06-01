@@ -40,6 +40,10 @@ public class Relatorio extends Servlet {
 		case "produtos":
 			jasp = "/web/sukces-produtos.jasper";
 			break;
+			
+		case "venda":
+			jasp = "/web/vendas-sukces.jasper";
+			break;
 		
 		default:
 			paginaErro(request, response, "Erro ao criar relatório (Parâmetro não existente)", null);
@@ -53,7 +57,13 @@ public class Relatorio extends Servlet {
 			String host = "http://" + request.getServerName() + ":" + request.getServerPort();
 			URL jasperURL = new URL(host + jasper);
 			HashMap params = new HashMap();
+			System.out.println(jasper);
+			if(jasp == "/web/vendas-sukces.jasper"){
+				String id = request.getParameter("id");
+				params.put("idPedido", id);
+			}
 			byte[] bytes = null;
+			System.out.println(jasper);
 			bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
 			if (bytes != null) {
 				response.setContentType("application/pdf");

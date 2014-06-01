@@ -699,6 +699,27 @@ public class Controladora extends Servlet {
 				break;
 
 			case "admin":
+				PedidoDAO pedDAO = null;
+				try {
+					pedDAO = new PedidoDAO();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					paginaErro(request, response, "Erro ao processar (Pedido)",
+							e1.getMessage());
+					return;
+				}
+				List<PedidoBean> listaPedidos = null;
+				try {
+					listaPedidos = pedDAO.carregarAll();
+				} catch (Exception e) {
+					e.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao carregar lista de pedidos", e.getMessage());
+					return;
+				}
+
+				request.setAttribute("listaPedidos", listaPedidos);
+				
 				if (!filtroAdmin(request, response)) {
 					return;
 				}
