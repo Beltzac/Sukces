@@ -88,7 +88,7 @@
 									<p>									
 									<input type="file" class="contact_input" name="imagem" />															
 									</p>
-								</div>
+								</div><br>
 
 								<div class="carrinho_prod_details_tab2">
 									<a

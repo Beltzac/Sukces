@@ -141,6 +141,16 @@ public class PedidoDAO implements IDAO<PedidoBean> {
 
 	}
 
+	public void alterarStatus(int id, String status) throws Exception {		
+		
+			PreparedStatement stmtAtualizar;			
+			stmtAtualizar = con.prepareStatement("UPDATE pedido SET status = ? WHERE id = ?");
+			stmtAtualizar.setString(1, status);
+			stmtAtualizar.setInt(2, id);			
+			
+			stmtAtualizar.executeUpdate();					
+	}
+	
 	@Override
 	public int deletar(int id) throws Exception {
 		PreparedStatement stmtDeletar;

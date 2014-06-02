@@ -7,12 +7,13 @@ import br.com.uol.pagseguro.domain.PaymentRequest;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.enums.Currency;
 import br.com.uol.pagseguro.enums.DocumentType;
+import br.com.uol.pagseguro.enums.TransactionStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.TransactionSearchService;
 
 public class Pagamento {
-	public String enviaPagSeguro(Carrinho carrinho, UsuarioBean usuario){		
+	public String enviaPagSeguro(Carrinho carrinho, UsuarioBean usuario,String transactionCode) throws PagSeguroServiceException{		
 		System.out.println("Acessando pagseguro...");
 		
 		
@@ -25,12 +26,12 @@ public class Pagamento {
 					  item.getQuantidade(), // Quantidade  					
 					  new BigDecimal(Double.toString(item.getPreco())), // Valor unitário  
 					  new Long(100), // Peso unitário, em gramas  
-					  new BigDecimal("0.00") // Valor unitário do frete  
+					  new BigDecimal("0.50") // Valor unitário do frete  
 					); 
 		}
 	
 	
-		paymentRequest.setShippingCost(new BigDecimal("30.00"));  
+		paymentRequest.setShippingCost(new BigDecimal("10.00"));  
 		
 		paymentRequest.setSender(  
 				  usuario.getNome(), // Nome completo  
@@ -42,47 +43,55 @@ public class Pagamento {
 				);  
 			
 
-				paymentRequest.setCurrency(Currency.BRL);
+		paymentRequest.setCurrency(Currency.BRL);
 				
-				// Referenciando a transação do PagSeguro em seu sistema  
-				paymentRequest.setReference("REF1234-USER214-ORDER754851B");  
+		// Referenciando a transação do PagSeguro em seu sistema  
+		paymentRequest.setReference(transactionCode);  
 				  
-				// URL para onde o comprador será redirecionado (GET) após o fluxo de pagamento  
-				paymentRequest.setRedirectURL("http://www.lojamodelo.com.br/thankyou");  
+		// URL para onde o comprador será redirecionado (GET) após o fluxo de pagamento  
+		paymentRequest.setRedirectURL("http://www.lojamodelo.com.br/thankyou");  
 			
-				String response = null;
-				try {  
+		String response = null;
+				
 					  
-					  boolean onlyCheckoutCode = false;  
-					  response = paymentRequest.register(PagSeguroConfig.getAccountCredentials(), onlyCheckoutCode);  
-					  
-					  System.out.println(response);  
-					  
-					} catch (PagSeguroServiceException e) {  
-					  
-					    System.err.println(e.getMessage());  
-					}  
-		
+		boolean onlyCheckoutCode = false;  
+		response = paymentRequest.register(PagSeguroConfig.getAccountCredentials(), onlyCheckoutCode);
 		return response;		
 	}
 	
-	public void recebePagSeguro(String transactionCode){		
-
-		Transaction transaction = null;  
-		  
-		try {  
-		  
-		    transaction = TransactionSearchService.searchByCode(PagSeguroConfig.getAccountCredentials(),  
-		            transactionCode);  
-		  
-		} catch (PagSeguroServiceException e) {  
-		    System.err.println(e.getMessage());  
-		}  
-		  
+	public boolean recebePagSeguro(String transactionCode) throws PagSeguroServiceException{		
+		System.out.println("Consultando pagseguro...");
+		Transaction transaction = null;
+		transaction = TransactionSearchService.searchByCode(PagSeguroConfig.getAccountCredentials(), transactionCode);  
 		if (transaction != null) {  
 		  System.out.println("reference: " + transaction.getReference());  
 		  System.out.println("status: " + transaction.getStatus());  
+		  
+		  if(transaction.getStatus() == TransactionStatus.AVAILABLE){
+			  return true;
+		  }
+		  
 		}  
-		
+		return false;		
+	}
+	
+	public String MD5(String md5) {
+		   try {
+		        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+		        byte[] array = md.digest(md5.getBytes());
+		        StringBuffer sb = new StringBuffer();
+		        for (int i = 0; i < array.length; ++i) {
+		          sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+		       }
+		        return sb.toString();
+		    } catch (java.security.NoSuchAlgorithmException e) {
+		    }
+		    return null;
+		}
+	
+	public String createTransactionCode(UsuarioBean u){		
+		String code  = "SUK-" + MD5("" + u.getId() + System.currentTimeMillis()).toUpperCase();
+		System.out.println(code);
+		return code;
 	}
 }

@@ -121,8 +121,16 @@
                         <h3>Meus Pedidos</h3>
 
                         <div>
-
-  							<table border='1'> <!--style="font-size:10;">  -->
+                        <c:choose>
+                        	<c:when test="${empty listaPedidos}">
+                        	
+                        		<h2>Você não realizou compras ainda</h2>
+                        		
+                        	</c:when>
+                        
+                      	  	<c:otherwise>
+                      	  	
+                        	<table border='1'> <!--style="font-size:10;">  -->
                                 <tr>
                                 	<td>Id</td>                                	
                                 	<td>Total</td>
@@ -139,6 +147,9 @@
 								 </tr>
         	           			 </c:forEach>
                              </table>
+                        
+                       	 	</c:otherwise>
+                        </c:choose> 
 
                         </div>
                     

@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -30,9 +29,10 @@ import util.FormUtil;
 import bean.CategoriaBean;
 import bean.ItemPedidoBean;
 import bean.LoginBean;
+import bean.PedidoBean;
 import bean.ProdutoBean;
 import bean.UsuarioBean;
-import bean.PedidoBean;
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import dao.CategoriaDAO;
 import dao.PedidoDAO;
 import dao.ProdutoDAO;
@@ -670,8 +670,16 @@ public class Controladora extends Servlet {
 									e2.getMessage());
 							return;
 						}
+						
+						
+						
 						carrinho.removeProduto(idProduto);
 						carrinho.adicionaProduto(produtoEscolhido, quantidade);
+						
+						if(request.getParameter("comentarios") != null){
+							carrinho.getProduto(idProduto).setComentarios(request.getParameter("comentarios"));
+						}
+						
 						break;				
 					}
 				}else{
@@ -680,8 +688,21 @@ public class Controladora extends Servlet {
 					
 						case "finalizar":							
 						loginBean = (LoginBean) session.getAttribute("loginBean");
+						
+						
 						Pagamento pagamento = new Pagamento();
-						String url = pagamento.enviaPagSeguro(carrinho, loginBean.getUsuario());
+						String tcode = pagamento.createTransactionCode(loginBean.getUsuario());
+						
+						String url;
+						try {
+							url = pagamento.enviaPagSeguro(carrinho, loginBean.getUsuario(),tcode);
+						} catch (PagSeguroServiceException e1) {
+							e1.printStackTrace();
+							paginaErro(request, response,
+									"Erro ao completar pedido.",
+									e1.getMessage());
+							return;
+						}
 						
 						
 						PedidoBean pedido = new PedidoBean();
@@ -702,7 +723,7 @@ public class Controladora extends Servlet {
 						pedido.setItems(lista);						
 						
 						
-						pedido.setTransactionCode(loginBean.getUsuario().getId() + "-" + System.currentTimeMillis());
+						pedido.setTransactionCode(tcode);
 						
 						pedidoDAO = null;
 						try {
@@ -726,7 +747,6 @@ public class Controladora extends Servlet {
 						}
 						
 						session.setAttribute("carrinho", null);
-						
 						
 						response.sendRedirect(url);	
 						return;		
@@ -761,18 +781,52 @@ public class Controladora extends Servlet {
 					return;
 				}
 				
+				System.out.println(request.getParameter("opcao"));
+				System.out.println(idPedidoAtualizar);
 				
 				switch (request.getParameter("opcao")) {
 				case "imagemOK":
-					
+					try {
+						pedidoDAO.alterarStatus(idPedidoAtualizar, "AGUARDANDO_PAGAMENTO");
+					} catch (Exception e2) {
+						e2.printStackTrace();
+						paginaErro(request, response, "Erro ao confirmar imagens.",
+								e2.getMessage());
+						return;
+					}
 					break;
 					
 				case "pagamentoOK":
-					
+					try {					
+						
+						Pagamento pagamento = new Pagamento();
+						
+						boolean aprovado = pagamento.recebePagSeguro(pedidoDAO.carregar(idPedidoAtualizar).getTransactionCode());
+						
+						if (aprovado){
+							pedidoDAO.alterarStatus(idPedidoAtualizar, "AGUARDANDO_CONFECCAO");
+						}else{							
+							paginaErro(request, response, "Pagamento ainda não foi efetuado.",	null);
+							return;
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+						paginaErro(request, response, "Erro ao confirmar pagamento.",
+								e2.getMessage());
+						return;
+					}					
 					break;
 					
 				case "confeccaoOK":
-	
+					try {
+						pedidoDAO.alterarStatus(idPedidoAtualizar, "ENVIADO");
+					} catch (Exception e2) {
+						e2.printStackTrace();
+						paginaErro(request, response, "Erro ao confirmar confecção.",
+								e2.getMessage());
+						return;
+					}	
 					break;	
 					
 				default:

@@ -81,7 +81,7 @@
 						
 						<c:choose>						
 							<c:when test="${pedido.status == 'AGUARDANDO_APROVACAO'}">
-								<form method="post" action="relatorio">
+								<form method="post" action="Controladora?action=atualizarPedido">
 									<input type='hidden' name='opcao' value='imagemOK'/>
 									<input type='hidden' name='id' value="${pedido.id}"/>
 							  		<input type='submit' value='Aprovar Imagens'/>
@@ -89,7 +89,7 @@
 							</c:when>
 							
 							<c:when test="${pedido.status == 'AGUARDANDO_PAGAMENTO'}">
-								<form method="post" action="relatorio">
+								<form method="post" action="Controladora?action=atualizarPedido">
 									<input type='hidden' name='opcao' value='pagamentoOK'/>
 									<input type='hidden' name='id' value="${pedido.id}"/>
 							  		<input type='submit' value='Verificar Pagamento'/>
@@ -97,7 +97,7 @@
 							</c:when>
 							
 							<c:when test="${pedido.status == 'AGUARDANDO_CONFECCAO'}">
-								<form method="post" action="relatorio">
+								<form method="post" action="Controladora?action=atualizarPedido">
 									<input type='hidden' name='opcao' value='confeccaoOK'/>
 									<input type='hidden' name='id' value="${pedido.id}"/>
 							  		<input type='submit' value='Finalizar'/>
