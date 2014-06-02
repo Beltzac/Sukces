@@ -118,7 +118,7 @@
                 <div class="center_content">
 
                     <div id="accordion">
-                        <h3>Status dos meus pedidos</h3>
+                        <h3>Meus Pedidos</h3>
 
                         <div>
 
@@ -126,14 +126,16 @@
                                 <tr>
                                 	<td>Id</td>                                	
                                 	<td>Total</td>
-                                	<td>Status</td>                            
+                                	<td>Status</td>   
+                                	<td>Detalhes</td>                                  
                                 </tr>
 
 								 <c:forEach items="${listaPedidos}" var="pedido">      
 								 <tr>
 								 	<td>${pedido.id}</td>								 	
-								 	<td>${pedido.total}</td>
-								 	<td>${pedido.status}</td>								 	
+								 	<td><fmt:formatNumber value="${pedido.total}" type="currency"/></td>
+								 	<td>${pedido.statusFormatado}</td>				
+								 	<td><a href="Controladora?action=detalhesPedido&id=${pedido.id}">Detalhes</a></td>					 	
 								 </tr>
         	           			 </c:forEach>
                              </table>
@@ -141,7 +143,7 @@
                         </div>
                     
 
-                        <h3>Detalhes da minha conta</h3>
+                        <h3>Minha Conta</h3>
 
                         <div>
                             <form action="Controladora?action=atualizarUsuario" id="pessoa" method="post">
@@ -242,7 +244,7 @@
                             </form>
                         </div>
 
-                        <h3>Alterar senha</h3>
+                        <h3>Alterar Senha</h3>
 
                         <div>
                             <form action="Controladora?action=atualizarSenha" id="senha" method="post">

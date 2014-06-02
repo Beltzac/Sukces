@@ -15,6 +15,21 @@ public class PedidoBean implements Serializable {
 	private String transactionCode;
 	private List<ItemPedidoBean> items;
 	
+	public String getStatusFormatado(){
+		switch (status) {
+		case "AGUARDANDO_APROVACAO":
+			return "Aguardando aprovação";
+		case "AGUARDANDO_PAGAMENTO":
+			return "Aguardando pagamento";
+		case "AGUARDANDO_CONFECCAO":
+			return "Aguardando confecção";
+		case "ENVIADO":
+			return "Enviado";
+		default:
+			return status;
+		}
+	}
+	
 	public double getTotal(){
 		double total = 0;
 		if(items != null)

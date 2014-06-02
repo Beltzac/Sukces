@@ -538,15 +538,10 @@ public class Controladora extends Servlet {
 					paginaErro(request, response,
 							"Erro ao carregar dados do usuario", e.getMessage());
 					return;
-				}
+				}	
 				
-				
-				
-
 				request.setAttribute("pedido", ped);
 				request.setAttribute("usuario", cli);
-				
-				
 
 				forward(request, response, "/detalhesPedido.jsp");
 				break;
@@ -557,9 +552,9 @@ public class Controladora extends Servlet {
 				}
 				loginBean = (LoginBean) session.getAttribute("loginBean");
 				
-				PedidoDAO pedidodao = null;
+				pedidoDAO = null;
 				try {
-					pedidodao = new PedidoDAO();
+					pedidoDAO = new PedidoDAO();
 				} catch (Exception e4) {
 					e4.printStackTrace();
 					paginaErro(request, response,
@@ -568,7 +563,7 @@ public class Controladora extends Servlet {
 				}
 				
 				try {
-					request.setAttribute("listaPedidos", pedidodao.carregarTodos(loginBean.getUsuario().getId()));
+					request.setAttribute("listaPedidos", pedidoDAO.carregarTodos(loginBean.getUsuario().getId()));
 					
 				} catch (Exception e4) {
 					e4.printStackTrace();
@@ -703,16 +698,15 @@ public class Controladora extends Servlet {
 							itemPedido.setValor(item.getPreco());		
 							lista.add(itemPedido);
 							
-						}
+						}						
+						pedido.setItems(lista);						
 						
-						pedido.setItems(lista);
 						
-						Random rand = new Random(System.nanoTime());
-						pedido.setTransactionCode(rand.nextGaussian() +"-kgf" + rand.nextFloat());
+						pedido.setTransactionCode(loginBean.getUsuario().getId() + "-" + System.currentTimeMillis());
 						
-						PedidoDAO pdao = null;
+						pedidoDAO = null;
 						try {
-							pdao = new PedidoDAO();
+							pedidoDAO = new PedidoDAO();
 						} catch (Exception e) {
 							e.printStackTrace();
 							paginaErro(request, response,
@@ -722,7 +716,7 @@ public class Controladora extends Servlet {
 						}
 						
 						try {							
-							pdao.gravar(pedido, false);
+							pedidoDAO.gravar(pedido, false);
 						} catch (Exception e) {
 							e.printStackTrace();
 							paginaErro(request, response,
@@ -753,11 +747,47 @@ public class Controladora extends Servlet {
 
 				forward(request, response, "/contato.jsp");
 				break;
+				
+			case "atualizarPedido":				
+				int idPedidoAtualizar = Integer.valueOf(request.getParameter("id"));
+				
+				pedidoDAO = null;
+				try {
+					pedidoDAO = new PedidoDAO();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					paginaErro(request, response, "Erro ao processar (Pedido)",
+							e1.getMessage());
+					return;
+				}
+				
+				
+				switch (request.getParameter("opcao")) {
+				case "imagemOK":
+					
+					break;
+					
+				case "pagamentoOK":
+					
+					break;
+					
+				case "confeccaoOK":
+	
+					break;	
+					
+				default:
+					paginaErro(request, response, "Ação Inexistente", null);
+					return;
+				}			
+
+				forward(request, response, "Controladora?action=detalhesPedido&id=" + idPedidoAtualizar);
+				break;
+				
 
 			case "admin":
-				PedidoDAO pedDAO = null;
+				 pedidoDAO = null;
 				try {
-					pedDAO = new PedidoDAO();
+					pedidoDAO = new PedidoDAO();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					paginaErro(request, response, "Erro ao processar (Pedido)",
@@ -768,7 +798,7 @@ public class Controladora extends Servlet {
 				
 				if(request.getParameter("option")==null){
 					try {
-						listaPedidos = pedDAO.carregarTodos();
+						listaPedidos = pedidoDAO.carregarTodos();
 					} catch (Exception e) {
 						e.printStackTrace();
 						paginaErro(request, response,
@@ -850,7 +880,7 @@ public class Controladora extends Servlet {
 						
 					case "pedido":
 						try {
-							listaPedidos = pedDAO.carregarTodos(request.getParameter("option"));
+							listaPedidos = pedidoDAO.carregarTodos(request.getParameter("option"));
 						} catch (Exception e) {
 							e.printStackTrace();
 							paginaErro(request, response,

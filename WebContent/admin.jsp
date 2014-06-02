@@ -497,7 +497,7 @@
 						Categoria:
 							<form method='post' action='Controladora?action=admin&sub=pedido'>							
 								<br /> <br /> 
-								<input type='radio' name='option' value=AGUARDANDO_APROVACAO checked> Aguardando aprovação <br /> 
+								<input type='radio' name='option' value='AGUARDANDO_APROVACAO' checked> Aguardando aprovação <br /> 
 								<input type='radio' name='option' value='AGUARDANDO_PAGAMENTO'> Aguardando pagamento <br />							
 								<input type='radio' name='option' value='AGUARDANDO_CONFECCAO'> Aguardando confecção <br />
 								<input type='radio' name='option' value='ENVIADO'> Enviado <br />   
@@ -518,7 +518,7 @@
 									<tr>
 										<td>${pedido.id}</td>
 										<td>${pedido.usuario}</td>
-										<td>${pedido.total}</td>										
+										<td><fmt:formatNumber value="${pedido.total}" type="currency"/></td>										
 										<td><a href="Controladora?action=detalhesPedido&id=${pedido.id}">Detalhes</a></td>
 									</tr>
 								</c:forEach>

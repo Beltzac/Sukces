@@ -38,6 +38,8 @@
 					<div class="center_prod_box_big2">
 
 						Comprador: ${usuario.nome}<br/>
+						Email: ${usuario.email}<br/><br/>
+						
 						Total: <fmt:formatNumber value="${pedido.total}" type="currency"/><br/>
 						Status: ${pedido.status}<br/>
 						
@@ -77,37 +79,32 @@
 						
 						Administração:
 						
-						<table>
-							<tr>
-								<td>	
-									<form method="post" action="relatorio">
-										<input type='hidden' name='option' value='vendas'/>
-										<input type='hidden' name='id' value="${pedido.id}"/>
-						  				<input type='submit' value='Aprovar Imagens'/>
-									</form>
-							 	</td>													
-							</tr>
-							<tr>
-								<td>	
-									<form method="post" action="relatorio">
-										<input type='hidden' name='option' value='vendas'/>
-										<input type='hidden' name='id' value="${pedido.id}"/>
-						  				<input type='submit' value='Verificar Pagamento'/>
-									</form>
-							 	</td>													
-							</tr>
-							<tr>
-								<td>	
-									<form method="post" action="relatorio">
-										<input type='hidden' name='option' value='vendas'/>
-										<input type='hidden' name='id' value="${pedido.id}"/>
-						  				<input type='submit' value='Finalizar'/>
-									</form>
-							 	</td>													
-							</tr>				
-						</table>
-					
-						</c:if>
+						<c:choose>						
+							<c:when test="${pedido.status == 'AGUARDANDO_APROVACAO'}">
+								<form method="post" action="relatorio">
+									<input type='hidden' name='opcao' value='imagemOK'/>
+									<input type='hidden' name='id' value="${pedido.id}"/>
+							  		<input type='submit' value='Aprovar Imagens'/>
+							</form>					
+							</c:when>
+							
+							<c:when test="${pedido.status == 'AGUARDANDO_PAGAMENTO'}">
+								<form method="post" action="relatorio">
+									<input type='hidden' name='opcao' value='pagamentoOK'/>
+									<input type='hidden' name='id' value="${pedido.id}"/>
+							  		<input type='submit' value='Verificar Pagamento'/>
+								</form>				
+							</c:when>
+							
+							<c:when test="${pedido.status == 'AGUARDANDO_CONFECCAO'}">
+								<form method="post" action="relatorio">
+									<input type='hidden' name='opcao' value='confeccaoOK'/>
+									<input type='hidden' name='id' value="${pedido.id}"/>
+							  		<input type='submit' value='Finalizar'/>
+								</form>			
+							</c:when>						
+						</c:choose>										
+					</c:if>
 
 					</div>
 				</div>
