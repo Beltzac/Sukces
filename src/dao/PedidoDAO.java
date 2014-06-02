@@ -48,9 +48,7 @@ public class PedidoDAO implements IDAO<PedidoBean> {
 		List<ItemPedidoBean> l = bp.toBeanList(rs, ItemPedidoBean.class);
 		rs.close();
 		return l;
-	}
-	
-
+	}	
 
 	
 	public List<PedidoBean> carregarTodos(int idusuario) throws Exception {
@@ -69,17 +67,34 @@ public class PedidoDAO implements IDAO<PedidoBean> {
 		return l;
 	}
 	
-	public List<PedidoBean> carregarAll() throws Exception {
+	public List<PedidoBean> carregarTodos(String status) throws Exception {
+		PreparedStatement stmtCarregarTodos;
+		stmtCarregarTodos = con.prepareStatement("SELECT * FROM pedido WHERE status = ?");
+		stmtCarregarTodos.setString(1, status);
+		ResultSet rs = stmtCarregarTodos.executeQuery();
+		BeanProcessor bp = new BeanProcessor();
+		List<PedidoBean> l = bp.toBeanList(rs, PedidoBean.class);
+		
+		for (PedidoBean pedidoBean : l) {
+			pedidoBean.setItems(carregarTodosItems(pedidoBean.getId()));
+		}
+		
+		rs.close();
+		return l;
+	}
+	
+	public List<PedidoBean> carregarTodos() throws Exception {
 		PreparedStatement stmtCarregarTodos;
 		stmtCarregarTodos = con.prepareStatement("SELECT * FROM pedido");
 		ResultSet rs = stmtCarregarTodos.executeQuery();
 		BeanProcessor bp = new BeanProcessor();
 		List<PedidoBean> l = bp.toBeanList(rs, PedidoBean.class);
+		for (PedidoBean pedidoBean : l) {
+			pedidoBean.setItems(carregarTodosItems(pedidoBean.getId()));
+		}
 		rs.close();
 		return l;
 	}
-
-
 
 	@Override
 	public void gravar(PedidoBean obj, boolean update) throws Exception {
@@ -134,11 +149,7 @@ public class PedidoDAO implements IDAO<PedidoBean> {
 		return stmtDeletar.executeUpdate();
 	}
 
-	@Override
-	public List<PedidoBean> carregarTodos() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 
 }

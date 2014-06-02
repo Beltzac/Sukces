@@ -573,6 +573,16 @@ A.prod_compare
     margin: 0px;
     border: 1px solid #F0F4F5;
 }
+.center_prod_box_big2
+{
+    width: 554px;
+    height: auto;
+    float: left;
+    text-align: left;
+    padding: 0 0 10px;
+    margin: 0px;
+    border: 1px solid #F0F4F5;
+}
 .product_img_big
 {
     width: 170px;

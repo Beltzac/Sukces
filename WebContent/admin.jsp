@@ -490,9 +490,45 @@
 
 						</div>
 					</div>
-
+										
+					<h3>Pedidos</h3>
+					<div>
+						<div>
+						Categoria:
+							<form method='post' action='Controladora?action=admin&sub=pedido'>							
+								<br /> <br /> 
+								<input type='radio' name='option' value=AGUARDANDO_APROVACAO checked> Aguardando aprovação <br /> 
+								<input type='radio' name='option' value='AGUARDANDO_PAGAMENTO'> Aguardando pagamento <br />							
+								<input type='radio' name='option' value='AGUARDANDO_CONFECCAO'> Aguardando confecção <br />
+								<input type='radio' name='option' value='ENVIADO'> Enviado <br />   
+								<input type='submit' value='Pesquisar'>
+							</form>
+							
+							<table>
+								<thead>
+									<tr>										
+										<td>Pedido</td>
+										<td>Cliente</td>
+										<td>Total</td>										
+										<td>Detalhes</td>
+									</tr>
+								</thead>
+								<tbody>
+								<c:forEach items="${listaPedidos}" var="pedido">
+									<tr>
+										<td>${pedido.id}</td>
+										<td>${pedido.usuario}</td>
+										<td>${pedido.total}</td>										
+										<td><a href="Controladora?action=detalhesPedido&id=${pedido.id}">Detalhes</a></td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+							
+						</div>
+					</div>
+					
 					<h3>Relatórios</h3>
-
 					<div>
 						<div>
 							<form method='post' action='relatorio'>
@@ -504,37 +540,6 @@
 
 						</div>
 
-					</div>
-					<h3>Relatório de Venda</h3>
-					<div>
-						<div>
-							
-							<table>
-								<thead>
-									<tr>
-										<td>Cliente</td>
-										<td>Pedido</td>
-										<td>Ação</td>
-									</tr>
-								</thead>
-								<tbody>
-								<c:forEach items="${listaPedidos}" var="ped">
-									<tr>
-										<td>${ped.usuario}</td>
-										<td>${ped.id}</td>
-										<td>
-											<form method="post" action="relatorio">
-												<input type='hidden' name='option' value='vendas'>
-												<input type='hidden' name='id' value="${ped.id}">
-												<input type='submit' value='Gerar'>
-											</form>
-										</td>
-									</tr>
-								</c:forEach>
-								</tbody>
-							</table>
-							
-						</div>
 					</div>
 				</div>
 

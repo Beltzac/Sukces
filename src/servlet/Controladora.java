@@ -65,6 +65,7 @@ public class Controladora extends Servlet {
 
 		UsuarioDAO usuarioDAO = null;
 		ProdutoDAO produtoDAO = null;
+		PedidoDAO pedidoDAO = null;
 
 		String path = getServletContext().getRealPath("/");
 
@@ -494,6 +495,62 @@ public class Controladora extends Servlet {
 				forward(request, response, "/detalhesProduto.jsp");
 				break;
 
+				
+			case "detalhesPedido":
+
+				try {
+					pedidoDAO = new PedidoDAO();
+				} catch (Exception e) {
+					e.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao processar (Pedido)", e.getMessage());
+					return;
+				}
+
+				int idPedido = Integer.valueOf(request.getParameter("id"));
+
+				PedidoBean ped = null;
+				try {
+					ped = pedidoDAO.carregar(idPedido);
+				} catch (Exception e) {
+					e.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao carregar dados do pedido", e.getMessage());
+					return;
+				}
+				
+				
+				
+				try {
+					usuarioDAO = new UsuarioDAO();
+				} catch (Exception e) {
+					e.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao processar (Usuario)", e.getMessage());
+					return;
+				}			
+
+				UsuarioBean cli = null;
+				try {
+					cli = usuarioDAO.carregar(ped.getUsuario());
+				} catch (Exception e) {
+					e.printStackTrace();
+					paginaErro(request, response,
+							"Erro ao carregar dados do usuario", e.getMessage());
+					return;
+				}
+				
+				
+				
+
+				request.setAttribute("pedido", ped);
+				request.setAttribute("usuario", cli);
+				
+				
+
+				forward(request, response, "/detalhesPedido.jsp");
+				break;
+				
 			case "conta":
 				if (!filtroLogado(request, response)) {
 					return;
@@ -664,8 +721,7 @@ public class Controladora extends Servlet {
 							return;
 						}
 						
-						try {
-							System.out.println("teste");
+						try {							
 							pdao.gravar(pedido, false);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -709,16 +765,19 @@ public class Controladora extends Servlet {
 					return;
 				}
 				List<PedidoBean> listaPedidos = null;
-				try {
-					listaPedidos = pedDAO.carregarAll();
-				} catch (Exception e) {
-					e.printStackTrace();
-					paginaErro(request, response,
-							"Erro ao carregar lista de pedidos", e.getMessage());
-					return;
+				
+				if(request.getParameter("option")==null){
+					try {
+						listaPedidos = pedDAO.carregarTodos();
+					} catch (Exception e) {
+						e.printStackTrace();
+						paginaErro(request, response,
+								"Erro ao carregar lista de pedidos", e.getMessage());
+						return;
+					}
+	
+					request.setAttribute("listaPedidos", listaPedidos);
 				}
-
-				request.setAttribute("listaPedidos", listaPedidos);
 				
 				if (!filtroAdmin(request, response)) {
 					return;
@@ -787,6 +846,20 @@ public class Controladora extends Servlet {
 
 					case "categoria":
 						request.setAttribute("active", 2);
+						break;
+						
+					case "pedido":
+						try {
+							listaPedidos = pedDAO.carregarTodos(request.getParameter("option"));
+						} catch (Exception e) {
+							e.printStackTrace();
+							paginaErro(request, response,
+									"Erro ao carregar lista de pedidos", e.getMessage());
+							return;
+						}
+		
+						request.setAttribute("listaPedidos", listaPedidos);
+						request.setAttribute("active", 3);
 						break;
 					}
 

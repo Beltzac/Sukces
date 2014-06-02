@@ -12,7 +12,8 @@ import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.TransactionSearchService;
 
 public class Pagamento {
-	public String enviaPagSeguro(Carrinho carrinho, UsuarioBean usuario){			
+	public String enviaPagSeguro(Carrinho carrinho, UsuarioBean usuario){		
+		System.out.println("Acessando pagseguro...");
 		
 		
 		PaymentRequest paymentRequest = new PaymentRequest();  

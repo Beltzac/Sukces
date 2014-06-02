@@ -17,6 +17,7 @@ public class PedidoBean implements Serializable {
 	
 	public double getTotal(){
 		double total = 0;
+		if(items != null)
 		for(ItemPedidoBean entry : items) {
 		    total += entry.getTotal();
 		}		
