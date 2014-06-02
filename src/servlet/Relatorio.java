@@ -41,7 +41,7 @@ public class Relatorio extends Servlet {
 			jasp = "/web/sukces-produtos.jasper";
 			break;
 			
-		case "venda":
+		case "vendas":
 			jasp = "/web/venda3-sukces.jasper";
 			break;
 		
@@ -61,6 +61,7 @@ public class Relatorio extends Servlet {
 			if(jasp == "/web/venda3-sukces.jasper"){
 				String id = request.getParameter("id");
 				params.put("idPedido", id);
+				System.out.println(id);
 			}
 			byte[] bytes = null;
 			System.out.println(jasper);
