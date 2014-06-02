@@ -42,7 +42,7 @@ public class Relatorio extends Servlet {
 			break;
 			
 		case "venda":
-			jasp = "/web/vendas-sukces.jasper";
+			jasp = "/web/venda3-sukces.jasper";
 			break;
 		
 		default:
@@ -58,7 +58,7 @@ public class Relatorio extends Servlet {
 			URL jasperURL = new URL(host + jasper);
 			HashMap params = new HashMap();
 			System.out.println(jasper);
-			if(jasp == "/web/vendas-sukces.jasper"){
+			if(jasp == "/web/venda3-sukces.jasper"){
 				String id = request.getParameter("id");
 				params.put("idPedido", id);
 			}
