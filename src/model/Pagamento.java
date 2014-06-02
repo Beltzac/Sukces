@@ -1,6 +1,8 @@
 package model;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import bean.UsuarioBean;
 import br.com.uol.pagseguro.domain.PaymentRequest;
@@ -20,16 +22,27 @@ public class Pagamento {
 		PaymentRequest paymentRequest = new PaymentRequest();  
 		
 		for (ItemCarrinho item : carrinho.getListaItens()) {
+			double d = item.getPreco();
+			NumberFormat formatter = new DecimalFormat("#,##");  
+			//formatter.setMaximumFractionDigits(2);  
+			//formatter.setMinimumFractionDigits(2);  
+	        String dou = formatter.format(d);
+	        BigDecimal big = new BigDecimal(d);
+	        big = big.setScale(2);
+	        dou = big.toString();
+	        System.out.println(big);
+	        //System.out.println(dou);
 			paymentRequest.addItem(  
 					  Integer.toString(item.getProduto().getId()), // Identificação em seu sistema  
 					  item.getProduto().getNome(), // Descrição  
 					  item.getQuantidade(), // Quantidade  					
-					  new BigDecimal(Double.toString(item.getPreco())), // Valor unitário  
+					  new BigDecimal(dou), // Valor unitário  
 					  new Long(100), // Peso unitário, em gramas  
 					  new BigDecimal("0.50") // Valor unitário do frete  
 					); 
 		}
-	
+		
+		
 	
 		paymentRequest.setShippingCost(new BigDecimal("10.00"));  
 		
