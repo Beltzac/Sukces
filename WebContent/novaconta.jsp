@@ -38,6 +38,7 @@
 													minlength : 5
 												},
 												numero : {
+													number: true,
 													required : true,
 													minlength : 1
 												},											
@@ -57,7 +58,7 @@
 													minlength : 11
 												},
 												cnpj : {
-													required : true,
+													required : false,
 													minlength : 14
 												}
 
@@ -81,6 +82,7 @@
 													minlength : "Sua rua deve conter, no m&iacutenimo, 5 caracteres"
 												},
 												numero : {
+													number: "Digite um número válido",
 													required : "Digite o n&uacutemero",
 													minlength : "Seu n&uacutemero deve conter, no m&iacutenimo, 1 caracter"
 												},												

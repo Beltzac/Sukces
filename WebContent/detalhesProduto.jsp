@@ -20,7 +20,7 @@
 			step : 1,
 			numberFormat : "n",
 			min : 1,
-			max : 20
+			max : 200
 		});
 	});
 </script>
@@ -62,7 +62,7 @@
 								method="post">
 								<div class="prod_price2">
 									<p>
-										<input id="spinner" name="quantidade" value="1" />
+										<input id="spinner" name="quantidade" value="1" readonly="readonly" />
 									</p>
 								</div>
 								<input type="hidden" name="tipo" value="adicionarProduto"/>

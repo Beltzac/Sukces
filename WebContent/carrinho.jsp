@@ -72,7 +72,7 @@
 									<p>
 										<label for="spinner${item.produto.id}">Quantidade:</label> <input
 											id="spinner${item.produto.id}" name="quantidade"
-											value="${item.quantidade}" />
+											value="${item.quantidade}" readonly="readonly"/>
 									</p>
 								</div>
 								
